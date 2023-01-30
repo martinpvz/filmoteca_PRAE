@@ -1,0 +1,54 @@
+$Fuente1: 'Nunito', sans-serif;
+$color-primario: #F4F4F4;
+$color-secundario: #043B9C;
+$color-terciario: #DFE0DC;
+$color-cuarto: #D1D3C4;
+
+* {
+    box-sizing: border-box;
+    font-size: 62.5%; 
+}
+
+body {
+    margin: 0;
+    background-color: $color-primario;
+    font-family: $Fuente1;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+@mixin menu {
+    background-image: url(../img/menuWhite.png);
+    background-position:center;
+    background-size:30px 30px;
+    width: 30px;
+    height: 30px;
+    display: none;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+    @include media(mobile-only) {
+        display: block;
+    }
+}
+
+@mixin close {
+    background-image: url(../img/xWhite.png);
+    background-position:center;
+    background-size:25px 25px;
+    margin-right: 10%;
+    width: 25px;
+    height: 25px;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+    @include media(mobile-only) {
+        display: block;
+    }
+}
