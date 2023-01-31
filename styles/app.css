@@ -190,11 +190,22 @@ a {
   width: 50px;
   position: absolute;
   left: 5%;
-  top: 10%;
+  top: 80px;
+}
+@media only screen and (max-width: 768px) {
+  .header__login--return {
+    width: 45px;
+    left: 3%;
+  }
 }
 .header__login--logo {
   width: 380px;
   min-width: 100px;
+}
+@media only screen and (max-width: 768px) {
+  .header__login--logo {
+    width: 250px;
+  }
 }
 
 .main__login {
@@ -205,6 +216,7 @@ a {
   align-items: center;
 }
 .main__login .form__login {
+  position: relative;
   width: 90%;
   max-width: 500px;
   height: auto;
@@ -230,6 +242,110 @@ a {
   box-shadow: 0px 0px 13px -1px rgba(0, 0, 0, 0.62);
   border-radius: 15px;
   font-family: "Nunito", sans-serif;
+  transition: 0.2s;
 }
+.main__login .form__login--buttons button:hover {
+  box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.62);
+}
+.main__login .form__login--form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main__login .form__login--form form {
+  width: 100%;
+  height: auto;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main__login .form__login--form .form__input {
+  width: 82%;
+  height: 40px;
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: start;
+  border-bottom: solid 1.5px black;
+  position: relative;
+}
+.main__login .form__login--form .form__input input {
+  width: 85%;
+  max-width: 350px;
+  padding: 0 15px 4px 15px;
+  border: none;
+  font-size: 1.7rem;
+  color: black;
+  outline: none;
+  font-family: "Nunito", sans-serif;
+  background-color: transparent;
+}
+.main__login .form__login--form .form__input span {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 10%;
+  bottom: 10px;
+}
+.main__login .form__login--form .form__input--img {
+  background: url(../img/user.png);
+  background-size: 25px 25px;
+  background-position: center;
+}
+.main__login .form__login--form .form__input--show {
+  background: url(../img/show.png);
+  background-size: 25px 25px;
+  background-position: center;
+}
+.main__login .form__login--form .disabled {
+  display: none;
+}
+
+::placeholder {
+  font-size: 1.7rem;
+  color: black;
+  font-family: "Nunito", sans-serif;
+}
+
+.submit {
+  --widthA: 70%;
+  background-color: #D1D3C4;
+  cursor: pointer;
+  padding-top: 20px;
+  border-radius: 20px;
+  width: 70%;
+  height: 65px;
+  color: black;
+  font-weight: bold;
+  font-size: 1.9rem;
+  font-family: "Nunito", sans-serif;
+  border: none;
+  z-index: -1;
+  position: absolute;
+  box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.22);
+  bottom: -45px;
+  left: calc(50% - var(--widthA) / 2);
+  transition: 0.2s;
+}
+
+.submit:hover {
+  box-shadow: 0px 0px 20px 15px rgba(0, 0, 0, 0.3);
+}
+
+/*.footer__login {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    color: black;
+    margin-top: 120px;
+    &--text {
+        font-size: 1.5rem;
+        @include media(mobile-only) {
+            font-size: 0.8rem;
+        }
+    }
+}*/
 
 /*# sourceMappingURL=app.css.map */

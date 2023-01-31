@@ -19,24 +19,46 @@
     <main class="main__login">
         <div class="form__login">
             <div class="form__login--buttons">
-                <button id="login">Iniciar sesión</button>
-                <button id="register">Registrarse</button>
+                <button id="login" onclick="login()">Iniciar sesión</button>
+                <button id="register" onclick="register()">Registrarse</button>
             </div>
             <div class="form__login--form">
                 <form action="" method="post">
-                    <div class="form__input">
+                    <div class="form__input enabled">
                         <input type="text" name="user" id="user" placeholder="Usuario">
                         <span class="form__input--img"></span>
                     </div>
+                    <div class="form__input enabled">
+                        <input type="text" name="password" id="password" placeholder="Contraseña">
+                        <span class="form__input--show"></span>
+                    </div>
+                    <div class="form__input disabled">
+                        <input type="text" name="name" id="name" placeholder="Nombre">
+                    </div>
+                    <div class="form__input disabled">
+                        <input type="text" name="surname" id="surname" placeholder="Apellidos">
+                    </div>
+                    <div class="form__input disabled">
+                        <input type="text" name="password" id="password" placeholder="Contraseña">
+                        <span class="form__input--show"></span>
+                    </div>
+                    <div class="form__input disabled">
+                        <input type="text" name="confirmation" id="confirmation" placeholder="Confirmar contraseña">
+                    </div>
+                    <div class="form__input disabled">
+                        <input type="text" name="key" id="key" placeholder="Clave de acceso">
+                    </div>
 
-                    <input type="submit" value="Acceder">
+                    <input type="submit" value="Acceder" class="submit" id="submit">
                 </form>
             </div>
         </div>
     </main>
 
-    <footer class="footer__login">
+    <!-- <footer class="footer__login">
         <p class="footer__login--text">© 2023 Copyright: PROYECTO ROBERTO ALONSO ESPINOSA </p>
-    </footer>
+    </footer> -->
+
+    <script src="./js/main.js"></script>
 </body>
 </html>
