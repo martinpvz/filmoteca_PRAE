@@ -39,6 +39,10 @@
   @else if $breakpoint == desktop-s-only {  
     @media only screen and (min-width: 768px) and (max-width: 1200px) { @content; }  
   } 
+
+  @else if $breakpoint == desktop-sm-only {  
+    @media only screen and (min-width: 768px) and (max-width: 1290px) { @content; }  
+  } 
   
   @else if $breakpoint == desktop-m-only {  
     @media only screen and (min-width: 1200px) and (max-width: 1480px) { @content; }  

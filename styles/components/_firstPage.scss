@@ -1,0 +1,245 @@
+.header__home {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 50px;
+    @include media(mobile-only) {
+        display: none;
+    }
+    &--img {
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 80%;
+        }
+    }
+    &--title {
+        width: 20%;
+        color: black;
+        text-align: center;
+        font-size: 3rem;
+    }
+    .profile {
+        width: 20%;
+        height: 50px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &__circle {
+            width: 50px;
+            height: 50px;
+            background-color: $color-secundario;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            &--text {
+                color: white;
+                font-size: 2rem;
+                font-weight: bold;
+                margin: 0;
+                user-select: none;
+            }
+        }
+        &__circle:hover {
+            background-color: #0759E6;
+        }
+        &__info {
+            width: 150px;
+            height: 120px;
+            position: absolute;
+            bottom: -130px;
+            right: 45%;
+            border-radius: 15px;
+            box-shadow: 0px 0px 13px -4px rgba(0,0,0,0.62);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content:space-around;
+            background-color: $color-terciario;
+            z-index: 2;
+            a {
+                width: 100%;
+                height: 50%;
+                color: black;
+                font-size: 1.6rem;
+                text-align: center;
+                line-height: 60px;
+                transition: 0.2s;
+            }
+            a:hover {
+                background-color: $color-cuarto;
+            }
+            &--edit {
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+            }
+            &--close {
+                border-bottom-left-radius: 15px;
+                border-bottom-right-radius: 15px;
+            }
+        }
+    }
+}
+
+.header__home--mobile {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    display: none;
+    @include media(mobile-only) {
+        display: block;
+    }
+    .img-mobile {
+        width: 100%;
+        padding-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 220px;
+        }
+        .menu {
+            @include menuBlack;
+            position: absolute;
+            right: 20px;
+        }
+        .return {
+            position: absolute;
+            left: 20px;
+            background-image: url(../img/return.png);
+            background-position:center;
+            background-size:40px 40px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+    }
+    .title-mobile {
+        width: 100%;
+        text-align: center;
+        h1 {
+            font-size: 3rem;
+            color: black;
+        }
+    }
+}
+
+.main__home {
+    width: 100%;
+    height: auto;
+    .cards {
+        width: 90%;
+        height: auto;
+        display: flex;
+        margin: 50px auto;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+        @include media(mobile-only) {
+            margin: 25px auto;
+        }
+    }
+    .card {
+        
+        //background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/chamontoya.jpeg);
+        //background-size: cover;
+        width: 60%;
+        max-width: 580px;
+        height: 270px;
+        border-radius: 20px;
+        overflow: hidden;
+        background-color: rgb(0, 0, 0);
+        box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.50);
+        position: relative;
+        transition: 0.3s;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include media(desktop-sm-only) {
+            width: 40%;
+        }
+        @include media(mobile-only) {
+            width: 90%;
+            height: 200px;
+        }
+        img {
+            object-fit: cover;
+            opacity: 0.4;
+            transition: 0.3s;
+        }
+        &--text {
+            width: 100%;
+            font-size: 2.6rem;
+            font-weight: bold;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            text-align: center;
+            @include media(mobile-only) {
+                font-size: 2rem;
+            }
+        }
+    }
+    .card img:hover {
+        transform: scale(1.1);
+        opacity: 0.3;
+    }
+    .card:hover {
+        box-shadow: 0px 0px 22px 4px rgba(0,0,0,0.50);
+    }
+}
+
+.card--add {
+    display: flex;
+    justify-content: center;
+    align-items: centers;
+    span {
+        font-size: 2.6rem;
+        @include media(mobile-only) {
+            font-size: 2rem;
+        }
+    }
+}
+
+.card--add__img {
+    width: 40px;
+    height: 40px;
+    background: url(../img/add.png);
+    background-size: 40px 40px;
+    background-position: center;
+    margin-right: 15px;
+    @include media(mobile-only) {
+        width: 30px;
+        height: 30px;
+        background-size: 30px 30px;
+    }
+}
+
+.footer__home {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin: 25px 0;
+    &--text {
+        color: black;
+        font-size: 1.5rem;
+        @include media(mobile-only) {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+.options {
+    @include options;
+}

@@ -23,30 +23,30 @@
                 <button id="register" onclick="register()">Registrarse</button>
             </div>
             <div class="form__login--form">
-                <form action="" method="post">
+                <form action="./firstPage.php" method="post">
                     <div class="form__input enabled">
-                        <input type="text" name="user" id="user" placeholder="Usuario">
+                        <input required class="required" type="text" name="user" id="user" placeholder="Usuario">
                         <span class="form__input--img"></span>
                     </div>
                     <div class="form__input enabled">
-                        <input type="text" name="password" id="password" placeholder="Contraseña">
+                        <input required class="required" type="text" name="password" id="password" placeholder="Contraseña">
                         <span class="form__input--show"></span>
                     </div>
                     <div class="form__input disabled">
-                        <input type="text" name="name" id="name" placeholder="Nombre">
+                        <input type="text" class="norequired" name="name" id="name" placeholder="Nombre">
                     </div>
                     <div class="form__input disabled">
-                        <input type="text" name="surname" id="surname" placeholder="Apellidos">
+                        <input type="text" class="norequired" name="surname" id="surname" placeholder="Apellidos">
                     </div>
                     <div class="form__input disabled">
-                        <input type="text" name="password" id="password" placeholder="Contraseña">
+                        <input type="text" class="norequired" name="password" id="password" placeholder="Contraseña">
                         <span class="form__input--show"></span>
                     </div>
                     <div class="form__input disabled">
-                        <input type="text" name="confirmation" id="confirmation" placeholder="Confirmar contraseña">
+                        <input type="text" class="norequired" name="confirmation" id="confirmation" placeholder="Confirmar contraseña">
                     </div>
                     <div class="form__input disabled">
-                        <input type="text" name="key" id="key" placeholder="Clave de acceso">
+                        <input type="text" class="norequired" name="key" id="key" placeholder="Clave de acceso">
                     </div>
 
                     <input type="submit" value="Acceder" class="submit" id="submit">

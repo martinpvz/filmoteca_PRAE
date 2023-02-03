@@ -37,6 +37,22 @@ a {
     }
 }
 
+@mixin menuBlack {
+    background-image: url(../img/menu.png);
+    background-position:center;
+    background-size:30px 30px;
+    width: 30px;
+    height: 30px;
+    display: none;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+    @include media(mobile-only) {
+        display: block;
+    }
+}
+
 @mixin close {
     background-image: url(../img/xWhite.png);
     background-position:center;
@@ -50,5 +66,38 @@ a {
     background-color: inherit;
     @include media(mobile-only) {
         display: block;
+    }
+}
+
+@mixin options {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-secundario;
+    z-index: 1;
+    display: none;
+    &__header {
+        width: 100%;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+    &__close {
+        @include close;
+    }
+    &__menu {
+        width: 100%;
+        height: 180px;
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content:space-evenly;
+        text-align: center;
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 15px;
     }
 }

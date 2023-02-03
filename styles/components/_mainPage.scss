@@ -90,33 +90,5 @@
 }
 
 .options {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: $color-secundario;
-    z-index: 1;
-    display: none;
-    &__header {
-        width: 100%;
-        height: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: end;
-    }
-    &__close {
-        @include close;
-    }
-    &__menu {
-        width: 100%;
-        height: auto;
-        margin-top: 150px;
-        display: flex;
-        flex-direction: column;
-        align-content: center;
-        justify-content: center;
-        text-align: center;
-        font-size: 3.5rem;
-        font-weight: bold;
-    }
+    @include options;
 }
