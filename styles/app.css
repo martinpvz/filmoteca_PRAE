@@ -670,4 +670,141 @@ a {
   margin-bottom: 15px;
 }
 
+.main__media {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+.main__media .classify {
+  width: 25%;
+  max-width: 380px;
+  height: 1400px;
+  outline: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main__media .classify .filter {
+  width: 95%;
+  height: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline: 1px solid red;
+}
+.main__media .classify .filter__title {
+  color: black;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 15px auto;
+}
+.main__media .classify .filter hr {
+  width: 85%;
+}
+.main__media .classify .filter__category {
+  width: 75%;
+  outline: 1px solid red;
+  display: flex;
+  flex-direction: column;
+}
+.main__media .classify .filter__category--title {
+  color: black;
+  font-size: 2.2rem;
+  font-weight: 600;
+  justify-self: start;
+  margin: 15px 0 10px 0;
+}
+.main__media .classify .filter__category .category {
+  width: 90%;
+  height: auto;
+  outline: 1px solid red;
+  align-self: center;
+}
+.main__media .gallery {
+  width: 75%;
+  height: auto;
+  outline: 1px solid red;
+}
+.main__media .media {
+  margin: 20px auto;
+  height: auto;
+  outline: 1px solid red;
+  column-count: 4;
+  column-gap: 15px;
+  width: 95%;
+  max-width: 1400px;
+}
+@media only screen and (min-width: 1780px) {
+  .main__media .media {
+    column-count: 5;
+    max-width: 1600px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .main__media .media {
+    column-count: 3;
+    max-width: 800px;
+  }
+}
+.main__media .media__img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.5);
+  background-color: rgb(0, 0, 0);
+  transition: 0.2s;
+}
+.main__media .media__img img {
+  width: 100%;
+  transition: 0.2s;
+}
+.main__media .media__img--button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.main__media .media__img--button .download {
+  width: 40px;
+  height: 40px;
+  background-color: #F2163E;
+  display: none;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+.main__media .media__img--button .download__img {
+  width: 18px;
+  height: 18px;
+  background: url(../img/download.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.main__media .media__img--button .download:hover {
+  background-color: #F2071B;
+}
+.main__media .media__img:hover img {
+  opacity: 0.4;
+  cursor: zoom-in;
+}
+.main__media .media__img:hover {
+  box-shadow: 0px 0px 14px 2px rgba(0, 0, 0, 0.5);
+}
+.main__media .media__img:hover .download {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .title__small {
+    font-size: 2.4rem;
+  }
+}
+
 /*# sourceMappingURL=app.css.map */

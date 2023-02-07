@@ -15,7 +15,7 @@
         <div class="header__home--img">
             <img src="./img/logo.png" alt="Logo">
         </div>
-        <h1 class="header__home--title">Filmoteca</h1>
+        <h1 class="header__home--title title__small">CDC Zacatlan</h1>
         <div class="profile">
             <div class="profile__circle" id="profile">
                 <p class="profile__circle--text">MP</p>
@@ -49,11 +49,145 @@
     </section>
 
     <main class="main__media">
-        <section class="filter">
-
+        <section class="classify">
+            <div class="filter">
+                <p class="filter__title">Filtros</p>
+                <hr>
+                <div class="filter__category">
+                    <p class="filter__category--title">Año</p>
+                    <div class="category">
+                        <div class="category__option">
+                            <input type="checkbox" name="" id="anteriores">
+                            <label for="anteriores">Años anteriores</label>
+                            <span>(12)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section class="media">
-
+        <section class="gallery">
+            <section class="media">
+                <div class="media__img">
+                    <img src="./img/zacatlan.jpeg" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto1.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/eventos.jpg" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/historia.jpeg" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto2.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto7.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto3.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto6.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto4.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto5.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto8.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto12.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto9.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto11.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="media__img">
+                    <img src="./img/foto10.png" alt="">
+                    <div class="media__img--button">
+                        <div class="download">
+                            <span class="download__img"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
     </main>
 
