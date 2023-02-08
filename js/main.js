@@ -6,6 +6,20 @@ function mostrarPantalla() {
     document.getElementById('options').style.display = 'none'
 }
 
+function mostrarFiltros() {
+    document.getElementById('main__media').style.display = 'none'
+    document.getElementById('footer__media').style.display = 'none'
+    document.getElementById('filter__responsive').style.display = 'block'
+    window.scrollTo(0, 0);
+}
+
+function mostrarMedia() {
+    document.getElementById('main__media').style.display = 'flex'
+    document.getElementById('footer__media').style.display = 'block'
+    document.getElementById('filter__responsive').style.display = 'none'
+    window.scrollTo(0, 0);
+}
+
 function register() {
     let activados = document.getElementsByClassName('enabled')
     let desactivados = document.getElementsByClassName('disabled')
