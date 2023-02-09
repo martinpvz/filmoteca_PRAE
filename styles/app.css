@@ -731,7 +731,7 @@ a {
   width: 100%;
   display: flex;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 9px;
 }
 .main__media .classify .filter__category .category__option input {
   justify-self: flex-start;
@@ -998,7 +998,7 @@ a {
   width: 100%;
   display: flex;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 9px;
 }
 .filter__responsive .classify .filter__category .category__option input {
   justify-self: flex-start;
@@ -1049,6 +1049,179 @@ a {
   display: flex;
   justify-content: center;
   align-content: center;
+}
+
+.modal__section {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.3s;
+}
+
+.modal {
+  width: 60%;
+  max-width: 900px;
+  height: auto;
+  padding: 20px 50px;
+  background-color: #DFE0DC;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+}
+@media only screen and (max-width: 768px) {
+  .modal {
+    width: 85%;
+  }
+}
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal__header--title {
+  color: black;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.modal__header--img {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: url(../img/x.png);
+  background-position: center;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+}
+.modal__content {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.modal__content--img {
+  width: 50%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .modal__content--img {
+    width: 60%;
+    margin-bottom: 25px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .modal__content--img {
+    width: 100%;
+    margin: 10px 0 25px 0;
+  }
+}
+.modal__content--img img {
+  width: 90%;
+  border-radius: 10px;
+}
+.modal__content--info {
+  width: 50%;
+  height: auto;
+  color: black;
+  display: flex;
+  padding: 0 5%;
+  flex-direction: column;
+  justify-content: center;
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .modal__content--info {
+    align-items: center;
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .modal__content--info {
+    align-items: center;
+    width: 90%;
+  }
+}
+.modal__content--info .content__details {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+.modal__content--info .content__description {
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin: 0 0 20px 0;
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .modal__content--info .content__description {
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .modal__content--info .content__description {
+    text-align: center;
+  }
+}
+.modal__content--info .content__date {
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin: 0 0 40px 0;
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .modal__content--info .content__date {
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .modal__content--info .content__date {
+    text-align: center;
+  }
+}
+.modal__content--info .content__download {
+  width: 130px;
+  height: 45px;
+  background-color: #043B9C;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  border: none;
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.5);
+  color: white;
+  align-self: center;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.modal__content--info .content__download:hover {
+  background-color: #0759E6;
+}
+
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.3s;
+}
+
+.category__option input[type=radio]:hover {
+  cursor: pointer;
+}
+
+.category__option label:hover {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=app.css.map */

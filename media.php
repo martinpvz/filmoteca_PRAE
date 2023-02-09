@@ -185,7 +185,7 @@
         <section class="gallery">
             <section class="media">
                 <div class="media__img">
-                    <img src="./img/zacatlan.jpeg" alt="">
+                    <img src="./img/zacatlan.jpeg" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -193,7 +193,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto1.png" alt="">
+                    <img src="./img/foto1.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -201,7 +201,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/eventos.jpg" alt="">
+                    <img src="./img/eventos.jpg" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -209,7 +209,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/historia.jpeg" alt="">
+                    <img src="./img/historia.jpeg" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -217,7 +217,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto2.png" alt="">
+                    <img src="./img/foto2.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -225,7 +225,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto7.png" alt="">
+                    <img src="./img/foto7.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -233,7 +233,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto3.png" alt="">
+                    <img src="./img/foto3.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -241,7 +241,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto6.png" alt="">
+                    <img src="./img/foto6.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -249,7 +249,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto4.png" alt="">
+                    <img src="./img/foto4.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -257,7 +257,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto5.png" alt="">
+                    <img src="./img/foto5.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -265,7 +265,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto8.png" alt="">
+                    <img src="./img/foto8.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -273,7 +273,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto12.png" alt="">
+                    <img src="./img/foto12.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -281,7 +281,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto9.png" alt="">
+                    <img src="./img/foto9.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -289,7 +289,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto11.png" alt="">
+                    <img src="./img/foto11.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -297,7 +297,7 @@
                     </div>
                 </div>
                 <div class="media__img">
-                    <img src="./img/foto10.png" alt="">
+                    <img src="./img/foto10.png" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
                             <span class="download__img"></span>
@@ -450,6 +450,26 @@
                 </div>
             </div>
         </section>
+    </section>
+
+    <section class="modal__section">
+        <div class="modal">
+            <div class="modal__header">
+                <p class="modal__header--title">Vista previa</p>
+                <button class="modal__header--img"></button>
+            </div>
+            <div class="modal__content">
+                <div class="modal__content--img">
+                    <img src="./img/foto3.png" alt="Foto">
+                </div>
+                <div class="modal__content--info">
+                    <p class="content__details">Detalles</p>
+                    <p class="content__description">Descripción: Niño con pañuelo en la cabeza</p>
+                    <p class="content__date">Fecha: 01/01/2023</p>
+                    <button type="button" class="content__download">Descargar</button>
+                </div>
+            </div>
+        </div>
     </section>
 
     <footer class="footer__home" id="footer__media">
