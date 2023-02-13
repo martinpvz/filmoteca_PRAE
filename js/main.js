@@ -1,11 +1,15 @@
+
+// SHOW MENU ON ALMOST ALL PAGES
 function mostrarMenu() {
     document.getElementById('options').style.display = 'block'
 }
 
+// QUIT MENU AND SHOW REGULAR PAGE IN ALMOST ALL PAGES
 function mostrarPantalla() {
     document.getElementById('options').style.display = 'none'
 }
 
+// SHOW FILTERS, IT DISABLES THE MAIN AND THE FOOTER AND SHOWS THE FILTER
 function mostrarFiltros() {
     document.getElementById('main__media').style.display = 'none'
     document.getElementById('footer__media').style.display = 'none'
@@ -13,6 +17,7 @@ function mostrarFiltros() {
     window.scrollTo(0, 0);
 }
 
+// SHOW MEDIA WHEN DE X BUTTON OF THE FILTER IS PUSHED
 function mostrarMedia() {
     document.getElementById('main__media').style.display = 'flex'
     document.getElementById('footer__media').style.display = 'block'
@@ -20,6 +25,7 @@ function mostrarMedia() {
     window.scrollTo(0, 0);
 }
 
+// LOGIC FOR THE REGISTER PART
 function register() {
     let activados = document.getElementsByClassName('enabled')
     let desactivados = document.getElementsByClassName('disabled')
@@ -45,6 +51,7 @@ function register() {
 
 }
 
+// LOGIC FOR THE LOGIN PART
 function login() {
     let activados = document.getElementsByClassName('enabled')
     let desactivados = document.getElementsByClassName('disabled')
@@ -71,6 +78,9 @@ function login() {
     document.getElementById('register').style.backgroundColor = "#043B9C"
 }
 
+
+
+// LOGIC FOR THE PROFILE MENU WHEN CLICKED ON FULL SCREEN
 document.getElementById('profile').onclick = function(){
     toggleProfileInfo();
 };
@@ -80,7 +90,6 @@ document.addEventListener('click', function(event) {
         document.getElementById('profile-info').style.display = 'none';
     }
 });
-
 function toggleProfileInfo() {
     if (document.getElementById('profile-info').style.display == 'flex') {
         document.getElementById('profile-info').style.display = 'none';
@@ -89,14 +98,18 @@ function toggleProfileInfo() {
     }
 }
 
+// VARIABLES FOR SOME BUTTONS
 const modal = document.querySelector(".modal__section");
 const triggers = document.getElementsByClassName("trigger");
 const closeButton = document.querySelector(".modal__header--img");
+const file = document.getElementById("rute_input");
 
+// FUNCTION TO DISABLE SCROLL WHEN MENU SOMEONE´S INSIDE THE MENU
 function disableScroll(){  
     window.scrollTo(0, 0);
 }
 
+// LOGIC FOR THE VISUALIZATION OF AN IMAGE OR VIDEO
 function toggleModal() {
     modal.classList.toggle("show-modal");
     if (modal.classList.contains("show-modal")) {
@@ -109,13 +122,12 @@ function toggleModal() {
     }
 }
 
+
 function windowOnClick(event) {
     if (event.target === modal) {
         toggleModal();
     }
 }
-
-
 
 console.log(triggers)
 for (let trigger of triggers) {

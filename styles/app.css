@@ -919,7 +919,6 @@ a {
   width: 100%;
   height: auto;
   background-color: #043B9C;
-  z-index: 1;
   display: none;
 }
 .filter__responsive__header {
@@ -1222,6 +1221,116 @@ a {
 
 .category__option label:hover {
   cursor: pointer;
+}
+
+.add {
+  width: 75%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 880px) {
+  .add {
+    width: 100%;
+  }
+}
+.add__form {
+  margin: 100px 0 20px 0;
+  height: 530px;
+  width: 95%;
+  max-width: 650px;
+  position: relative;
+  background-color: #DFE0DC;
+  padding: 30px;
+  box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.22);
+  border-radius: 20px;
+}
+@media only screen and (min-width: 1780px) {
+  .add__form {
+    max-width: 750px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .add__form {
+    max-width: 550px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .add__form {
+    max-width: 350px;
+  }
+}
+.add__form--title {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: black;
+}
+.add .form__add--form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.add .form__add--form form {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.add .form__add--form .add__input {
+  width: 82%;
+  height: 40px;
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: start;
+  border: solid 1px black;
+  position: relative;
+  padding: 0 15px 0 15px;
+}
+.add .form__add--form .add__input input {
+  width: 100%;
+  border: none;
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: black;
+  outline: none;
+  font-family: "Nunito", sans-serif;
+  background-color: transparent;
+}
+.add .form__add--form .add__input span {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 10%;
+  bottom: 10px;
+}
+.add .form__add--form .add__input .input__option {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  font-size: 1.7rem;
+  font-weight: 300;
+  font-family: "Nunito", sans-serif;
+  outline: none;
+}
+.add .form__add--form .date {
+  width: 100%;
+}
+
+#rute_input input {
+  cursor: pointer;
+}
+
+.submit__add {
+  z-index: -1;
+}
+
+.submit__:hover {
+  box-shadow: 0px 0px 20px 15px rgba(0, 0, 0, 0.3);
 }
 
 /*# sourceMappingURL=app.css.map */
