@@ -3,6 +3,8 @@
     height: auto;
     display: flex;
     justify-content: center;
+    margin-bottom: 50px;
+    z-index: 1;
     @include media(tablet-s-only) {
         width: 100%;
     }
@@ -16,7 +18,6 @@
         padding: 30px;
         box-shadow: 0px 0px 14px 7px rgba(0,0,0,0.22);
         border-radius: 20px;
-        //z-index: 1;
         @include media(desktop-xl) {
             max-width: 750px;
         }
@@ -25,6 +26,7 @@
         }
         @include media(mobile-only) {
             max-width: 350px;
+            margin: 60px 0;
         }
         &--title {
             text-align: center;
@@ -56,6 +58,9 @@
             border: solid 1px black;
             position: relative;
             padding: 0 15px 0 15px;
+            @include media(mobile-only) {
+                width: 95%;
+            }
             input {
                 width: 100%;
                 border: none;
@@ -86,11 +91,10 @@
         .date {
             width: 100%;
         }
+        .input__file {
+            padding: 0;
+        }
     }
-}
-
-#rute_input input{
-    cursor: pointer;
 }
 
 .submit__add {
@@ -98,4 +102,25 @@
 }
 .submit__:hover {
     box-shadow: 0px 0px 20px 15px rgba(0,0,0,0.30);
+}
+
+
+input[type=file]::file-selector-button {
+    background-color: $color-terciario;
+    color: #000;
+    border: 0px;
+    cursor: pointer;
+    border-right: 1px solid black;
+    padding: 10px 15px;
+    font-size: 1.7rem;
+    font-weight: 400;
+    font-family: 'Nunito', sans-serif;
+    margin-right: 20px;
+    transition: .5s;
+}
+
+input[type=file]::file-selector-button:hover {
+    background-color: #d2d2d2;
+    border: 0px;
+    border-right: 1px solid black;
 }

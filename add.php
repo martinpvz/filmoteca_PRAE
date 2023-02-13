@@ -203,8 +203,8 @@
                         <div class="add__input" id="rute_input">
                             <input type="text" disabled name="rute" id="rute" placeholder="Ruta (selección en filtros)">
                         </div>
-                        <div class="add__input">
-                            <input type="text" disabled name="file" id="file" placeholder="Fichero">
+                        <div class="add__input input__file">
+                            <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg, video/mp4">
                         </div>
 
                         <input type="submit" value="Registrar" class="submit submit__add" id="submit">

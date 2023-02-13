@@ -25,11 +25,12 @@ function mostrarMedia() {
     window.scrollTo(0, 0);
 }
 function toggleFilter() {
+    if (window.innerWidth < 880) {
     document.getElementById('main__media').style.display = 'none'
     document.getElementById('footer__media').style.display = 'none'
     document.getElementById('filter__responsive').style.display = 'block'
     window.scrollTo(0, 0);
-    console.log("hola")
+    }
 }
 // LOGIC FOR THE PROFILE MENU WHEN CLICKED ON FULL SCREEN
 
