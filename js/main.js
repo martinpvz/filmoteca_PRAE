@@ -135,3 +135,14 @@ for (let trigger of triggers) {
 }
 closeButton.addEventListener("click", toggleModal);
 window.addEventListener("click", windowOnClick);
+
+
+function toggleEdit() {
+    console.log("voy a editar")
+    toggleModal()
+    document.querySelector(".gallery").style.display = "none"
+    document.querySelector(".modify").style.display = "flex"
+}
+
+const edit = document.querySelector(".content__edit");
+edit.addEventListener("click", toggleEdit);

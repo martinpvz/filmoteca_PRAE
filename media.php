@@ -307,6 +307,37 @@
             </section>
         </section>
 
+        <section class="modify">
+            <div class="add__form">
+                <p class="add__form--title">Editar contenido</p>
+                <div class="form__add--form">
+                    <form action="./firstPage.php" method="post">
+                        <div class="add__input">
+                            <input required class="date" type="date" name="date" id="date" placeholder="Fecha">
+                        </div>
+                        <div class="add__input">
+                            <input required type="text" name="description" id="description" placeholder="Descripción">
+                        </div>
+                        <div class="add__input">
+                            <select class="input__option">
+                                <option value="" disabled selected>Selecciona un tipo</option>
+                                <option value="image">Imagen</option>
+                                <option value="video">Video</option>
+                            </select>
+                        </div>
+                        <div class="add__input" id="rute_input">
+                            <input type="text" disabled name="rute" id="rute" placeholder="Ruta (selección en filtros)">
+                        </div>
+                        <div class="add__input input__file">
+                            <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg, video/mp4">
+                        </div>
+
+                        <input type="submit" value="Registrar" class="submit submit__add" id="submit">
+                    </form>
+                </div>
+            </div>
+        </section>
+
         <button class="filter__button" type="button" onclick="mostrarFiltros()">
             <div class="filter__button--img"></div>
             <p class="filter__button--text">Filtrar</p>
@@ -466,7 +497,10 @@
                     <p class="content__details">Detalles</p>
                     <p class="content__description">Descripción: Niño con pañuelo en la cabeza</p>
                     <p class="content__date">Fecha: 01/01/2023</p>
-                    <button type="button" class="content__download">Descargar</button>
+                    <div class="content__buttons">
+                        <button type="button" class="content__download">Descargar</button>
+                        <button type="button" class="content__edit"></button>
+                    </div>
                 </div>
             </div>
         </div>

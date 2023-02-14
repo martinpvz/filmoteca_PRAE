@@ -485,6 +485,12 @@
                     text-align: center;
                 }
             }
+            .content__buttons {
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: space-evenly;
+            }
             .content__download {
                 width: 130px;
                 height: 45px;
@@ -499,6 +505,16 @@
                 font-family: 'Nunito', sans-serif;
                 font-size: 1.8rem;
                 font-weight: bold;
+            }
+            .content__edit {
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                align-self: center;
+                border: none;
+                background: url(../img/edit.png);
+                background-size: 30px 30px;
+                background-position: center;
             }
             .content__download:hover {
                 background-color: #0759E6;
@@ -519,4 +535,9 @@
 }
 .category__option label:hover {
     cursor: pointer;
+}
+
+.modify {
+    display: none;
+    width: 75%;
 }
