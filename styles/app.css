@@ -215,6 +215,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 100px;
 }
 .main__login .form__login {
   position: relative;
@@ -1064,7 +1065,8 @@ a {
 }
 @media only screen and (max-width: 768px) {
   .modal {
-    width: 85%;
+    width: 75%;
+    padding: 20px 40px;
   }
 }
 .modal__header {
@@ -1138,7 +1140,7 @@ a {
 @media only screen and (max-width: 768px) {
   .modal__content--info {
     align-items: center;
-    width: 90%;
+    width: 100%;
   }
 }
 .modal__content--info .content__details {
@@ -1229,6 +1231,184 @@ a {
 .modify {
   display: none;
   width: 75%;
+  height: min-content;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 50px;
+  z-index: 1;
+}
+@media only screen and (max-width: 880px) {
+  .modify {
+    width: 100%;
+  }
+}
+.modify .close__form {
+  width: 20px;
+  height: 20px;
+  background: url(../img/X.png);
+  background-size: 20px 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  border: none;
+  cursor: pointer;
+}
+.modify__form {
+  margin: 100px 0 20px 0;
+  height: auto;
+  width: 95%;
+  max-width: 650px;
+  position: relative;
+  background-color: #DFE0DC;
+  padding: 30px;
+  box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.22);
+  border-radius: 20px;
+}
+@media only screen and (min-width: 1780px) {
+  .modify__form {
+    max-width: 750px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .modify__form {
+    max-width: 550px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .modify__form {
+    max-width: 400px;
+    margin: 60px 0;
+  }
+}
+.modify__form--title {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: black;
+}
+.modify .form__add--form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modify .form__add--form img {
+  width: 50%;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+@media only screen and (max-width: 768px) {
+  .modify .form__add--form img {
+    width: 70%;
+  }
+}
+.modify .form__add--form form {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modify .form__add--form .add__input {
+  width: 82%;
+  height: 40px;
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: start;
+  border: solid 1px black;
+  position: relative;
+  padding: 0 15px 0 15px;
+}
+@media only screen and (max-width: 768px) {
+  .modify .form__add--form .add__input {
+    width: 95%;
+  }
+}
+.modify .form__add--form .add__input input {
+  width: 100%;
+  border: none;
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: black;
+  outline: none;
+  font-family: "Nunito", sans-serif;
+  background-color: transparent;
+}
+.modify .form__add--form .add__input span {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 10%;
+  bottom: 10px;
+}
+.modify .form__add--form .add__input .input__option {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  font-size: 1.7rem;
+  font-weight: 300;
+  font-family: "Nunito", sans-serif;
+  outline: none;
+}
+.modify .form__add--form .date {
+  width: 100%;
+}
+.modify .form__add--form .input__file {
+  padding: 0;
+}
+
+.submit__update {
+  --widthA: 40%;
+  background-color: #043B9C;
+  cursor: pointer;
+  padding-top: 20px;
+  border-radius: 20px;
+  width: 40%;
+  height: 65px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.9rem;
+  font-family: "Nunito", sans-serif;
+  border: none;
+  z-index: -1;
+  position: absolute;
+  box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.22);
+  bottom: -45px;
+  left: calc(25% - var(--widthA) / 2);
+  transition: 0.2s;
+}
+
+.submit__update:hover {
+  box-shadow: 0px 0px 20px 15px rgba(0, 0, 0, 0.3);
+}
+
+.submit__delete {
+  --widthA: 40%;
+  background-color: #e83845;
+  cursor: pointer;
+  padding-top: 20px;
+  border-radius: 20px;
+  width: 40%;
+  height: 65px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.9rem;
+  font-family: "Nunito", sans-serif;
+  border: none;
+  z-index: -1;
+  position: absolute;
+  box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.22);
+  bottom: -45px;
+  right: calc(25% - var(--widthA) / 2);
+  transition: 0.2s;
+}
+
+.submit__delete:hover {
+  box-shadow: 0px 0px 20px 15px rgba(0, 0, 0, 0.3);
 }
 
 .add {
@@ -1267,7 +1447,7 @@ a {
 }
 @media only screen and (max-width: 768px) {
   .add__form {
-    max-width: 350px;
+    max-width: 400px;
     margin: 60px 0;
   }
 }

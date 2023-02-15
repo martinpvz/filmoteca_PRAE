@@ -2,11 +2,13 @@
 // SHOW MENU ON ALMOST ALL PAGES
 function mostrarMenu() {
     document.getElementById('options').style.display = 'block'
+    document.body.style.overflow = "hidden";
 }
 
 // QUIT MENU AND SHOW REGULAR PAGE IN ALMOST ALL PAGES
 function mostrarPantalla() {
     document.getElementById('options').style.display = 'none'
+    document.body.style.overflow = "auto";
 }
 
 // SHOW FILTERS, IT DISABLES THE MAIN AND THE FOOTER AND SHOWS THE FILTER
@@ -138,11 +140,23 @@ window.addEventListener("click", windowOnClick);
 
 
 function toggleEdit() {
-    console.log("voy a editar")
     toggleModal()
     document.querySelector(".gallery").style.display = "none"
     document.querySelector(".modify").style.display = "flex"
+    document.querySelector(".filter__button").style.display = "none"
+    window.scrollTo(0, 0);
 }
 
 const edit = document.querySelector(".content__edit");
 edit.addEventListener("click", toggleEdit);
+
+
+
+function closeModify() {
+    document.querySelector(".gallery").style.display = "flex"
+    document.querySelector(".modify").style.display = "none"
+    if (window.innerWidth < 880) {
+        document.querySelector(".filter__button").style.display = "flex"
+    }
+    window.scrollTo(0, 0);
+}
