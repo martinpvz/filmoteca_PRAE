@@ -39,6 +39,12 @@
                         <input type="text" class="norequired" name="surname" id="surname" placeholder="Apellidos">
                     </div>
                     <div class="form__input disabled">
+                        <input type="email" class="norequired" name="email" id="email" placeholder="Correo electrónico">
+                    </div>
+                    <div class="form__input disabled">
+                        <input type="email" class="norequired" name="user" id="user" placeholder="Usuario">
+                    </div>
+                    <div class="form__input disabled">
                         <input type="text" class="norequired" name="password" id="password" placeholder="Contraseña">
                         <span class="form__input--show"></span>
                     </div>
