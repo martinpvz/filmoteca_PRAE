@@ -21,7 +21,7 @@
                 <p class="profile__circle--text">MP</p>
             </div>
             <div class="profile__info" id="profile-info">
-                <a class="profile__info--edit" href="#">Editar perfil</a>
+                <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
                 <a class="profile__info--close" href="./mainPage.php">Cerrar sesión</a>
             </div>
         </div>
@@ -42,7 +42,7 @@
             <button type="button" class="options__close" onclick="mostrarPantalla()"></button>
         </div>
         <div class="options__menu">
-            <a href="#">Editar perfil</a>
+            <a href="./editProfile.php">Editar perfil</a>
             <a href="./mainPage.php">Cerrar sesion</a>
         </div>
     </section>

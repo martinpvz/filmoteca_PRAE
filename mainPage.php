@@ -15,7 +15,7 @@
         <nav class="nav__mainpage">
             <img class="nav__mainpage--img" src="./img/logo.png" alt="Logo de la empresa">
             <div class="login__mainpage">
-                <a href="#" class="login__mainpage--text">Acceder</a>
+                <a href="./login.php" class="login__mainpage--text">Acceder</a>
             </div>
             <button type="button" class="login__mainpage--button" onclick="mostrarMenu()"></button>
         </nav>
@@ -26,7 +26,7 @@
             <button type="button" class="options__close" onclick="mostrarPantalla()"></button>
         </div>
         <div class="options__menu">
-            <a href="#">Iniciar sesión</a>
+            <a href="./login.php">Iniciar sesión</a>
         </div>
     </section>
 

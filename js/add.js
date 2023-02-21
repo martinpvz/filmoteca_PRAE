@@ -2,11 +2,13 @@
 // SHOW MENU ON ALMOST ALL PAGES
 function mostrarMenu() {
     document.getElementById('options').style.display = 'block'
+    document.body.style.overflow = "hidden";
 }
 
 // QUIT MENU AND SHOW REGULAR PAGE IN ALMOST ALL PAGES
 function mostrarPantalla() {
     document.getElementById('options').style.display = 'none'
+    document.body.style.overflow = "auto";
 }
 
 // SHOW FILTERS, IT DISABLES THE MAIN AND THE FOOTER AND SHOWS THE FILTER

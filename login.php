@@ -42,10 +42,10 @@
                         <input type="email" class="norequired" name="email" id="email" placeholder="Correo electrónico">
                     </div>
                     <div class="form__input disabled">
-                        <input type="email" class="norequired" name="user" id="user" placeholder="Usuario">
+                        <input type="email" class="norequired" name="user" id="userR" placeholder="Usuario">
                     </div>
                     <div class="form__input disabled">
-                        <input type="text" class="norequired" name="password" id="password" placeholder="Contraseña">
+                        <input type="text" class="norequired" name="password" id="passwordR" placeholder="Contraseña">
                         <span class="form__input--show"></span>
                     </div>
                     <div class="form__input disabled">
@@ -53,6 +53,9 @@
                     </div>
                     <div class="form__input disabled">
                         <input type="text" class="norequired" name="key" id="key" placeholder="Clave de acceso">
+                    </div>
+                    <div class="form__error" id="form__error">
+                        <p>Existen campos vacíos</p>
                     </div>
 
                     <input type="submit" value="Acceder" class="submit" id="submit">
@@ -66,5 +69,6 @@
     </footer> -->
 
     <script src="./js/main.js"></script>
+    <script src="./js/login.js"></script>
 </body>
 </html>
