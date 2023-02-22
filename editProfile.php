@@ -47,6 +47,9 @@
                 <input class="edit__profile--input" type="text" name="name" id="name" placeholder="Correo electrónico">
                 <input class="edit__profile--input" type="text" name="name" id="name" placeholder="Usuario">
                 <input class="edit__profile--save" type="submit" value="Guardar">
+                <!-- <div class="form__error" id="form__error">
+                        <p>Existen campos vacíos</p>
+                </div> -->
             </form>
         </div>
     </main>

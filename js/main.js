@@ -51,6 +51,8 @@ function register() {
     document.getElementById('register').style.backgroundColor = "#0759E6"
     document.getElementById('login').style.backgroundColor = "#043B9C"
 
+    document.getElementById('form__error').style.display = "none"
+
 }
 
 // LOGIC FOR THE LOGIN PART
@@ -78,6 +80,7 @@ function login() {
 
     document.getElementById('login').style.backgroundColor = "#0759E6"
     document.getElementById('register').style.backgroundColor = "#043B9C"
+    document.getElementById('form__error').style.display = "none"
 }
 
 

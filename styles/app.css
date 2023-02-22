@@ -865,6 +865,18 @@ a {
 .main__media .media__img--button .download:hover {
   background-color: #0759E6;
 }
+.main__media .media__img .favourite {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  display: none;
+  left: 35px;
+  top: 27px;
+  background: url(../img/starWhite.png);
+  background-size: 25px 25px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .main__media .media__img:hover img {
   opacity: 0.4;
   cursor: zoom-in;
@@ -876,6 +888,9 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.main__media .media__img:hover .favourite {
+  display: flex;
 }
 
 .filter__button {

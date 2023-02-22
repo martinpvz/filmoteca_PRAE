@@ -175,6 +175,18 @@
                     background-color: #0759E6;
                 }
             }
+            .favourite {
+                width: 25px;
+                height: 25px;
+                position: absolute;
+                display: none;
+                left: 35px;
+                top: 27px;
+                background: url(../img/starWhite.png);
+                background-size: 25px 25px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
         }
         &__img:hover img {
             opacity: 0.4;
@@ -187,6 +199,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        &__img:hover .favourite{
+            display: flex;
         }
     }
 }

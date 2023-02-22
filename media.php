@@ -191,6 +191,7 @@
                             <span class="download__img"></span>
                         </div>
                     </div>
+                    <span class="favourite"></span>
                 </div>
                 <div class="media__img">
                     <img src="./img/foto1.png" alt="" class="trigger">
@@ -199,6 +200,7 @@
                             <span class="download__img"></span>
                         </div>
                     </div>
+                    <span class="favourite"></span>
                 </div>
                 <div class="media__img">
                     <img src="./img/eventos.jpg" alt="" class="trigger">
