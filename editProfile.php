@@ -43,13 +43,13 @@
             <img src="./img/user_edit.png" alt="User">
             <form action="./firstPage.php">
                 <input class="edit__profile--input" type="text" name="name" id="name" placeholder="Nombre">
-                <input class="edit__profile--input" type="text" name="name" id="name" placeholder="Apellidos">
-                <input class="edit__profile--input" type="text" name="name" id="name" placeholder="Correo electrónico">
-                <input class="edit__profile--input" type="text" name="name" id="name" placeholder="Usuario">
-                <input class="edit__profile--save" type="submit" value="Guardar">
-                <!-- <div class="form__error" id="form__error">
+                <input class="edit__profile--input" type="text" name="surname" id="surname" placeholder="Apellidos">
+                <input class="edit__profile--input" type="text" name="email" id="email" placeholder="Correo electrónico">
+                <input class="edit__profile--input" type="text" name="user" id="user" placeholder="Usuario">
+                <div class="form__error" id="form__error">
                         <p>Existen campos vacíos</p>
-                </div> -->
+                </div>
+                <input class="edit__profile--save" type="submit" value="Guardar" id="submit__edit">
             </form>
         </div>
     </main>
@@ -73,5 +73,6 @@
     </footer>
 
     <script src="./js/main.js"></script>
+    <script src="./js/edit.js"></script>
 </body>
 </html>

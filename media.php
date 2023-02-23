@@ -327,7 +327,9 @@
                         <div class="add__input" id="rute_input">
                             <input type="text" disabled name="rute" id="rute" placeholder="Ruta">
                         </div>
-
+                        <div class="form__error" id="form__error">
+                            <p>Existen campos vacíos</p>
+                        </div>
                         <input type="submit" value="Actualizar" class="submit__update" id="submit">
                         <input type="submit" value="Eliminar" class="submit__delete" id="delete">
                     </form>
@@ -510,5 +512,6 @@
     </footer>
 
     <script src="./js/main.js"></script>
+    <script src="./js/modify.js"></script>
 </body>
 </html>

@@ -59,3 +59,21 @@ file.addEventListener("click", toggleFilter);
 function disableScroll(){  
     window.scrollTo(0, 0);
 }
+
+
+const update = document.getElementById("submit");
+
+update.addEventListener("click", function(event) {
+    const error = document.getElementById('form__error')
+    const date = document.getElementById("date").value;
+    const description = document.getElementById("description").value;
+    const rute = document.getElementById("rute").value;
+    const file = document.getElementById("file").value;
+
+    if (date === "" || description === "" || rute === "" || file === "") {
+        error.style.display = "flex"
+        event.preventDefault();
+    }
+});
+
+

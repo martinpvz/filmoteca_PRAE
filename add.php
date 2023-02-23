@@ -207,6 +207,10 @@
                             <input type="file" name="file" id="file" accept="image/png, image/jpeg, image/jpg, video/mp4">
                         </div>
 
+                        <div class="form__error" id="form__error">
+                            <p>Existen campos vacíos</p>
+                        </div>
+
                         <input type="submit" value="Registrar" class="submit submit__add" id="submit">
                     </form>
                 </div>
