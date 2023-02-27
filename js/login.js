@@ -8,6 +8,7 @@ form.addEventListener("click", function(event) {
         const password = document.getElementById("password").value;
     
         if (user === "" || password === "") {
+            document.getElementById("error__text").innerText = "Existen campos vacíos";
             error.style.display = "flex"
             event.preventDefault();
         }
@@ -21,8 +22,20 @@ form.addEventListener("click", function(event) {
         const key = document.getElementById("key").value;
 
         if (name === "" || surname === "" || email === "" || user === "" || password === "" || confirmation === "" || key === "") {
-                error.style.display = "flex"
+            document.getElementById("error__text").innerText = "Existen campos vacíos";
+            error.style.display = "flex"
                 event.preventDefault();
             }
     }
 });
+
+
+// Obtener la URL actual
+const url = new URL(window.location.href);
+// Obtener el valor de "error" de la URL
+const error = url.searchParams.get("error");
+
+if (error != null) {
+    document.getElementById("error__text").innerText = "Usuario o contraseña incorrectos";
+    document.getElementById("form__error").style.display = "flex";
+}

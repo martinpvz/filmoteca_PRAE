@@ -77,3 +77,38 @@ update.addEventListener("click", function(event) {
 });
 
 
+// Logic for filter section (so it can appear in the rute form)
+// Obtener los elementos de radio
+/*const anios = document.getElementsByName("anio");
+const area = document.getElementsByName("area");
+const category = document.getElementsByName("category");
+
+const rute = document.getElementById("rute");
+// Verificar qué elemento está seleccionado
+for (let i = 0; i < anios.length; i++) {
+    anios[i].addEventListener("click", function() {
+        console.log("El elemento seleccionado es " + anios[i].id);
+        rute.value = anios[i].id + ", "
+    });
+}
+
+let selected = true
+for (let i = 0; i < area.length; i++) {
+    area[i].addEventListener("click", function() {
+        if (selected) {
+            console.log("El elemento seleccionado es " + area[i].id);
+            rute.value += area[i].id + ", "
+            selected = false
+        }
+    });
+}
+
+for (let i = 0; i < category.length; i++) {
+    category[i].addEventListener("click", function() {
+        if (selected) {
+            console.log("El elemento seleccionado es " + category[i].id);
+            rute.value += category[i].id + ", "
+            selected = false
+        }
+    });
+}*/

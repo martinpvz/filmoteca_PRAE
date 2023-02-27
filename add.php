@@ -78,32 +78,32 @@
                     <p class="filter__category--title">Área</p>
                     <div class="category">
                         <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
+                            <input type="radio" name="area" id="educacion">
                             <label for="anteriores">Educación</label>
                             <span>87</span>
                         </div>
                         <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
+                            <input type="radio" name="area" id="salud">
                             <label for="anteriores">Salud</label>
                             <span>13</span>
                         </div>
                         <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
+                            <input type="radio" name="area" id="entorno">
                             <label for="anteriores">Entorno</label>
                             <span>34</span>
                         </div>
                         <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
+                            <input type="radio" name="area" id="social">
                             <label for="anteriores">Trabajo social</label>
                             <span>94</span>
                         </div>
                         <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
+                            <input type="radio" name="area" id="convocatorias">
                             <label for="anteriores">Proyectos y convocatorias</label>
                             <span>94</span>
                         </div>
                         <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
+                            <input type="radio" name="area" id="donativos">
                             <label for="anteriores">Entrega de donativos</label>
                             <span>32</span>
                         </div>

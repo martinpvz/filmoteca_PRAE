@@ -1,3 +1,20 @@
+<?php
+session_start();
+if(isset($_SESSION['sesion']) != true) {
+    header("location:./mainPage.php"); 
+}
+if(isset($_SESSION['username']) == true) {
+    echo "Bienvenido " . $_SESSION['username'];
+} else {
+    echo "No hay sesión iniciada";
+}
+$nombre = $_SESSION['name'];
+$apellido = $_SESSION['surname'];
+$inicialN = strtoupper(substr($nombre, 0, 1));
+$inicialA = strtoupper(substr($apellido, 0, 1));
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,11 +35,11 @@
         <h1 class="header__home--title">Filmoteca</h1>
         <div class="profile">
             <div class="profile__circle" id="profile">
-                <p class="profile__circle--text">MP</p>
+                <p class="profile__circle--text"> <?php echo "$inicialN$inicialA" ?> </p>
             </div>
             <div class="profile__info" id="profile-info">
                 <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
-                <a class="profile__info--close" href="./mainPage.php">Cerrar sesión</a>
+                <a class="profile__info--close" href="./logout.php">Cerrar sesión</a>
             </div>
         </div>
     </header>

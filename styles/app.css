@@ -358,6 +358,14 @@ a {
   font-size: 1.7rem;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #DFE0DC inset;
+  font-family: "Lato", sans-serif;
+  font-size: 1.7rem;
+}
+
 .header__home {
   width: 100%;
   height: 150px;
