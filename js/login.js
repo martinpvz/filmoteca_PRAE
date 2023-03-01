@@ -1,3 +1,13 @@
+const passwordInput = document.getElementById('password');
+const showPasswordButton = document.getElementById('show__password');
+
+const passwordInputR = document.getElementById('passwordR');
+const showPasswordButtonR = document.getElementById('show__passwordR');
+
+const passwordConfirmation = document.getElementById('confirmation');
+const showPasswordConfirmation = document.getElementById('show__confirmation');
+
+
 // LOGIC FOR THE REGISTER PART
 function register() {
     let activados = document.getElementsByClassName('enabled')
@@ -33,6 +43,11 @@ function register() {
 
     document.getElementById('form__error').style.display = "none"
 
+    // return passwordInputR and passwordConfirmation type to password
+    passwordInputR.type = 'password';
+    showPasswordButtonR.style.backgroundImage="url(img/show.png)";
+    passwordConfirmation.type = 'password';
+    showPasswordConfirmation.style.backgroundImage="url(img/show.png)";
 }
 
 // LOGIC FOR THE LOGIN PART
@@ -70,6 +85,11 @@ function login() {
     document.getElementById('login').style.backgroundColor = "#0759E6"
     document.getElementById('register').style.backgroundColor = "#043B9C"
     document.getElementById('form__error').style.display = "none"
+
+    // return passwordInput type to password
+    passwordInput.type = 'password';
+    showPasswordButton.style.backgroundImage="url(img/show.png)";
+
 }
 
 
@@ -101,8 +121,12 @@ form.addEventListener("click", function(event) {
         if (name === "" || surname === "" || email === "" || user === "" || password === "" || confirmation === "" || key === "") {
             document.getElementById("error__text").innerText = "Existen campos vacíos";
             error.style.display = "flex"
-                event.preventDefault();
-            }
+            event.preventDefault();
+        } else if (password != confirmation) {
+            document.getElementById("error__text").innerText = "Las contraseñas no coinciden";
+            error.style.display = "flex"
+            event.preventDefault();
+        }
     }
 });
 
@@ -148,3 +172,37 @@ if (registered == '1') {
     document.getElementById("error__text").innerText = "Error al registrar el usuario";
     document.getElementById("form__error").style.display = "flex";
 }
+
+
+
+// logic for the view password button
+
+showPasswordButton.addEventListener('click', function() {
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        showPasswordButton.style.backgroundImage="url(img/hide.png)";
+    } else {
+        passwordInput.type = 'password';
+        showPasswordButton.style.backgroundImage="url(img/show.png)";
+    }
+});
+
+showPasswordButtonR.addEventListener('click', function() {
+    if (passwordInputR.type === 'password') {
+        passwordInputR.type = 'text';
+        showPasswordButtonR.style.backgroundImage="url(img/hide.png)";
+    } else {
+        passwordInputR.type = 'password';
+        showPasswordButtonR.style.backgroundImage="url(img/show.png)";
+    }
+});
+
+showPasswordConfirmation.addEventListener('click', function() {
+    if (passwordConfirmation.type === 'password') {
+        passwordConfirmation.type = 'text';
+        showPasswordConfirmation.style.backgroundImage="url(img/hide.png)";
+    } else {
+        passwordConfirmation.type = 'password';
+        showPasswordConfirmation.style.backgroundImage="url(img/show.png)";
+    }
+})

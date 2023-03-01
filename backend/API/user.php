@@ -45,6 +45,8 @@ class User extends DataBase
             }
         } else if($filasAdmin){
             header("location:../../homeadmin.php"); // not implemented yet
+        } else {
+            header("location:../../login.php?error=1");
         }
         mysqli_free_result($resultAdmin);
         mysqli_close($this->conexion);       

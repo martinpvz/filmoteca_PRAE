@@ -30,7 +30,7 @@
                     </div>
                     <div class="form__input enabled">
                         <input required class="required" type="password" name="password" id="password" placeholder="Contraseña">
-                        <span class="form__input--show"></span>
+                        <span class="form__input--show" id="show__password"></span>
                     </div>
                     <div class="form__input disabled">
                         <input type="text" class="norequired" name="name" id="name" placeholder="Nombre">
@@ -45,11 +45,12 @@
                         <input type="text" class="norequired" name="userR" id="userR" placeholder="Usuario">
                     </div>
                     <div class="form__input disabled">
-                        <input type="text" class="norequired" name="passwordR" id="passwordR" placeholder="Contraseña">
-                        <span class="form__input--show"></span>
+                        <input type="password" class="norequired" name="passwordR" id="passwordR" placeholder="Contraseña">
+                        <span class="form__input--show" id="show__passwordR"></span>
                     </div>
                     <div class="form__input disabled">
-                        <input type="text" class="norequired" name="confirmation" id="confirmation" placeholder="Confirmar contraseña">
+                        <input type="password" class="norequired" name="confirmation" id="confirmation" placeholder="Confirmar contraseña">
+                        <span class="form__input--show" id="show__confirmation"></span>
                     </div>
                     <div class="form__input disabled">
                         <input type="text" class="norequired" name="key" id="key" placeholder="Clave de acceso">
