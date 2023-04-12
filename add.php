@@ -1,3 +1,20 @@
+<?php
+session_start();
+if(isset($_SESSION['sesion']) != true) {
+    header("location:./mainPage.php"); 
+} else {
+    if($_SESSION['role'] != 1 && $_SESSION['role'] != 2 && $_SESSION['role'] != 3) {
+        header("location:./firstPage.php"); 
+    }
+}
+$nombre = $_SESSION['name'];
+$apellido = $_SESSION['surname'];
+$role = $_SESSION['role'];
+$inicialN = strtoupper(substr($nombre, 0, 1));
+$inicialA = strtoupper(substr($apellido, 0, 1));
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,14 +32,14 @@
         <div class="header__home--img">
             <img src="./img/logo.png" alt="Logo">
         </div>
-        <h1 class="header__home--title title__small">CDC Zacatlan</h1>
+        <h1 class="header__home--title title__small" id="title-desktop"></h1>
         <div class="profile">
             <div class="profile__circle" id="profile">
-                <p class="profile__circle--text">MP</p>
+                <p class="profile__circle--text"> <?php echo "$inicialN$inicialA" ?> </p>
             </div>
             <div class="profile__info" id="profile-info">
                 <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
-                <a class="profile__info--close" href="./mainPage.php">Cerrar sesión</a>
+                <a class="profile__info--close" href="./logout.php">Cerrar sesión</a>
             </div>
         </div>
     </header>
@@ -34,7 +51,7 @@
             <a href="./firstPage.php" class="return"></a>
         </div>
         <div class="title-mobile">
-            <h1>Filmoteca</h1>
+            <h1 id="title-mobile"></h1>
         </div>
     </header>
 
@@ -44,7 +61,7 @@
         </div>
         <div class="options__menu">
             <a href="./editProfile.php">Editar perfil</a>
-            <a href="./mainPage.php">Cerrar sesion</a>
+            <a href="./logout.php">Cerrar sesion</a>
         </div>
     </section>
 

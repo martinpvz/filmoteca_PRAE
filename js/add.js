@@ -1,3 +1,22 @@
+const url = new URL(window.location.href);
+// Obtener el valor de "error" de la URL
+const cdc = url.searchParams.get("cdc");
+const type = url.searchParams.get("type");
+
+
+if (cdc != null) {
+    console.log(cdc);
+    const cdcTitle = "CDC " + (cdc.charAt(0).toUpperCase() + cdc.slice(1));
+    document.getElementById("title-mobile").innerText = cdcTitle;
+    document.getElementById("title-desktop").innerText = cdcTitle;
+} else if (type != null) {
+    console.log(type);
+    const typeTitle = (type.charAt(0).toUpperCase() + type.slice(1));
+    document.getElementById("title-mobile").innerText = typeTitle;
+    document.getElementById("title-desktop").innerText = typeTitle;
+}
+
+
 
 // SHOW MENU ON ALMOST ALL PAGES
 function mostrarMenu() {

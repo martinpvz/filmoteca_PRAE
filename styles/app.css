@@ -880,8 +880,7 @@ input:-webkit-autofill:focus {
   position: absolute;
   display: none;
   left: 35px;
-  top: 27px;
-  background: url(../img/starWhite.png);
+  top: 29px;
   background-size: 25px 25px;
   background-position: center;
   background-repeat: no-repeat;
@@ -1453,6 +1452,56 @@ input:-webkit-autofill:focus {
   box-shadow: 0px 0px 20px 15px rgba(0, 0, 0, 0.3);
 }
 
+.card {
+  height: 200px;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: rgb(0, 0, 0);
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.5);
+  position: relative;
+  transition: 0.3s;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card img {
+  object-fit: cover;
+  opacity: 0.4;
+  transition: 0.3s;
+}
+.card--text {
+  width: 100%;
+  font-size: 2.6rem;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  text-align: center;
+}
+@media only screen and (max-width: 880px) {
+  .card--text {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 880px) {
+  .addmedia span {
+    font-size: 2rem;
+  }
+}
+
+.card img:hover {
+  transform: scale(1.1);
+  opacity: 0.3;
+}
+
+.card:hover {
+  box-shadow: 0px 0px 14px 2px rgba(0, 0, 0, 0.5);
+}
+
 .add {
   width: 75%;
   height: auto;
@@ -1643,6 +1692,7 @@ input[type=file]::file-selector-button:hover {
   font-size: 1.6rem;
   font-family: "Nunito", sans-serif;
   font-weight: 300;
+  color: gray;
 }
 .edit__profile--save {
   width: 30%;

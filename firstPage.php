@@ -3,13 +3,9 @@ session_start();
 if(isset($_SESSION['sesion']) != true) {
     header("location:./mainPage.php"); 
 }
-if(isset($_SESSION['username']) == true) {
-    echo "Bienvenido " . $_SESSION['username'];
-} else {
-    echo "No hay sesión iniciada";
-}
 $nombre = $_SESSION['name'];
 $apellido = $_SESSION['surname'];
+$role = $_SESSION['role'];
 $inicialN = strtoupper(substr($nombre, 0, 1));
 $inicialA = strtoupper(substr($apellido, 0, 1));
 ?>
@@ -60,20 +56,26 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
         </div>
         <div class="options__menu">
             <a href="./editProfile.php">Editar perfil</a>
-            <a href="./mainPage.php">Cerrar sesion</a>
+            <a href="./logout.php">Cerrar sesion</a>
         </div>
     </section>
 
     <main class="main__home">
-        <div class="cards">
-            <!-- <a href="#" class="card">  
-                <img src="./img/newCDC.jpeg" alt="cdc">
-                <div class="card--text card--add">
-                    <div class="card--add__img"></div>
-                    <span>Agregar CDC</span>
-                </div>
-            </a> -->
-            <a href="./media.php" class="card">  
+        <div class="cards" id="cards">
+            <?php
+                if ( $role == '1' || $role == '2') {
+                    echo '
+                        <a href="#" class="card" id="add-card">  
+                            <img src="./img/newCDC.jpeg" alt="cdc">
+                            <div class="card--text card--add">
+                                <div class="card--add__img"></div>
+                                <span>Agregar CDC</span>
+                            </div>
+                        </a>
+                    ';
+                }
+            ?>
+            <!-- <a href="./media.php" class="card">  
                 <img src="./img/chamontoya.jpeg" alt="cdc">
                 <div class="card--text">
                     CDC Chamontoya
@@ -90,20 +92,20 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
                 <div class="card--text">
                     CDC Zacatlán
                 </div>
-            </a>
-            <a href="./media.php" class="card">
+            </a> -->
+            <a href="./media.php?type=multimedia" class="card">
                 <img src="./img/eventos.jpeg" alt="cdc">
                 <div class="card--text">
                     Multimedia PRAE
                 </div>
             </a>
-            <a href="./media.php" class="card">
+            <a href="./media.php?type=eventos" class="card">
                 <img src="./img/eventos.jpg" alt="cdc">
                 <div class="card--text">
                     Eventos institucionales
                 </div>
             </a>
-            <a href="./media.php" class="card">
+            <a href="#" class="card">
                 <img src="./img/historia.jpeg" alt="cdc">
                 <div class="card--text">
                     Historia PRAE
@@ -117,5 +119,6 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
     </footer>
 
     <script src="./js/main.js"></script>
+    <script src="./js/cdc.js"></script>
 </body>
 </html>

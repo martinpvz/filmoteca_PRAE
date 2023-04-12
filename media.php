@@ -1,3 +1,16 @@
+<?php
+session_start();
+if(isset($_SESSION['sesion']) != true) {
+    header("location:./mainPage.php"); 
+}
+$nombre = $_SESSION['name'];
+$apellido = $_SESSION['surname'];
+$role = $_SESSION['role'];
+$inicialN = strtoupper(substr($nombre, 0, 1));
+$inicialA = strtoupper(substr($apellido, 0, 1));
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,20 +22,115 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Media | Filmoteca PRAE</title>
+    <style>
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(20, 20, 20, 0.95);
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition:all .3s ease;
+        }
+
+        .spinner {
+            width: 44px;
+            height: 44px;
+            animation: spinner-y0fdc1 2s infinite ease;
+            transform-style: preserve-3d;
+        }
+
+        .spinner > div {
+            background-color: rgba(0,77,255,0.2);
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            border: 2px solid #004dff;
+        }
+
+        .spinner div:nth-of-type(1) {
+            transform: translateZ(-22px) rotateY(180deg);
+        }
+
+        .spinner div:nth-of-type(2) {
+            transform: rotateY(-270deg) translateX(50%);
+            transform-origin: top right;
+        }
+
+        .spinner div:nth-of-type(3) {
+            transform: rotateY(270deg) translateX(-50%);
+            transform-origin: center left;
+        }
+
+        .spinner div:nth-of-type(4) {
+            transform: rotateX(90deg) translateY(-50%);
+            transform-origin: top center;
+        }
+
+        .spinner div:nth-of-type(5) {
+            transform: rotateX(-90deg) translateY(50%);
+            transform-origin: bottom center;
+        }
+
+        .spinner div:nth-of-type(6) {
+            transform: translateZ(22px);
+        }
+
+        @keyframes spinner-y0fdc1 {
+            0% {
+            transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+            }
+
+            50% {
+            transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+            }
+
+            100% {
+            transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+            }
+        }
+
+    </style>
+    <script>
+        window.addEventListener('load', function() {
+            var loader = document.querySelector('.loader');
+
+            setTimeout(function() {
+                loader.style.visibility = 'hidden';
+                loader.style.opacity = '0';
+            }, 1100);
+        });
+    </script>
 </head>
 <body>
+
+    <div class="loader">
+        <div class="spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    
     <header class="header__home">
         <div class="header__home--img">
             <img src="./img/logo.png" alt="Logo">
         </div>
-        <h1 class="header__home--title title__small">CDC Zacatlan</h1>
+        <h1 class="header__home--title title__small" id="title-desktop"></h1>
         <div class="profile">
             <div class="profile__circle" id="profile">
-                <p class="profile__circle--text">MP</p>
+                <p class="profile__circle--text"> <?php echo "$inicialN$inicialA" ?> </p>
             </div>
             <div class="profile__info" id="profile-info">
                 <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
-                <a class="profile__info--close" href="./mainPage.php">Cerrar sesión</a>
+                <a class="profile__info--close" href="./logout.php">Cerrar sesión</a>
             </div>
         </div>
     </header>
@@ -34,7 +142,7 @@
             <a href="./firstPage.php" class="return"></a>
         </div>
         <div class="title-mobile">
-            <h1>CDC Zacatlan</h1>
+            <h1 id="title-mobile"></h1>
         </div>
     </header>
 
@@ -44,19 +152,19 @@
         </div>
         <div class="options__menu">
             <a href="./editProfile.php">Editar perfil</a>
-            <a href="./mainPage.php">Cerrar sesion</a>
+            <a href="./logout.php">Cerrar sesion</a>
         </div>
     </section>
 
     <main class="main__media" id="main__media">
         <section class="classify">
-            <div class="filter">
+            <div class="filter" id="filter">
                 <p class="filter__title">Filtros</p>
                 <hr>
                 <div class="filter__category">
                     <p class="filter__category--title">Año</p>
-                    <div class="category">
-                        <div class="category__option">
+                    <div class="category" id="category-year">
+                        <!-- <div class="category__option">
                             <input type="radio" name="anio" id="anteriores">
                             <label for="anteriores">Años anteriores</label>
                             <span>125</span>
@@ -70,14 +178,14 @@
                             <input type="radio" name="anio" id="2020">
                             <label for="2020">2020</label>
                             <span>20</span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <hr>
                 <div class="filter__category">
                     <p class="filter__category--title">Área</p>
-                    <div class="category">
-                        <div class="category__option">
+                    <div class="category" id="category-area">
+                        <!--<div class="category__option">
                             <input type="radio" name="area" id="anteriores">
                             <label for="anteriores">Educación</label>
                             <span>87</span>
@@ -106,7 +214,7 @@
                             <input type="radio" name="area" id="anteriores">
                             <label for="anteriores">Entrega de donativos</label>
                             <span>32</span>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <hr>
@@ -183,8 +291,22 @@
         </section>
 
         <section class="gallery">
-            <section class="media">
-                <div class="media__img">
+            <section class="media" id="media">
+                <?php
+                    if ( $role == '1' || $role == '2') {
+                        echo '    
+                        <a href="./add.php" class="card addmedia" id="add-media">
+                            <img src="./img/blue.jpeg">
+                            <div class="card--text card--add">
+                                <div class="card--add__img"></div>
+                                <span>Agregar</span>
+                            </div>
+                        </a>
+                        ';
+                    }
+                ?>
+
+                <!-- <div class="media__img">
                     <img src="./img/zacatlan.jpeg" alt="" class="trigger">
                     <div class="media__img--button">
                         <div class="download">
@@ -305,7 +427,7 @@
                             <span class="download__img"></span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </section>
         </section>
 
@@ -316,7 +438,7 @@
                 <button class="close__form" onclick="closeModify()"></button>
                 <p class="add__form--title">Editar contenido</p>
                 <div class="form__add--form">
-                    <img src="./img/foto2.png" alt="Imagen multimedia">
+                    <img src="./img/foto2.png" alt="Imagen multimedia" id="modify-photo">
                     <form action="./firstPage.php" method="post">
                         <div class="add__input">
                             <input required class="date" type="date" name="date" id="date" placeholder="Fecha">
@@ -324,14 +446,14 @@
                         <div class="add__input">
                             <input required type="text" name="description" id="description" placeholder="Descripción">
                         </div>
-                        <div class="add__input" id="rute_input">
-                            <input type="text" disabled name="rute" id="rute" placeholder="Ruta">
-                        </div>
+                        <!-- <div class="add__input" id="rute_input">
+                            <input type="text" disabled name="rute" id="rute" placeholder="Categorías">
+                        </div> -->
                         <div class="form__error" id="form__error">
                             <p>Existen campos vacíos</p>
                         </div>
                         <input type="submit" value="Actualizar" class="submit__update" id="submit">
-                        <input type="submit" value="Eliminar" class="submit__delete" id="delete">
+                        <input type="button" value="Eliminar" class="submit__delete" id="delete" onclick="deleteMedia()">
                     </form>
                 </div>
             </div>
@@ -492,15 +614,17 @@
             </div>
             <div class="modal__content">
                 <div class="modal__content--img">
-                    <img src="./img/foto3.png" alt="Foto">
+                    <img src="./img/foto3.png" alt="Foto" id="modal-media">
                 </div>
                 <div class="modal__content--info">
-                    <p class="content__details">Detalles</p>
-                    <p class="content__description">Descripción: Niño con pañuelo en la cabeza</p>
-                    <p class="content__date">Fecha: 01/01/2023</p>
+                    <p class="content__details"></p>
+                    <p class="content__description" id="modal-description"></p>
+                    <p class="content__date" id="modal-date"></p>
                     <div class="content__buttons">
-                        <button type="button" class="content__download">Descargar</button>
-                        <button type="button" class="content__edit"></button>
+                        <a href="#" download id="modal-download"><button type="button" class="content__download">Descargar</button></a>
+                        <?php
+                        if ( $role == '1' || $role == '2') { echo '<button type="button" class="content__edit"></button>'; }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -510,8 +634,13 @@
     <footer class="footer__home" id="footer__media">
         <p class="footer__home--text">© 2023 Copyright: PROYECTO ROBERTO ALONSO ESPINOSA </p>
     </footer>
-
+    <script>
+        var currentUserType = "<?php echo $_SESSION['role']; ?>";
+        var currentCDC = "<?php echo $_SESSION['cdc']; ?>";
+    </script>
     <script src="./js/main.js"></script>
+    <script src="./js/filter.js"></script>
+    <script src="./js/media.js"></script>
     <script src="./js/modify.js"></script>
 </body>
 </html>
