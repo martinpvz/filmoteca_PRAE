@@ -80,7 +80,7 @@ function toggleEdit() {
             document.getElementById('description').value = info.description;
             /*document.getElementById('modal-download').href = info.resource;*/
         } 
-    } catch(e) { console.log("holita") }
+    } catch(e) { console.log("error") }
 
     toggleModal()
     document.querySelector('.classify').style.display = "none";
@@ -104,18 +104,23 @@ function deleteMedia() {
 
 
 
+
 function closeModify() {
     document.querySelector('.classify').style.display = "flex";
     document.querySelector(".gallery").style.display = "flex"
-    document.querySelector(".modify").style.display = "none"
+    document.querySelector(".modify").style.display = "none";
+    const error = document.getElementById('form__error')
+    error.style.display = "none";
     if (window.innerWidth < 880) {
         document.querySelector(".filter__button").style.display = "flex"
     }
     window.scrollTo(0, 0);
 }
 
-const edit = document.querySelector(".content__edit");
-edit.addEventListener("click", toggleEdit);
+try {
+    const edit = document.querySelector(".content__edit");
+    edit.addEventListener("click", toggleEdit);
+} catch(e) {}
 
 
 

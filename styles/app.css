@@ -730,6 +730,9 @@ input:-webkit-autofill:focus {
   display: flex;
   flex-direction: column;
 }
+.main__media .classify .filter__category hr {
+  width: 100%;
+}
 .main__media .classify .filter__category--title {
   color: black;
   font-size: 2.2rem;
@@ -1360,6 +1363,7 @@ input:-webkit-autofill:focus {
   display: flex;
   margin-bottom: 30px;
   justify-content: start;
+  align-items: center;
   border: solid 1px black;
   position: relative;
   padding: 0 15px 0 15px;
@@ -1502,6 +1506,30 @@ input:-webkit-autofill:focus {
   box-shadow: 0px 0px 14px 2px rgba(0, 0, 0, 0.5);
 }
 
+.see__more {
+  width: 35%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.see__more p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #044bb6;
+}
+.see__more--img {
+  background: url(../img/down-arrow.png);
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .add {
   width: 75%;
   height: auto;
@@ -1606,6 +1634,7 @@ input:-webkit-autofill:focus {
 }
 .add .form__add--form .date {
   width: 100%;
+  align-self: center;
 }
 .add .form__add--form .input__file {
   padding: 0;

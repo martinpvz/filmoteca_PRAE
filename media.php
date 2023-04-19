@@ -163,128 +163,47 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
                 <hr>
                 <div class="filter__category">
                     <p class="filter__category--title">Año</p>
-                    <div class="category" id="category-year">
-                        <!-- <div class="category__option">
-                            <input type="radio" name="anio" id="anteriores">
-                            <label for="anteriores">Años anteriores</label>
-                            <span>125</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="anio" id="2021">
-                            <label for="2021">2021</label>
-                            <span>15</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="anio" id="2020">
-                            <label for="2020">2020</label>
-                            <span>20</span>
-                        </div> -->
-                    </div>
+                    <div class="category" id="category-year"></div>
                 </div>
                 <hr>
                 <div class="filter__category">
                     <p class="filter__category--title">Área</p>
-                    <div class="category" id="category-area">
-                        <!--<div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Educación</label>
-                            <span>87</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Salud</label>
-                            <span>13</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Entorno</label>
-                            <span>34</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Trabajo social</label>
-                            <span>94</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Proyectos y convocatorias</label>
-                            <span>94</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Entrega de donativos</label>
-                            <span>32</span>
-                        </div>-->
-                    </div>
+                    <div class="category" id="category-area"></div>
                 </div>
                 <hr>
                 <div class="filter__category">
                     <p class="filter__category--title">Categoría</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="category" id="anteriores">
-                            <label for="anteriores">Atención primaria 
-                            a la salud</label>
-                            <span>87</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="category" id="anteriores">
-                            <label for="anteriores">Prácticas de bienestar
-                            comunitario</label>
-                            <span>13</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="category" id="anteriores">
-                            <label for="anteriores">Educación para la salud</label>
-                            <span>34</span>
-                        </div>
+                    <div class="category" id="category-category"></div>
+                    <div class="see__more" onclick="changeCategory('category')">
+                        <p id="see-more-category">Ver más</p>
+                        <div class="see__more--img" id="see-more-img-category"></div>
                     </div>
                 </div>
                 <hr>
                 <div class="filter__category">
                     <p class="filter__category--title">Subcategoría</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="subcategory" id="anteriores">
-                            <label for="anteriores">Talleres y prácticas
-                            saludables</label>
-                            <span>87</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="subcategory" id="anteriores">
-                            <label for="anteriores">Formación curricular</label>
-                            <span>13</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="subcategory" id="anteriores">
-                            <label for="anteriores">Capacitación en
-                            seguridad y protección
-                            escolar</label>
-                            <span>34</span>
-                        </div>
+                    <div class="category" id="category-subcategory"></div>
+                    <div class="see__more" onclick="changeCategory('subcategory')">
+                        <p id="see-more-subcategory">Ver más</p>
+                        <div class="see__more--img" id="see-more-img-subcategory"></div>
                     </div>
                 </div>
                 <hr>
                 <div class="filter__category">
                     <p class="filter__category--title">Tipo</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="type" id="anteriores">
-                            <label for="anteriores">Seguridad y prevención
-                            de accidentes</label>
-                            <span>2</span>
-                        </div>
+                    <div class="category" id="category-type"></div>
+                    <div class="see__more" onclick="changeCategory('type')">
+                        <p id="see-more-type">Ver más</p>
+                        <div class="see__more--img" id="see-more-img-type"></div>
                     </div>
                 </div>
                 <hr>
                 <div class="filter__category">
                     <p class="filter__category--title">Subtipo</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="subtype" id="anteriores">
-                            <label for="anteriores">Actividades del área</label>
-                            <span>12</span>
-                        </div>
+                    <div class="category" id="category-subtype"></div>
+                    <div class="see__more" onclick="changeCategory('subtype')">
+                        <p id="see-more-subtype">Ver más</p>
+                        <div class="see__more--img" id="see-more-img-subtype"></div>
                     </div>
                 </div>
             </div>
@@ -450,7 +369,7 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
                             <input type="text" disabled name="rute" id="rute" placeholder="Categorías">
                         </div> -->
                         <div class="form__error" id="form__error">
-                            <p>Existen campos vacíos</p>
+                            <p id="form__error--p">Existen campos vacíos</p>
                         </div>
                         <input type="submit" value="Actualizar" class="submit__update" id="submit">
                         <input type="button" value="Eliminar" class="submit__delete" id="delete" onclick="deleteMedia()">

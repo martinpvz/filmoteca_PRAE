@@ -73,7 +73,21 @@ class Media extends DataBase
 
     public function edit($post)
     {
-        
+        $media_id = $post['id'];
+        $date = $post['date'];
+        $description = $post['description'];
+        $this->response = array();
+        $sql = "UPDATE media
+                SET date = '$date', description = '$description'
+                WHERE id = '$media_id';
+            ";
+        if ($this->conexion->query($sql)) {
+            $this->response['estatus'] =  "Correcto";
+            $this->response['mensaje'] =  "La media se actualizo correctamente";
+        } else {
+            $this->response['mensaje'] = "No se pudo ejecutar la instrucción $sql. " . mysqli_error($this->conexion);
+        }
+        $this->conexion->close();
     }
 
     public function delete($get)
@@ -86,7 +100,7 @@ class Media extends DataBase
             ";
         if ($this->conexion->query($sql)) {
             $this->response['estatus'] =  "Correcto";
-            $this->response['mensaje'] =  "El favorito se eliminó correctamente";
+            $this->response['mensaje'] =  "La media se eliminó correctamente";
         } else {
             $this->response['mensaje'] = "No se pudo ejecutar la instrucción $sql. " . mysqli_error($this->conexion);
         }

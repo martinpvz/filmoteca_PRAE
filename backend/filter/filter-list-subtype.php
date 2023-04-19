@@ -1,11 +1,12 @@
 <?php
 
+
 use DataBase\Filter;
 
 require_once '../API/filter.php';
 
 $var = new Filter();
 
-$var->update();
+$var->listSubTypes($_GET);
 
 echo $var->getResponse();
