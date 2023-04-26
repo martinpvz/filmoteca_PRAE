@@ -67,11 +67,7 @@ function windowOnClick(event) {
 function toggleEdit() {
     try {
         if ( selectedMedia != null ) {
-            console.log( "hola soy el edit222")
-            console.log( selectedMedia )
-            console.log( photoInfo )
             const info = photoInfo.find( photo => photo.media_id == selectedMedia )
-            console.log( info )
             document.getElementById('modify-photo').src = info.resource;
             const date = new Date(info.date);
             const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -83,10 +79,11 @@ function toggleEdit() {
     } catch(e) { console.log("error") }
 
     toggleModal()
-    document.querySelector('.classify').style.display = "none";
+    //document.querySelector('.classify').style.display = "none";
+    document.querySelector('.classify').classList.add('hide');
     document.querySelector(".gallery").style.display = "none"
     document.querySelector(".modify").style.display = "flex"
-    document.querySelector(".filter__button").style.display = "none"
+    document.querySelector('.filter__button').classList.add('hide');
     window.scrollTo(0, 0);
 }
 
@@ -106,14 +103,21 @@ function deleteMedia() {
 
 
 function closeModify() {
-    document.querySelector('.classify').style.display = "flex";
+    // if ( window.innerWidth <= 880 ) {
+    //     document.querySelector('.classify').classList.add('hide');
+    // } else {
+    //     document.querySelector('.classify').classList.remove('hide');
+    // }
+    document.querySelector('.classify').classList.remove('hide');
+    // document.querySelector('.classify').style.display = "flex";
     document.querySelector(".gallery").style.display = "flex"
     document.querySelector(".modify").style.display = "none";
     const error = document.getElementById('form__error')
     error.style.display = "none";
-    if (window.innerWidth < 880) {
-        document.querySelector(".filter__button").style.display = "flex"
-    }
+    // if (window.innerWidth < 880) {
+    //     document.querySelector(".filter__button").style.display = "flex"
+    // }
+    document.querySelector(".filter__button").classList.remove('hide');
     window.scrollTo(0, 0);
 }
 

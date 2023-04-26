@@ -1,17 +1,88 @@
+// let regularFilter = '';
+// let responsiveFilter = ''; // aqui esta guardado
+
+// function handleResponsiveFilter() {
+//     const screenWidth = window.innerWidth;
+//     if (screenWidth <= 880) {
+//         if( document.getElementById('classify-regular').innerText != "" ) {
+//             console.log('entro')
+//             responsiveFilter = document.getElementById('classify-regular').innerHTML;
+//             console.log(responsiveFilter)
+//             document.getElementById('filter__responsive--section').innerHTML = responsiveFilter;
+//             document.getElementById('classify-regular').innerHTML = "";
+//             getName('anio')
+//             getName('area')
+//             getName('category')
+//             getName('subcategory')
+//             getName('type')
+//             getName('subtype')
+//         }
+//     } else {
+//         if( document.getElementById('filter__responsive--section').innerText != "" ) {  
+//             console.log('entro') 
+//             regularFilter = document.getElementById('filter__responsive--section').innerHTML;
+//             document.getElementById('classify-regular').innerHTML = regularFilter;
+//             document.getElementById('filter__responsive--section').innerHTML = "";
+//             getName('anio')
+//             getName('area')
+//             getName('category')
+//             getName('subcategory')
+//             getName('type')
+//             getName('subtype')
+//         }
+//     } 
+// }
+
+function firstResponsiveFilter() {
+    const screenWidth = window.innerWidth;
+    if( screenWidth <= 880) {
+        //regularFilter = document.getElementById('classify-regular').innerHTML;
+        document.getElementById('classify-regular').innerHTML = "";
+    } else if ( screenWidth > 880) {
+        //responsiveFilter = document.getElementById('filter__responsive').innerHTML;
+        document.getElementById('filter__responsive--section').innerHTML = "";
+    }
+}
+
+// Agregar el evento de cambio de tamaño de pantalla
+// window.addEventListener("resize", handleResponsiveFilter);
+
+firstResponsiveFilter();
+
+
+
+
+
 const url = new URL(window.location.href);
 // Obtener el valor de "error" de la URL
 const cdc = url.searchParams.get("cdc");
 const type = url.searchParams.get("type");
-
+// document.getElementById('classify-regular').style.display = 'flex'
+console.log(document.getElementById("filter"));
 
 const Category = document.getElementById("category");
 const Subcategory = document.getElementById("subcategory");
 const Type = document.getElementById("type");
 const Subtype = document.getElementById("subtype");
+const loader1 = document.getElementsByClassName("loaderText")[0];
+const loader2 = document.getElementsByClassName("loaderText")[1];
 
-//Subcategory.style.display = "none";
-//Type.style.display = "none";
-//Subtype.style.display = "none";
+Subcategory.style.display = "none";
+Type.style.display = "none";
+Subtype.style.display = "none";
+loader1.style.display = "none";
+loader2.style.display = "none";
+
+
+
+let categories = '';
+let categoriesShort = '';
+let subcategories = '';
+let subcategoriesShort = '';
+let types = '';
+let typesShort = '';
+let subtypes = '';
+let subtypesShort = '';
 
 
 if (cdc != null) {
@@ -38,9 +109,82 @@ let info = {
 
 let value = {...info}
 
+
 ///////////// ------------------------ FILTROS ------------------------ //////////////
 
-async function updateFilter(data) {
+function makeTemplate(data, name) {
+    let template = '';
+    let templateShort = '';
+    data.forEach(e => {
+        template += /*html*/`
+            <div class="category__option">
+                <input type="radio" name="${name}" id="${e.id}${e.name}" class="${e.id}">
+                <label for="${e.id}${e.name}">${e.name}</label>
+                <span>${e.total}</span>
+            </div>
+        `;
+    });
+    if( name == "category") {
+        categories = template;
+    } else if (name == "subcategory") {
+        subcategories = template;
+    } else if (name == "type") {
+        types = template;
+    } else if (name == "subtype") {
+        subtypes = template;
+    }
+    if (data.length > 6) {
+        for (let i = 0; i < 6; i++) {
+            templateShort += /*html*/`
+                <div class="category__option">
+                    <input type="radio" name="${name}" id="${data[i].id}${data[i].name}" class="${data[i].id}">
+                    <label for="${data[i].id}${data[i].name}">${data[i].name}</label>
+                    <span>${data[i].total}</span>
+                </div>
+            `;
+        }
+        try {
+            document.getElementById('see-more-' + name).style.display = "flex";
+        } catch (error) {}
+        if( name == "category") {
+            categoriesShort = templateShort;
+        } else if (name == "subcategory") {
+            subcategoriesShort = templateShort;
+        } else if (name == "type") {
+            typesShort = templateShort;
+        } else if (name == "subtype") {
+            subtypesShort = templateShort;
+        }
+        console.log(templateShort);
+        console.log(template);
+        return templateShort;
+    } else  {
+        try {
+            document.getElementById('see-more-' + name).style.display = "none";
+        } catch (error) {}
+    }
+    return template;
+}
+
+function selectDefault(name) {
+    // Obtener el contenedor de la categoría
+    let categoryContainer = document.querySelector('#category-' + name);
+
+    // Obtener todos los labels dentro del contenedor de la categoría
+    let labels = categoryContainer.querySelectorAll('.category__option label');
+
+    // Recorrer los labels y buscar el que coincide con el valor del año
+    labels.forEach(label => {
+        if (label.textContent === value[name]) {
+            let input = label.previousElementSibling;
+            if (input) {
+                input.checked = true;
+            }
+        }
+    });
+}
+
+async function updateFilter(data, name) {
     data.cdc = cdc;
     console.log(data)
     const response = await fetch(`./backend/filter/filter-update.php`, {
@@ -51,12 +195,147 @@ async function updateFilter(data) {
         body: JSON.stringify(data)
     });
     const result = await response.json();
-    console.log(result)
-    //return result;
+
+    // if theres something selected in the years section of the filter
+    if(value.year != "" && value.area == "" && value.category == "" && value.subcategory == "" && value.type == "" && value.subtype == "") { 
+        let templateY = makeTemplate(result['years'], "anio");
+        document.getElementById('category-year').innerHTML = templateY;
+        getName("anio");
+    
+        selectDefault("year");
+    
+        let templateA = makeTemplate(result['areas'], "area");
+        document.getElementById('category-area').innerHTML = templateA;
+        getName("area");
+    
+        selectDefault("area");
+    
+        let templateC = makeTemplate(result['categories'], "category");
+        document.getElementById('category-category').innerHTML = templateC;
+        getName("category");
+    
+        selectDefault("category");
+    } else if(value.year != "" && value.area != "" && value.category == "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateC = makeTemplate(result['categories'], "category");
+        document.getElementById('category-category').innerHTML = templateC;
+        getName("category");
+    
+        selectDefault("category");
+    } else if(value.year != "" && value.area != "" && value.category != "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateS = makeTemplate(result['subcategories'], "subcategory");
+        document.getElementById('category-subcategory').innerHTML = templateS;
+        getName("subcategory");
+
+        selectDefault("subcategory");
+    } else if(value.year != "" && value.area != "" && value.category != "" && value.subcategory != "" && value.type == "" && value.subtype == "") {
+        let templateT = makeTemplate(result['types'], "type");
+        document.getElementById('category-type').innerHTML = templateT;
+        getName("type");
+
+        selectDefault("type");
+    } else if(value.year != "" && value.area != "" && value.category != "" && value.subcategory != "" && value.type != "" && value.subtype == "") {
+        let templateSt = makeTemplate(result['subtypes'], "subtype");
+        document.getElementById('category-subtype').innerHTML = templateSt;
+        getName("subtype");
+
+        selectDefault("subtype");
+    } else if(value.year == "" && value.area != "" && value.category == "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateC = makeTemplate(result['categories'], "category");
+        document.getElementById('category-category').innerHTML = templateC;
+        getName("category");
+    
+        selectDefault("category");
+    } else if(value.year == "" && value.area != "" && value.category != "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateS = makeTemplate(result['subcategories'], "subcategory");
+        document.getElementById('category-subcategory').innerHTML = templateS;
+        getName("subcategory");
+
+        selectDefault("subcategory");
+    } else if(value.year == "" && value.area != "" && value.category != "" && value.subcategory != "" && value.type == "" && value.subtype == "") {
+        let templateT = makeTemplate(result['types'], "type");
+        document.getElementById('category-type').innerHTML = templateT;
+        getName("type");
+
+        selectDefault("type");
+    } else if(value.year == "" && value.area != "" && value.category != "" && value.subcategory != "" && value.type != "" && value.subtype == "") {
+        let templateSt = makeTemplate(result['subtypes'], "subtype");
+        document.getElementById('category-subtype').innerHTML = templateSt;
+        getName("subtype");
+
+        selectDefault("subtype");
+    } else if(value.year == "" && value.area != "" && value.category == "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateC = makeTemplate(result['categories'], "category");
+        document.getElementById('category-category').innerHTML = templateC;
+        getName("category");
+    
+        selectDefault("category");
+    } else if(value.year == "" && value.area == "" && value.category != "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateS = makeTemplate(result['subcategories'], "subcategory");
+        document.getElementById('category-subcategory').innerHTML = templateS;
+        getName("subcategory");
+
+        selectDefault("subcategory");
+    } else if(value.year == "" && value.area == "" && value.category != "" && value.subcategory != "" && value.type == "" && value.subtype == "") {
+        let templateT = makeTemplate(result['types'], "type");
+        document.getElementById('category-type').innerHTML = templateT;
+        getName("type");
+
+        selectDefault("type");
+    } else if(value.year == "" && value.area == "" && value.category != "" && value.subcategory != "" && value.type != "" && value.subtype == "") {
+        let templateSt = makeTemplate(result['subtypes'], "subtype");
+        document.getElementById('category-subtype').innerHTML = templateSt;
+        getName("subtype");
+
+        selectDefault("subtype");
+    }
+    console.log(name)
+    if(name == "anio") {
+        Subcategory.style.display = "none";
+        Type.style.display = "none";
+        Subtype.style.display = "none";
+    } else if(name == "area") {
+        Subcategory.style.display = "none";
+        Type.style.display = "none";
+        Subtype.style.display = "none";
+    } else if(name == "category") {
+        if(checkContent("subcategory")) {
+            Subcategory.style.display = "flex";
+        } else {
+            Subcategory.style.display = "none";
+        }
+        Type.style.display = "none";
+        Subtype.style.display = "none";
+    } else if(name == "subcategory") {
+        if(checkContent("type")) {
+            Type.style.display = "flex";
+        } else {
+            Type.style.display = "none";
+        }
+        Subtype.style.display = "none";
+    } else if(name == "type") {
+        if(checkContent("subtype")) {
+            Subtype.style.display = "flex";
+        } else {
+            Subtype.style.display = "none";
+        }
+    }
+
+    setTimeout(function() {
+        document.getElementById("filter").style.display = "flex";
+        loader1.style.display = "none";
+        loader2.style.display = "none";
+    }, 1000);
 }
 
 
-
+function checkContent(name) {
+    const category = document.querySelector('#category-' + name);
+    if (category.innerHTML == '') {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 const getName = (name) => {
     // obtener las categorias
@@ -71,21 +350,56 @@ const getName = (name) => {
             if (name == "category") {
                 info.category = clase;
                 value.category = label.textContent;
+                // erase all other values
+                info.subcategory = "";
+                info.type = "";
+                info.subtype = "";
+                value.subcategory = "";
+                value.type = "";
+                value.subtype = "";
             } else if (name == "subcategory") {
                 info.subcategory = clase;
-                value.subcategory = label.textContent;
+                value.subcategory = label.textContent; 
+                // erase all other values
+                info.type = "";
+                info.subtype = "";
+                value.type = "";
+                value.subtype = "";
             } else if (name == "type") {
                 info.type = clase;
                 value.type = label.textContent;
+                // erase all other values
+                info.subtype = "";
+                value.subtype = "";
             } else if (name == "subtype") {
                 info.subtype = clase;
                 value.subtype = label.textContent;
             }  else if (name == "anio") {
                 info.year = clase;
                 value.year = label.textContent;
+                // erase all other values
+                info.area = "";
+                info.category = "";
+                info.subcategory = "";
+                info.type = "";
+                info.subtype = "";
+                value.area = "";
+                value.category = "";
+                value.subcategory = "";
+                value.type = "";
+                value.subtype = "";
             }  else if (name == "area") {
                 info.area = clase;
                 value.area = label.textContent;
+                // erase all other values
+                info.category = "";
+                info.subcategory = "";
+                info.type = "";
+                info.subtype = "";
+                value.category = "";
+                value.subcategory = "";
+                value.type = "";
+                value.subtype = "";
             }
             text = "";
             for (let v in value) {
@@ -96,7 +410,10 @@ const getName = (name) => {
             // rute.value = " " + label.textContent + " ";
             rute.value = text;
             console.log(value)
-            updateFilter(info);
+            document.getElementById("filter").style.display = "none";
+            loader1.style.display = "flex";
+            loader2.style.display = "flex";
+            updateFilter(info, name);
         });
     }
 }
@@ -153,9 +470,6 @@ function listAreas() {
 
 listAreas();
 
-let categories = '';
-let categoriesShort = '';
-
 function listCategories() {
     fetch(`./backend/filter/filter-list-category.php?cdc=${cdc}`)
         .then(response => response.json())
@@ -194,9 +508,6 @@ function listCategories() {
 
 listCategories();
 
-let subcategories = '';
-let subcategoriesShort = '';
-
 function listSubCategories() {
     fetch(`./backend/filter/filter-list-subcategory.php?cdc=${cdc}`)
         .then(response => response.json())
@@ -233,10 +544,7 @@ function listSubCategories() {
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-listSubCategories();
-
-let types = '';
-let typesShort = '';
+// listSubCategories();
 
 function listTypes() {
     fetch(`./backend/filter/filter-list-type.php?cdc=${cdc}`)
@@ -274,10 +582,7 @@ function listTypes() {
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-listTypes();
-
-let subtypes = '';
-let subtypesShort = '';
+// listTypes();
 
 function listSubTypes() {
     fetch(`./backend/filter/filter-list-subtype.php?cdc=${cdc}`)
@@ -315,11 +620,11 @@ function listSubTypes() {
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-listSubTypes();
+// listSubTypes();
 
 
 function changeCategory(type) {
-    const text = document.getElementById(`see-more-${type}`);
+    const text = document.getElementById(`see-more-${type}-text`);
     const arrow = document.getElementById(`see-more-img-${type}`);
     let variable;
     let variableShort;
@@ -343,14 +648,24 @@ function changeCategory(type) {
     if (text.innerText == 'Ver más') {
         text.innerText = 'Ver menos';
         document.getElementById(`category-${type}`).innerHTML = variable;
-        arrow.style.backgroundImage = 'url(./img/up-arrow.png)';
+        if (window.innerWidth <= 880) { 
+            arrow.style.backgroundImage = 'url(./img/up-arrowW.png)';
+        } else {
+            arrow.style.backgroundImage = 'url(./img/up-arrow.png)';
+        }
         getName(type);
+        selectDefault(type);
         
     } else {
         text.innerText = 'Ver más';
         document.getElementById(`category-${type}`).innerHTML = variableShort;
-        arrow.style.backgroundImage = 'url(./img/down-arrow.png)';
+        if (window.innerWidth <= 880) { 
+            arrow.style.backgroundImage = 'url(./img/down-arrowW.png)';
+        } else {
+            arrow.style.backgroundImage = 'url(./img/down-arrow.png)';
+        }
         getName(type);
+        selectDefault(type);
     }
 }
 //////////////// ------------------------------------ ////////////////////////
@@ -385,14 +700,16 @@ function mostrarMedia() {
     document.getElementById('main__media').style.display = 'flex'
     document.getElementById('footer__media').style.display = 'block'
     document.getElementById('filter__responsive').style.display = 'none'
+    document.querySelector('.body__add').style.backgroundColor = '#F4F4F4';
     window.scrollTo(0, 0);
 }
 function toggleFilter() {
-    if (window.innerWidth < 880) {
+    if (window.innerWidth <= 880) {
     document.getElementById('main__media').style.display = 'none'
     document.getElementById('footer__media').style.display = 'none'
     document.getElementById('filter__responsive').style.display = 'block'
     window.scrollTo(0, 0);
+    document.querySelector('.body__add').style.backgroundColor = '#043B9C';
     }
 }
 // LOGIC FOR THE PROFILE MENU WHEN CLICKED ON FULL SCREEN
@@ -424,6 +741,67 @@ function disableScroll(){
 
 const update = document.getElementById("submit");
 
+
+function verifyFilter() {
+    let correctFilter = false;
+    
+    const anio = document.querySelector('#category-year input[type="radio"]:checked')?.value || "";
+    if (anio == "") {
+        correctFilter = false;
+    } else {
+        correctFilter = true;
+    }
+    
+    const area = document.querySelector('#category-area input[type="radio"]:checked')?.value || "";
+    if (area == "") {
+        correctFilter = false;
+    } else {
+        correctFilter = true;
+    }
+    
+    if (checkContent('category')) {
+        console.log("hola soy la funcion")
+        // check if there is a category selected
+        const category = document.querySelector('#category-category input[type="radio"]:checked')?.value || "";
+        if (category == "") {
+            correctFilter = false;
+        } else {
+            correctFilter = true;
+        }
+    }
+
+    if (checkContent('subcategory')) {
+        // check if there is a subcategory selected
+        const subcategory = document.querySelector('#category-subcategory input[type="radio"]:checked')?.value || "";
+        if (subcategory == "") {
+            correctFilter = false;
+        } else {
+            correctFilter = true;
+        }
+    }
+
+    if (checkContent('type')) {
+        // check if there is a type selected
+        const type = document.querySelector('#category-type input[type="radio"]:checked')?.value || "";
+        if (type == "") {
+            correctFilter = false;
+        } else {
+            correctFilter = true;
+        }
+    }
+
+    if (checkContent('subtype')) {
+        // check if there is a subtype selected
+        const subtype = document.querySelector('#category-subtype input[type="radio"]:checked')?.value || "";
+        if (subtype == "") {
+            correctFilter = false;
+        } else {
+            correctFilter = true;
+        }
+    }
+    return correctFilter;
+}
+
 update.addEventListener("click", function(event) {
     const error = document.getElementById('form__error')
     const date = document.getElementById("date").value;
@@ -434,44 +812,8 @@ update.addEventListener("click", function(event) {
     if (date === "" || description === "" || rute === "" || file === "") {
         error.style.display = "flex"
         event.preventDefault();
+    } else if(!verifyFilter()) {
+        document.getElementById('form__error--text').innerText = "Faltan categorías por seleccionar";
+        event.preventDefault();
     }
 });
-
-
-// Logic for filter section (so it can appear in the rute form)
-// Obtener los elementos de radio
-// const anios = document.getElementsByName("anio");
-// const area = document.getElementsByName("area");
-// const category = document.getElementsByName("category");
-
-// console.log(anios)
-
-// const rute = document.getElementById("rute");
-// // Verificar qué elemento está seleccionado
-// for (let i = 0; i < anios.length; i++) {
-//     anios[i].addEventListener("click", function() {
-//         console.log("El elemento seleccionado es " + anios[i].id);
-//         rute.value = anios[i].id + ", "
-//     });
-// }
-
-// let selected = true
-// for (let i = 0; i < area.length; i++) {
-//     area[i].addEventListener("click", function() {
-//         if (selected) {
-//             console.log("El elemento seleccionado es " + area[i].id);
-//             rute.value += area[i].id + ", "
-//             selected = false
-//         }
-//     });
-// }
-
-// for (let i = 0; i < category.length; i++) {
-//     category[i].addEventListener("click", function() {
-//         if (selected) {
-//             console.log("El elemento seleccionado es " + category[i].id);
-//             rute.value += category[i].id + ", "
-//             selected = false
-//         }
-//     });
-// }

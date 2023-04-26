@@ -10,7 +10,7 @@
         min-width: 290px;
         height: auto;
         display: flex;
-        justify-content: center;
+        //justify-content: center;
         align-items:flex-start;
         @include media(tablet-s-only) {
             display: none;
@@ -110,7 +110,9 @@
                 }
             }
         }
-
+    }
+    .hide {
+        display: none;
     }
     .gallery {
         width: 75%;
@@ -285,7 +287,7 @@
         max-width: 380px;
         min-width: 290px;
         margin: 0 auto;
-        height: auto;
+        height: none;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -791,6 +793,9 @@
         font-size: 1.5rem;
         font-weight: 600;
         color: #044bb6;
+        @include media(tablet-s-only) {
+            color: white;
+        }
     }
     &--img {
         background: url(../img/down-arrow.png);
@@ -799,5 +804,11 @@
         background-size: 20px 20px;
         background-repeat: no-repeat;
         background-position: center;
+        @include media(tablet-s-only) {
+            background: url(../img/down-arrowW.png);
+            background-size: 20px 20px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
     }
 }

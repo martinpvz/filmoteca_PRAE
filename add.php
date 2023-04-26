@@ -27,7 +27,7 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Add | Filmoteca PRAE</title>
 </head>
-<body>
+<body class="body__add">
     <header class="header__home">
         <div class="header__home--img">
             <img src="./img/logo.png" alt="Logo">
@@ -66,58 +66,71 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
     </section>
 
     <main class="main__media" id="main__media">
-        <section class="classify">
+        <section class="classify" id="classify-regular">
+                <div class="loaderText">
+                    <div class="wrapperText">
+                        <div class="circle"></div>
+                        <div class="line-1"></div>
+                        <div class="line-2"></div>
+                        <div class="line-3"></div>
+                        <div class="line-4"></div>
+                    </div>
+                </div>
+
+                <div class="loaderText">
+                    <div class="wrapperText">
+                        <div class="circle"></div>
+                        <div class="line-1"></div>
+                        <div class="line-2"></div>
+                        <div class="line-3"></div>
+                        <div class="line-4"></div>
+                    </div>
+                </div>
             <div class="filter" id="filter">
                 <p class="filter__title">Filtros</p>
-                <!-- <hr> -->
                 <div class="filter__category">
                     <hr>
                     <p class="filter__category--title">Año</p>
                     <div class="category" id="category-year"></div>
                 </div>
-                <!-- <hr> -->
                 <div class="filter__category">
                     <hr>
                     <p class="filter__category--title">Área</p>
                     <div class="category" id="category-area"></div>
                 </div>
-                <!-- <hr> -->
                 <div class="filter__category" id="category">
                     <hr>
                     <p class="filter__category--title">Categoría</p>
                     <div class="category" id="category-category"></div>
-                    <div class="see__more" onclick="changeCategory('category')">
-                        <p id="see-more-category">Ver más</p>
+                    <div class="see__more" onclick="changeCategory('category')" id="see-more-category">
+                        <p id="see-more-category-text">Ver más</p>
                         <div class="see__more--img" id="see-more-img-category"></div>
                     </div>
                 </div>
-                <!-- <hr> -->
                 <div class="filter__category" id="subcategory">
                     <hr>
                     <p class="filter__category--title">Subcategoría</p>
                     <div class="category" id="category-subcategory"></div>
-                    <div class="see__more" onclick="changeCategory('subcategory')">
-                        <p id="see-more-subcategory">Ver más</p>
+                    <div class="see__more" onclick="changeCategory('subcategory')" id="see-more-subcategory">
+                        <p id="see-more-subcategory-text">Ver más</p>
                         <div class="see__more--img" id="see-more-img-subcategory"></div>
                     </div>
                 </div>
-                <!-- <hr> -->
                 <div class="filter__category" id="type">
                     <hr>
                     <p class="filter__category--title">Tipo</p>
                     <div class="category" id="category-type"></div>
-                    <div class="see__more" onclick="changeCategory('type')">
-                        <p id="see-more-type">Ver más</p>
+                    <div class="see__more" onclick="changeCategory('type')" id="see-more-type">
+                        <p id="see-more-type-text">Ver más</p>
                         <div class="see__more--img" id="see-more-img-type"></div>
                     </div>
                 </div>
-                <!-- <hr> -->
                 <div class="filter__category" id="subtype">
                     <hr>    
                     <p class="filter__category--title">Subtipo</p>
                     <div class="category" id="category-subtype"></div>
-                    <div class="see__more" onclick="changeCategory('subtype')">
-                        <p id="see-more-subtype">Ver más</p>
+                    <div class="see__more" onclick="changeCategory('subtype')" id="see-more-subtype">
+                        <p id="see-more-subtype-text">Ver más</p>
                         <div class="see__more--img" id="see-more-img-subtype"></div>
                     </div>
                 </div>
@@ -150,10 +163,10 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
                         </div>
 
                         <div class="form__error" id="form__error">
-                            <p>Existen campos vacíos</p>
+                            <p id="form__error--text">Existen campos vacíos</p>
                         </div>
 
-                        <input type="submit" value="Registrar" class="submit submit__add" id="submit">
+                        <input type="button" value="Registrar" class="submit submit__add" id="submit">
                     </form>
                 </div>
             </div>
@@ -166,134 +179,78 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
         <div class="filter__responsive--header">
             <button type="button" class="filter__close" onclick="mostrarMedia()"></button>
         </div>
-        <section class="classify">
-            <div class="filter">
+        <section class="classify" id="filter__responsive--section">
+            <div class="loaderText">
+                <div class="wrapperText">
+                    <div class="circle"></div>
+                    <div class="line-1"></div>
+                    <div class="line-2"></div>
+                    <div class="line-3"></div>
+                    <div class="line-4"></div>
+                </div>
+            </div>
+
+            <div class="loaderText">
+                <div class="wrapperText">
+                    <div class="circle"></div>
+                    <div class="line-1"></div>
+                    <div class="line-2"></div>
+                    <div class="line-3"></div>
+                    <div class="line-4"></div>
+                </div>
+            </div>    
+            <div class="filter" id="filter">
                 <p class="filter__title">Filtros</p>
-                <hr>
+                <!-- <hr> -->
                 <div class="filter__category">
+                    <hr>
                     <p class="filter__category--title">Año</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="anio" id="anteriores">
-                            <label for="anteriores">Años anteriores</label>
-                            <span>125</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="anio" id="2021">
-                            <label for="2021">2021</label>
-                            <span>15</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="anio" id="2020">
-                            <label for="2020">2020</label>
-                            <span>20</span>
-                        </div>
-                    </div>
+                    <div class="category" id="category-year"></div>
                 </div>
-                <hr>
+                <!-- <hr> -->
                 <div class="filter__category">
+                    <hr>
                     <p class="filter__category--title">Área</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Educación</label>
-                            <span>87</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Salud</label>
-                            <span>13</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Entorno</label>
-                            <span>34</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Trabajo social</label>
-                            <span>94</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Proyectos y convocatorias</label>
-                            <span>94</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="area" id="anteriores">
-                            <label for="anteriores">Entrega de donativos</label>
-                            <span>32</span>
-                        </div>
-                    </div>
+                    <div class="category" id="category-area"></div>
                 </div>
-                <hr>
-                <div class="filter__category">
+                <!-- <hr> -->
+                <div class="filter__category" id="category">
+                    <hr>
                     <p class="filter__category--title">Categoría</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="category" id="anteriores">
-                            <label for="anteriores">Atención primaria 
-                            a la salud</label>
-                            <span>87</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="category" id="anteriores">
-                            <label for="anteriores">Prácticas de bienestar
-                            comunitario</label>
-                            <span>13</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="category" id="anteriores">
-                            <label for="anteriores">Educación para la salud</label>
-                            <span>34</span>
-                        </div>
+                    <div class="category" id="category-category"></div>
+                    <div class="see__more" onclick="changeCategory('category')" id="see-more-category">
+                        <p id="see-more-category-text">Ver más</p>
+                        <div class="see__more--img" id="see-more-img-category"></div>
                     </div>
                 </div>
-                <hr>
-                <div class="filter__category">
+                <!-- <hr> -->
+                <div class="filter__category" id="subcategory">
+                    <hr>
                     <p class="filter__category--title">Subcategoría</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="subcategory" id="anteriores">
-                            <label for="anteriores">Talleres y prácticas
-                            saludables</label>
-                            <span>87</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="subcategory" id="anteriores">
-                            <label for="anteriores">Formación curricular</label>
-                            <span>13</span>
-                        </div>
-                        <div class="category__option">
-                            <input type="radio" name="subcategory" id="anteriores">
-                            <label for="anteriores">Capacitación en
-                            seguridad y protección
-                            escolar</label>
-                            <span>34</span>
-                        </div>
+                    <div class="category" id="category-subcategory"></div>
+                    <div class="see__more" onclick="changeCategory('subcategory')" id="see-more-subcategory">
+                        <p id="see-more-subcategory-text">Ver más</p>
+                        <div class="see__more--img" id="see-more-img-subcategory"></div>
                     </div>
                 </div>
-                <hr>
-                <div class="filter__category">
+                <!-- <hr> -->
+                <div class="filter__category" id="type">
+                    <hr>
                     <p class="filter__category--title">Tipo</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="type" id="anteriores">
-                            <label for="anteriores">Seguridad y prevención
-                            de accidentes</label>
-                            <span>2</span>
-                        </div>
+                    <div class="category" id="category-type"></div>
+                    <div class="see__more" onclick="changeCategory('type')" id="see-more-type">
+                        <p id="see-more-type-text">Ver más</p>
+                        <div class="see__more--img" id="see-more-img-type"></div>
                     </div>
                 </div>
-                <hr>
-                <div class="filter__category">
+                <!-- <hr> -->
+                <div class="filter__category" id="subtype">
+                    <hr>    
                     <p class="filter__category--title">Subtipo</p>
-                    <div class="category">
-                        <div class="category__option">
-                            <input type="radio" name="subtype" id="anteriores">
-                            <label for="anteriores">Actividades del área</label>
-                            <span>12</span>
-                        </div>
+                    <div class="category" id="category-subtype"></div>
+                    <div class="see__more" onclick="changeCategory('subtype')" id="see-more-subtype">
+                        <p id="see-more-subtype-text">Ver más</p>
+                        <div class="see__more--img" id="see-more-img-subtype"></div>
                     </div>
                 </div>
             </div>

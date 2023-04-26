@@ -246,16 +246,35 @@ class Filter extends DataBase
                 $categories[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
             }
             $this->response['categories'] = $categories;
-
-            $sql = "SELECT s.id, s.name, COUNT(m.id) as total
-            FROM subcategory s
+        } else if ($year == "" && $area != "" && $category == "" && $subcategory == "" && $type == "" && $subtype == "") {
+            $sql = "SELECT c.id, c.name, COUNT(m.id) as total
+            FROM category c
             LEFT JOIN (
-                SELECT m.id, m.subcategory_id, m.cdc_id
+                SELECT m.id, m.category_id, m.cdc_id
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year'
-            ) m ON s.id = m.subcategory_id
-            GROUP BY s.id, s.name";
+                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area'
+            ) m ON c.id = m.category_id
+            WHERE c.area_id = '$area'
+            GROUP BY c.id, c.name";
+
+            $result = $this->conexion->query($sql);
+            $categories = array();
+            while($row = mysqli_fetch_assoc($result)){
+                $categories[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
+            }
+            $this->response['categories'] = $categories;
+        } else if ($year == "" && $area != "" && $category != "" && $subcategory == "" && $type == "" && $subtype == "") {
+            $sql = "SELECT c.id, c.name, COUNT(m.id) as total
+            FROM subcategory c
+            LEFT JOIN (
+                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id
+                FROM media m
+                INNER JOIN cdc c ON m.cdc_id = c.id
+                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category'
+            ) m ON c.id = m.subcategory_id
+            WHERE c.category_id = '$category'
+            GROUP BY c.id, c.name";
 
             $result = $this->conexion->query($sql);
             $subcategories = array();
@@ -263,15 +282,16 @@ class Filter extends DataBase
                 $subcategories[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
             }
             $this->response['subcategories'] = $subcategories;
-
+        }  else if ($year == "" && $area != "" && $category != "" && $subcategory != "" && $type == "" && $subtype == "") {
             $sql = "SELECT t.id, t.name, COUNT(m.id) as total
             FROM type t
             LEFT JOIN (
-                SELECT m.id, m.type_id, m.cdc_id
+                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year'
+                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory'
             ) m ON t.id = m.type_id
+            WHERE t.subcategory_id = '$subcategory'
             GROUP BY t.id, t.name";
 
             $result = $this->conexion->query($sql);
@@ -280,16 +300,17 @@ class Filter extends DataBase
                 $types[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
             }
             $this->response['types'] = $types;
-
-            $sql = "SELECT st.id, st.name, COUNT(m.id) as total
-            FROM subtype st
+        }  else if ($year == "" && $area != "" && $category != "" && $subcategory != "" && $type != "" && $subtype == "") {
+            $sql = "SELECT s.id, s.name, COUNT(m.id) as total
+            FROM subtype s
             LEFT JOIN (
-                SELECT m.id, m.subtype_id, m.cdc_id
+                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year'
-            ) m ON st.id = m.subtype_id
-            GROUP BY st.id, st.name";
+                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type'
+            ) m ON s.id = m.subtype_id
+            WHERE s.type_id = '$type'
+            GROUP BY s.id, s.name";
 
             $result = $this->conexion->query($sql);
             $subtypes = array();
@@ -297,43 +318,63 @@ class Filter extends DataBase
                 $subtypes[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
             }
             $this->response['subtypes'] = $subtypes;
+        } 
+        // aqui
+        else if ($year == "" && $area == "" && $category != "" && $subcategory == "" && $type == "" && $subtype == "") {
+            $sql = "SELECT c.id, c.name, COUNT(m.id) as total
+            FROM subcategory c
+            LEFT JOIN (
+                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id
+                FROM media m
+                INNER JOIN cdc c ON m.cdc_id = c.id
+                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category'
+            ) m ON c.id = m.subcategory_id
+            WHERE c.category_id = '$category'
+            GROUP BY c.id, c.name";
 
+            $result = $this->conexion->query($sql);
+            $subcategories = array();
+            while($row = mysqli_fetch_assoc($result)){
+                $subcategories[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
+            }
+            $this->response['subcategories'] = $subcategories;
+        } else if ($year == "" && $area == "" && $category != "" && $subcategory != "" && $type == "" && $subtype == "") {
+            $sql = "SELECT t.id, t.name, COUNT(m.id) as total
+            FROM type t
+            LEFT JOIN (
+                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id
+                FROM media m
+                INNER JOIN cdc c ON m.cdc_id = c.id
+                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory'
+            ) m ON t.id = m.type_id
+            WHERE t.subcategory_id = '$subcategory'
+            GROUP BY t.id, t.name";
+
+            $result = $this->conexion->query($sql);
+            $types = array();
+            while($row = mysqli_fetch_assoc($result)){
+                $types[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
+            }
+            $this->response['types'] = $types;
+        }  else if ($year == "" && $area == "" && $category != "" && $subcategory != "" && $type != "" && $subtype == "") {
+            $sql = "SELECT s.id, s.name, COUNT(m.id) as total
+            FROM subtype s
+            LEFT JOIN (
+                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id
+                FROM media m
+                INNER JOIN cdc c ON m.cdc_id = c.id
+                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type'
+            ) m ON s.id = m.subtype_id
+            WHERE s.type_id = '$type'
+            GROUP BY s.id, s.name";
+
+            $result = $this->conexion->query($sql);
+            $subtypes = array();
+            while($row = mysqli_fetch_assoc($result)){
+                $subtypes[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
+            }
+            $this->response['subtypes'] = $subtypes;
         } else if ($year != "" && $area != "" && $category == "" && $subcategory == "" && $type == "" && $subtype == "") {
-            $sql = "SELECT y.id, y.year,COUNT(m.id) as total
-            FROM year y
-            LEFT JOIN (
-                SELECT m.id, m.year_id, m.cdc_id
-                FROM media m
-                INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%'
-            ) m ON y.id = m.year_id
-            GROUP BY y.id, y.year";
-
-            $result = $this->conexion->query($sql);
-            $years = array();
-            while($row = mysqli_fetch_assoc($result)){
-                $years[] = array('name' => $row['year'], 'total' => $row['total'], 'id' => $row['id']);
-            }
-            $this->response['years'] = $years;
-
-
-            $sql = "SELECT a.id, a.name, COUNT(m.id) as total
-            FROM area a
-            LEFT JOIN (
-                SELECT m.id, m.area_id, m.cdc_id
-                FROM media m
-                INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year'
-            ) m ON a.id = m.area_id
-            GROUP BY a.id, a.name";
-
-            $result = $this->conexion->query($sql);
-            $areas = array();
-            while($row = mysqli_fetch_assoc($result)){
-                $areas[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
-            }
-            $this->response['areas'] = $areas;
-
             $sql = "SELECT c.id, c.name, COUNT(m.id) as total
             FROM category c
             LEFT JOIN (
@@ -352,14 +393,60 @@ class Filter extends DataBase
             }
             $this->response['categories'] = $categories;
         } else if ($year != "" && $area != "" && $category != "" && $subcategory == "" && $type == "" && $subtype == "") {
+            $sql = "SELECT c.id, c.name, COUNT(m.id) as total
+            FROM subcategory c
+            LEFT JOIN (
+                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id
+                FROM media m
+                INNER JOIN cdc c ON m.cdc_id = c.id
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category'
+            ) m ON c.id = m.subcategory_id
+            WHERE c.category_id = '$category'
+            GROUP BY c.id, c.name";
 
+            $result = $this->conexion->query($sql);
+            $subcategories = array();
+            while($row = mysqli_fetch_assoc($result)){
+                $subcategories[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
+            }
+            $this->response['subcategories'] = $subcategories;
         } else if ($year != "" && $area != "" && $category != "" && $subcategory != "" && $type == "" && $subtype == "") {
+            $sql = "SELECT t.id, t.name, COUNT(m.id) as total
+            FROM type t
+            LEFT JOIN (
+                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id
+                FROM media m
+                INNER JOIN cdc c ON m.cdc_id = c.id
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory'
+            ) m ON t.id = m.type_id
+            WHERE t.subcategory_id = '$subcategory'
+            GROUP BY t.id, t.name";
 
-        } else if ($year != "" && $area != "" && $category != "" && $subcategory != "" && $type != "" && $subtype == "") {
+            $result = $this->conexion->query($sql);
+            $types = array();
+            while($row = mysqli_fetch_assoc($result)){
+                $types[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
+            }
+            $this->response['types'] = $types;
+        } else if ( ($year != "" && $area != "" && $category != "" && $subcategory != "" && $type != "" && $subtype == "") || ($year != "" && $area != "" && $category != "" && $subcategory != "" && $type != "" && $subtype != "") ) {
+            $sql = "SELECT s.id, s.name, COUNT(m.id) as total
+            FROM subtype s
+            LEFT JOIN (
+                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id
+                FROM media m
+                INNER JOIN cdc c ON m.cdc_id = c.id
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type'
+            ) m ON s.id = m.subtype_id
+            WHERE s.type_id = '$type'
+            GROUP BY s.id, s.name";
 
-        } else if ($year != "" && $area != "" && $category != "" && $subcategory != "" && $type != "" && $subtype != "") {
-
-        } 
+            $result = $this->conexion->query($sql);
+            $subtypes = array();
+            while($row = mysqli_fetch_assoc($result)){
+                $subtypes[] = array('name' => $row['name'], 'total' => $row['total'], 'id' => $row['id']);
+            }
+            $this->response['subtypes'] = $subtypes;
+        }
 
         $this->conexion->close();
     }

@@ -178,6 +178,7 @@ a {
   font-size: 3.5rem;
   font-weight: bold;
   margin-bottom: 15px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .header__login {
@@ -245,6 +246,7 @@ a {
   border-radius: 15px;
   font-family: "Nunito", sans-serif;
   transition: 0.2s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .main__login .form__login--buttons button:hover {
   box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.62);
@@ -335,6 +337,7 @@ a {
   bottom: -45px;
   left: calc(50% - var(--widthA) / 2);
   transition: 0.2s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .submit:hover {
@@ -683,6 +686,7 @@ input:-webkit-autofill:focus {
   font-size: 3.5rem;
   font-weight: bold;
   margin-bottom: 15px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .main__media {
@@ -698,7 +702,6 @@ input:-webkit-autofill:focus {
   min-width: 290px;
   height: auto;
   display: flex;
-  justify-content: center;
   align-items: flex-start;
 }
 @media only screen and (max-width: 880px) {
@@ -800,6 +803,9 @@ input:-webkit-autofill:focus {
   display: flex;
   justify-content: center;
   align-content: center;
+}
+.main__media .hide {
+  display: none;
 }
 .main__media .gallery {
   width: 75%;
@@ -983,7 +989,7 @@ input:-webkit-autofill:focus {
   max-width: 380px;
   min-width: 290px;
   margin: 0 auto;
-  height: auto;
+  height: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1521,6 +1527,11 @@ input:-webkit-autofill:focus {
   font-weight: 600;
   color: #044bb6;
 }
+@media only screen and (max-width: 880px) {
+  .see__more p {
+    color: white;
+  }
+}
 .see__more--img {
   background: url(../img/down-arrow.png);
   width: 20px;
@@ -1529,7 +1540,108 @@ input:-webkit-autofill:focus {
   background-repeat: no-repeat;
   background-position: center;
 }
+@media only screen and (max-width: 880px) {
+  .see__more--img {
+    background: url(../img/down-arrowW.png);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
 
+.loaderText {
+  position: relative;
+  width: 75%;
+  min-width: 200px;
+  height: 130px;
+  margin-top: 50px;
+  padding: 15px;
+  overflow: hidden;
+  align-self: center;
+  justify-self: start;
+}
+
+.loaderText:after {
+  content: "";
+  position: absolute;
+  width: 66%;
+  height: 75%;
+  top: 15%;
+  left: 0;
+  background: linear-gradient(110deg, rgba(227, 227, 227, 0) 0%, rgba(227, 227, 227, 0) 40%, rgba(227, 227, 227, 0.5) 50%, rgba(227, 227, 227, 0) 60%, rgba(227, 227, 227, 0) 100%);
+  animation: gradient-animation_2 0.8s linear infinite;
+}
+
+.loaderText .wrapperText {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.loaderText .wrapperText > div {
+  background-color: #cacaca;
+}
+
+.loaderText .button {
+  display: inline-block;
+  height: 32px;
+  width: 75px;
+}
+
+.loaderText .line-1 {
+  position: absolute;
+  top: 11px;
+  height: 10px;
+  width: 80%;
+}
+
+.loaderText .line-2 {
+  position: absolute;
+  top: 34px;
+  height: 10px;
+  width: 65%;
+}
+
+.loaderText .line-3 {
+  position: absolute;
+  top: 57px;
+  left: 0px;
+  height: 10px;
+  width: 100%;
+}
+
+.loaderText .line-4 {
+  position: absolute;
+  top: 80px;
+  left: 0px;
+  height: 10px;
+  width: 92%;
+}
+
+.loaderText .line-5 {
+  position: absolute;
+  top: 103px;
+  left: 0px;
+  height: 10px;
+  width: 88%;
+}
+
+.loaderText .line-6 {
+  position: absolute;
+  top: 80px;
+  left: 0px;
+  height: 10px;
+  width: 90%;
+}
+
+@keyframes gradient-animation_2 {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
 .add {
   width: 75%;
   height: auto;
@@ -1545,7 +1657,7 @@ input:-webkit-autofill:focus {
 }
 .add__form {
   margin: 100px 0 20px 0;
-  height: 530px;
+  height: 560px;
   width: 95%;
   max-width: 650px;
   position: relative;
@@ -1615,6 +1727,7 @@ input:-webkit-autofill:focus {
   outline: none;
   font-family: "Nunito", sans-serif;
   background-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .add .form__add--form .add__input span {
   width: 25px;
@@ -1641,6 +1754,7 @@ input:-webkit-autofill:focus {
 }
 
 .submit__add {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   z-index: -1;
 }
 
@@ -1666,6 +1780,11 @@ input[type=file]::file-selector-button:hover {
   background-color: #d2d2d2;
   border: 0px;
   border-right: 1px solid black;
+}
+
+.classify {
+  display: flex;
+  flex-direction: column;
 }
 
 .edit {
