@@ -859,6 +859,10 @@ input:-webkit-autofill:focus {
   width: 100%;
   transition: 0.2s;
 }
+.main__media .media__img video {
+  width: 100%;
+  transition: 0.2s;
+}
 .main__media .media__img--button {
   position: absolute;
   right: 20px;
@@ -895,6 +899,10 @@ input:-webkit-autofill:focus {
   background-repeat: no-repeat;
 }
 .main__media .media__img:hover img {
+  opacity: 0.4;
+  cursor: zoom-in;
+}
+.main__media .media__img:hover video {
   opacity: 0.4;
   cursor: zoom-in;
 }
@@ -1172,6 +1180,10 @@ input:-webkit-autofill:focus {
   width: 90%;
   border-radius: 10px;
 }
+.modal__content--img video {
+  width: 90%;
+  border-radius: 10px;
+}
 .modal__content--info {
   width: 50%;
   height: auto;
@@ -1344,6 +1356,11 @@ input:-webkit-autofill:focus {
   justify-content: center;
   align-items: center;
 }
+.modify .form__add--form .modify-media-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .modify .form__add--form img {
   width: 50%;
   border-radius: 15px;
@@ -1351,6 +1368,16 @@ input:-webkit-autofill:focus {
 }
 @media only screen and (max-width: 768px) {
   .modify .form__add--form img {
+    width: 70%;
+  }
+}
+.modify .form__add--form video {
+  width: 50%;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+@media only screen and (max-width: 768px) {
+  .modify .form__add--form video {
     width: 70%;
   }
 }

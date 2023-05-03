@@ -156,6 +156,10 @@
                 width: 100%;
                 transition: 0.2s;
             }
+            video {
+                width: 100%;
+                transition: 0.2s;
+            }
             &--button {
                 position: absolute;
                 right: 20px;
@@ -194,6 +198,10 @@
             }
         }
         &__img:hover img {
+            opacity: 0.4;
+            cursor: zoom-in;
+        }
+        &__img:hover video {
             opacity: 0.4;
             cursor: zoom-in;
         }
@@ -462,6 +470,10 @@
                 width: 90%;
                 border-radius: 10px;
             }
+            video {
+                width: 90%;
+                border-radius: 10px;
+            }
         }
         &--info {
             width: 50%;
@@ -616,7 +628,20 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        .modify-media-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         img {
+            width: 50%;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            @include media(mobile-only) {
+                width: 70%;
+            }
+        }
+        video {
             width: 50%;
             border-radius: 15px;
             margin-bottom: 10px;

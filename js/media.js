@@ -40,7 +40,29 @@ function toggleModal( event ) {
             const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
             const dateFinal = date.toLocaleDateString('es-MX', options).replace(/\-/g, '/');
             document.getElementById('modal-date').innerText = 'Fecha: ' + dateFinal;
-            document.getElementById('modal-media').src = info.resource;
+
+            // Eliminar el elemento de imagen existente
+            const modalMedia = document.getElementById('modal-media');
+            if (modalMedia) {
+                modalMedia.remove();
+            }
+
+            // Verificar el tipo de medio y establecer el elemento correspondiente en el DOM
+            if (info.type == 2) {
+                const video = document.createElement('video');
+                video.id = 'modal-media';
+                video.src = info.resource;
+                video.controls = true;
+                video.autoplay = false;
+                video.loop = false;
+                document.querySelector('.modal__content--img').appendChild(video);
+            } else {
+                const img = document.createElement('img');
+                img.id = 'modal-media';
+                img.src = info.resource;
+                document.querySelector('.modal__content--img').appendChild(img);
+            }
+
             document.getElementById('modal-download').href = info.resource;
         }
     } catch(e) {}
@@ -57,7 +79,6 @@ function toggleModal( event ) {
     }
 }
 
-
 function windowOnClick(event) {
     if (event.target === modal) {
         toggleModal();
@@ -67,16 +88,37 @@ function windowOnClick(event) {
 function toggleEdit() {
     try {
         if ( selectedMedia != null ) {
-            const info = photoInfo.find( photo => photo.media_id == selectedMedia )
-            document.getElementById('modify-photo').src = info.resource;
-            const date = new Date(info.date);
-            const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-            const dateFinal = date.toLocaleDateString('es-MX', options).replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1');
-            document.getElementById("date").value = dateFinal;
-            document.getElementById('description').value = info.description;
-            /*document.getElementById('modal-download').href = info.resource;*/
+        const info = photoInfo.find( photo => photo.media_id == selectedMedia );
+        const modifyMediaWrapper = document.getElementById('modify-media-wrapper');
+
+        // Eliminar el elemento de imagen o video existente
+        const modifyMedia = document.getElementById('modify-media');
+        if (modifyMedia) {
+            modifyMedia.remove();
+        }
+
+        // Verificar el tipo de medio y establecer el elemento correspondiente en el DOM
+        if (info.type == 2) {
+            const video = document.createElement('video');
+            video.id = 'modify-media';
+            video.src = info.resource;
+            video.controls = true;
+            modifyMediaWrapper.appendChild(video);
+        } else {
+            const img = document.createElement('img');
+            img.id = 'modify-media';
+            img.src = info.resource;
+            modifyMediaWrapper.appendChild(img);
+        }
+
+        const date = new Date(info.date);
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const dateFinal = date.toLocaleDateString('es-MX', options).replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1');
+        document.getElementById("date").value = dateFinal;
+        document.getElementById('description').value = info.description;
+        /*document.getElementById('modal-download').href = info.resource;*/
         } 
-    } catch(e) { console.log("error") }
+    } catch(e) { console.log(e) }
 
     toggleModal()
     //document.querySelector('.classify').style.display = "none";
@@ -86,7 +128,6 @@ function toggleEdit() {
     document.querySelector('.filter__button').classList.add('hide');
     window.scrollTo(0, 0);
 }
-
 
 function deleteMedia() {
     fetch(`./backend/media/media-delete.php?id=${selectedMedia}`)
@@ -98,9 +139,6 @@ function deleteMedia() {
         })
         .catch(error => console.error('Error al realizar la petición', error));
 }
-
-
-
 
 function closeModify() {
     // if ( window.innerWidth <= 880 ) {
@@ -126,8 +164,6 @@ try {
     edit.addEventListener("click", toggleEdit);
 } catch(e) {}
 
-
-
 async function star( id ) {
     fetch(`./backend/favourite/make-favourite.php?id=${id}`)
         .then(response => response.json())
@@ -143,9 +179,6 @@ async function star( id ) {
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-
-
-
 function listarMedia() {
     fetch(`./backend/media/media-list.php?cdc=${cdc}&type=${type}`)
         .then(response => response.json())
@@ -154,41 +187,81 @@ function listarMedia() {
                 let template = '';
                 photoInfo = data;
                 data.forEach(photo => {
-                    if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
-                        template += /*html*/`
-                        <div class="media__img">
-                            <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
-                            <div class="media__img--button">
-                                <a href="${photo.resource}" download class="download">
-                                    <span class="download__img"></span>
-                                </a>
+                    if(photo.type == "1") {
+                        if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
+                            template += /*html*/`
+                            <div class="media__img">
+                                <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                                <div class="media__img--button">
+                                    <a href="${photo.resource}" download class="download">
+                                        <span class="download__img"></span>
+                                    </a>
+                                </div>
+                                <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
                             </div>
-                            <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
-                        </div>
-                        `;
-                    } else if(photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3"))  {
-                        template += /*html*/`
-                        <div class="media__img">
-                            <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
-                            <div class="media__img--button">
-                                <a href="${photo.resource}" download class="download">
-                                    <span class="download__img"></span>
-                                </a>
+                            `;
+                        } else if(photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3"))  {
+                            template += /*html*/`
+                            <div class="media__img">
+                                <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                                <div class="media__img--button">
+                                    <a href="${photo.resource}" download class="download">
+                                        <span class="download__img"></span>
+                                    </a>
+                                </div>
+                                <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
                             </div>
-                            <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
-                        </div>
-                        `;
+                            `;
+                        } else {
+                            template += /*html*/`
+                            <div class="media__img">
+                                <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                                <div class="media__img--button">
+                                    <a href="${photo.resource}" download class="download">
+                                        <span class="download__img"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            `;
+                        }
                     } else {
-                        template += /*html*/`
-                        <div class="media__img">
-                            <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
-                            <div class="media__img--button">
-                                <a href="${photo.resource}" download class="download">
-                                    <span class="download__img"></span>
-                                </a>
+                        // aqui vamos a modificar ahorita
+                        if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
+                            template += /*html*/`
+                            <div class="media__img">
+                                <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                                <div class="media__img--button">
+                                    <a href="${photo.resource}" download class="download">
+                                        <span class="download__img"></span>
+                                    </a>
+                                </div>
+                                <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
                             </div>
-                        </div>
-                        `;
+                            `;
+                        } else if(photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3"))  {
+                            template += /*html*/`
+                            <div class="media__img">
+                                <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                                <div class="media__img--button">
+                                    <a href="${photo.resource}" download class="download">
+                                        <span class="download__img"></span>
+                                    </a>
+                                </div>
+                                <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
+                            </div>
+                            `;
+                        } else {
+                            template += /*html*/`
+                            <div class="media__img">
+                                <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                                <div class="media__img--button">
+                                    <a href="${photo.resource}" download class="download">
+                                        <span class="download__img"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            `;
+                        }
                     }
                 });
             if (addMedia) {

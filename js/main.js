@@ -17,6 +17,7 @@ function mostrarFiltros() {
     document.getElementById('footer__media').style.display = 'none'
     document.getElementById('filter__responsive').style.display = 'block'
     window.scrollTo(0, 0);
+    document.querySelector('.body__media').style.backgroundColor = '#043B9C';
 }
 
 // SHOW MEDIA WHEN DE X BUTTON OF THE FILTER IS PUSHED
@@ -25,6 +26,7 @@ function mostrarMedia() {
     document.getElementById('footer__media').style.display = 'block'
     document.getElementById('filter__responsive').style.display = 'none'
     window.scrollTo(0, 0);
+    document.querySelector('.body__media').style.backgroundColor = '#F4F4F4';
 }
 
 

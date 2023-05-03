@@ -1,7 +1,84 @@
+// let regularFilter = '';
+// let responsiveFilter = ''; // aqui esta guardado
+
+// function handleResponsiveFilter() {
+//     const screenWidth = window.innerWidth;
+//     if (screenWidth <= 880) {
+//         if( document.getElementById('classify-regular').innerText != "" ) {
+//             console.log('entro')
+//             responsiveFilter = document.getElementById('classify-regular').innerHTML;
+//             console.log(responsiveFilter)
+//             document.getElementById('filter__responsive--section').innerHTML = responsiveFilter;
+//             document.getElementById('classify-regular').innerHTML = "";
+//             getName('anio')
+//             getName('area')
+//             getName('category')
+//             getName('subcategory')
+//             getName('type')
+//             getName('subtype')
+//         }
+//     } else {
+//         if( document.getElementById('filter__responsive--section').innerText != "" ) {  
+//             console.log('entro') 
+//             regularFilter = document.getElementById('filter__responsive--section').innerHTML;
+//             document.getElementById('classify-regular').innerHTML = regularFilter;
+//             document.getElementById('filter__responsive--section').innerHTML = "";
+//             getName('anio')
+//             getName('area')
+//             getName('category')
+//             getName('subcategory')
+//             getName('type')
+//             getName('subtype')
+//         }
+//     } 
+// }
+
+function firstResponsiveFilter() {
+    const screenWidth = window.innerWidth;
+    if( screenWidth <= 880) {
+        //regularFilter = document.getElementById('classify-regular').innerHTML;
+        document.getElementById('classify-regular').innerHTML = "";
+    } else if ( screenWidth > 880) {
+        //responsiveFilter = document.getElementById('filter__responsive').innerHTML;
+        document.getElementById('filter__responsive--section').innerHTML = "";
+    }
+}
+
+// Agregar el evento de cambio de tamaño de pantalla
+// window.addEventListener("resize", handleResponsiveFilter);
+
+firstResponsiveFilter();
+
+
 const url = new URL(window.location.href);
 // Obtener el valor de "error" de la URL
 const cdc = url.searchParams.get("cdc");
 const type = url.searchParams.get("type");
+// document.getElementById('classify-regular').style.display = 'flex'
+
+const Category = document.getElementById("category");
+const Subcategory = document.getElementById("subcategory");
+const Type = document.getElementById("type");
+const Subtype = document.getElementById("subtype");
+const loader1 = document.getElementsByClassName("loaderText")[0];
+const loader2 = document.getElementsByClassName("loaderText")[1];
+
+Subcategory.style.display = "none";
+Type.style.display = "none";
+Subtype.style.display = "none";
+loader1.style.display = "none";
+loader2.style.display = "none";
+
+
+
+// let categories = '';
+// let categoriesShort = '';
+// let subcategories = '';
+// let subcategoriesShort = '';
+// let types = '';
+// let typesShort = '';
+// let subtypes = '';
+// let subtypesShort = '';
 
 
 if (cdc != null) {
@@ -15,6 +92,18 @@ if (cdc != null) {
     document.getElementById("title-mobile").innerText = typeTitle;
     document.getElementById("title-desktop").innerText = typeTitle;
 }
+
+
+let info = {
+    year: "",
+    area: "",
+    category: "",
+    subcategory: "",
+    type: "",
+    subtype: "",
+}
+
+let value = {...info}
 
 
 
@@ -58,21 +147,305 @@ document.getElementById('filter').addEventListener('change', function() {
         }
     }
 
-    // just get the params of the url and put them in a string, print it 
-    // and you will see what you need
-    //
-    var params = url.searchParams.toString();
-    fetch(`./backend/filter/filter-list.php?${params}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-        })
-        .catch(error => console.error('Error al realizar la petición', error));
-        
-    console.log(params);
-    console.log(filtro);
-
 });
+
+/////
+
+function makeTemplate(data, name) {
+    let template = '';
+    let templateShort = '';
+    data.forEach(e => {
+        template += /*html*/`
+            <div class="category__option">
+                <input type="radio" name="${name}" id="${e.id}${e.name}" class="${e.id}">
+                <label for="${e.id}${e.name}">${e.name}</label>
+                <span>${e.total}</span>
+            </div>
+        `;
+    });
+    if( name == "category") {
+        categories = template;
+    } else if (name == "subcategory") {
+        subcategories = template;
+    } else if (name == "type") {
+        types = template;
+    } else if (name == "subtype") {
+        subtypes = template;
+    }
+    if (data.length > 6) {
+        for (let i = 0; i < 6; i++) {
+            templateShort += /*html*/`
+                <div class="category__option">
+                    <input type="radio" name="${name}" id="${data[i].id}${data[i].name}" class="${data[i].id}">
+                    <label for="${data[i].id}${data[i].name}">${data[i].name}</label>
+                    <span>${data[i].total}</span>
+                </div>
+            `;
+        }
+        try {
+            document.getElementById('see-more-' + name).style.display = "flex";
+        } catch (error) {}
+        if( name == "category") {
+            categoriesShort = templateShort;
+        } else if (name == "subcategory") {
+            subcategoriesShort = templateShort;
+        } else if (name == "type") {
+            typesShort = templateShort;
+        } else if (name == "subtype") {
+            subtypesShort = templateShort;
+        }
+        console.log(templateShort);
+        console.log(template);
+        return templateShort;
+    } else  {
+        try {
+            document.getElementById('see-more-' + name).style.display = "none";
+        } catch (error) {}
+    }
+    return template;
+}
+
+function selectDefault(name) {
+    // Obtener el contenedor de la categoría
+    let categoryContainer = document.querySelector('#category-' + name);
+
+    // Obtener todos los labels dentro del contenedor de la categoría
+    let labels = categoryContainer.querySelectorAll('.category__option label');
+
+    // Recorrer los labels y buscar el que coincide con el valor del año
+    labels.forEach(label => {
+        if (label.textContent === value[name]) {
+            let input = label.previousElementSibling;
+            if (input) {
+                input.checked = true;
+            }
+        }
+    });
+}
+
+async function updateFilter(data, name) {
+    data.cdc = cdc;
+    console.log(data)
+    const response = await fetch(`./backend/filter/filter-update.php`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    const result = await response.json();
+
+    // if theres something selected in the years section of the filter
+    if(value.year != "" && value.area == "" && value.category == "" && value.subcategory == "" && value.type == "" && value.subtype == "") { 
+        let templateY = makeTemplate(result['years'], "anio");
+        document.getElementById('category-year').innerHTML = templateY;
+        getName("anio");
+    
+        selectDefault("year");
+    
+        let templateA = makeTemplate(result['areas'], "area");
+        document.getElementById('category-area').innerHTML = templateA;
+        getName("area");
+    
+        selectDefault("area");
+    
+        let templateC = makeTemplate(result['categories'], "category");
+        document.getElementById('category-category').innerHTML = templateC;
+        getName("category");
+    
+        selectDefault("category");
+    } else if(value.year != "" && value.area != "" && value.category == "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateC = makeTemplate(result['categories'], "category");
+        document.getElementById('category-category').innerHTML = templateC;
+        getName("category");
+    
+        selectDefault("category");
+    } else if(value.year != "" && value.area != "" && value.category != "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateS = makeTemplate(result['subcategories'], "subcategory");
+        document.getElementById('category-subcategory').innerHTML = templateS;
+        getName("subcategory");
+
+        selectDefault("subcategory");
+    } else if(value.year != "" && value.area != "" && value.category != "" && value.subcategory != "" && value.type == "" && value.subtype == "") {
+        let templateT = makeTemplate(result['types'], "type");
+        document.getElementById('category-type').innerHTML = templateT;
+        getName("type");
+
+        selectDefault("type");
+    } else if(value.year != "" && value.area != "" && value.category != "" && value.subcategory != "" && value.type != "" && value.subtype == "") {
+        let templateSt = makeTemplate(result['subtypes'], "subtype");
+        document.getElementById('category-subtype').innerHTML = templateSt;
+        getName("subtype");
+
+        selectDefault("subtype");
+    } else if(value.year == "" && value.area != "" && value.category == "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateC = makeTemplate(result['categories'], "category");
+        document.getElementById('category-category').innerHTML = templateC;
+        getName("category");
+    
+        selectDefault("category");
+    } else if(value.year == "" && value.area != "" && value.category != "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateS = makeTemplate(result['subcategories'], "subcategory");
+        document.getElementById('category-subcategory').innerHTML = templateS;
+        getName("subcategory");
+
+        selectDefault("subcategory");
+    } else if(value.year == "" && value.area != "" && value.category != "" && value.subcategory != "" && value.type == "" && value.subtype == "") {
+        let templateT = makeTemplate(result['types'], "type");
+        document.getElementById('category-type').innerHTML = templateT;
+        getName("type");
+
+        selectDefault("type");
+    } else if(value.year == "" && value.area != "" && value.category != "" && value.subcategory != "" && value.type != "" && value.subtype == "") {
+        let templateSt = makeTemplate(result['subtypes'], "subtype");
+        document.getElementById('category-subtype').innerHTML = templateSt;
+        getName("subtype");
+
+        selectDefault("subtype");
+    } else if(value.year == "" && value.area != "" && value.category == "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateC = makeTemplate(result['categories'], "category");
+        document.getElementById('category-category').innerHTML = templateC;
+        getName("category");
+    
+        selectDefault("category");
+    } else if(value.year == "" && value.area == "" && value.category != "" && value.subcategory == "" && value.type == "" && value.subtype == "") {
+        let templateS = makeTemplate(result['subcategories'], "subcategory");
+        document.getElementById('category-subcategory').innerHTML = templateS;
+        getName("subcategory");
+
+        selectDefault("subcategory");
+    } else if(value.year == "" && value.area == "" && value.category != "" && value.subcategory != "" && value.type == "" && value.subtype == "") {
+        let templateT = makeTemplate(result['types'], "type");
+        document.getElementById('category-type').innerHTML = templateT;
+        getName("type");
+
+        selectDefault("type");
+    } else if(value.year == "" && value.area == "" && value.category != "" && value.subcategory != "" && value.type != "" && value.subtype == "") {
+        let templateSt = makeTemplate(result['subtypes'], "subtype");
+        document.getElementById('category-subtype').innerHTML = templateSt;
+        getName("subtype");
+
+        selectDefault("subtype");
+    }
+    console.log(name)
+    if(name == "anio") {
+        Subcategory.style.display = "none";
+        Type.style.display = "none";
+        Subtype.style.display = "none";
+    } else if(name == "area") {
+        Subcategory.style.display = "none";
+        Type.style.display = "none";
+        Subtype.style.display = "none";
+    } else if(name == "category") {
+        if(checkContent("subcategory")) {
+            Subcategory.style.display = "flex";
+        } else {
+            Subcategory.style.display = "none";
+        }
+        Type.style.display = "none";
+        Subtype.style.display = "none";
+    } else if(name == "subcategory") {
+        if(checkContent("type")) {
+            Type.style.display = "flex";
+        } else {
+            Type.style.display = "none";
+        }
+        Subtype.style.display = "none";
+    } else if(name == "type") {
+        if(checkContent("subtype")) {
+            Subtype.style.display = "flex";
+        } else {
+            Subtype.style.display = "none";
+        }
+    }
+
+    setTimeout(function() {
+        document.getElementById("filter").style.display = "flex";
+        loader1.style.display = "none";
+        loader2.style.display = "none";
+    }, 1000);
+}
+
+
+function checkContent(name) {
+    const category = document.querySelector('#category-' + name);
+    if (category.innerHTML == '') {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+const getName = (name) => {
+    // obtener las categorias
+    const type = document.getElementsByName(name);
+    // Verificar qué elemento está seleccionado
+    for (let i = 0; i < type.length; i++) {
+        type[i].addEventListener("click", function() {
+            const label = document.querySelector(`label[for="${type[i].id}"]`);
+            const clase = type[i].classList.toString();
+            if (name == "category") {
+                info.category = clase;
+                value.category = label.textContent;
+                // erase all other values
+                info.subcategory = "";
+                info.type = "";
+                info.subtype = "";
+                value.subcategory = "";
+                value.type = "";
+                value.subtype = "";
+            } else if (name == "subcategory") {
+                info.subcategory = clase;
+                value.subcategory = label.textContent; 
+                // erase all other values
+                info.type = "";
+                info.subtype = "";
+                value.type = "";
+                value.subtype = "";
+            } else if (name == "type") {
+                info.type = clase;
+                value.type = label.textContent;
+                // erase all other values
+                info.subtype = "";
+                value.subtype = "";
+            } else if (name == "subtype") {
+                info.subtype = clase;
+                value.subtype = label.textContent;
+            }  else if (name == "anio") {
+                info.year = clase;
+                value.year = label.textContent;
+                // erase all other values
+                info.area = "";
+                info.category = "";
+                info.subcategory = "";
+                info.type = "";
+                info.subtype = "";
+                value.area = "";
+                value.category = "";
+                value.subcategory = "";
+                value.type = "";
+                value.subtype = "";
+            }  else if (name == "area") {
+                info.area = clase;
+                value.area = label.textContent;
+                // erase all other values
+                info.category = "";
+                info.subcategory = "";
+                info.type = "";
+                info.subtype = "";
+                value.category = "";
+                value.subcategory = "";
+                value.type = "";
+                value.subtype = "";
+            }
+
+            document.getElementById("filter").style.display = "none";
+            loader1.style.display = "flex";
+            loader2.style.display = "flex";
+            updateFilter(info, name);
+        });
+    }
+}
 
 function listYears() {
     fetch(`./backend/filter/filter-list-year.php?cdc=${cdc}`)
@@ -92,6 +465,8 @@ function listYears() {
                 });
             document.getElementById('category-year').innerHTML = template;
             }
+
+            getName("anio");
         })
         .catch(error => console.error('Error al realizar la petición', error));
 }
@@ -117,14 +492,12 @@ function listAreas() {
                 });
             document.getElementById('category-area').innerHTML = template;
             }
+            getName("area");
         })
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
 listAreas();
-
-let categories = '';
-let categoriesShort = '';
 
 function listCategories() {
     fetch(`./backend/filter/filter-list-category.php?cdc=${cdc}`)
@@ -157,14 +530,12 @@ function listCategories() {
                 categories = template;
                 categoriesShort = templateShort;
             }
+            getName("category");
         })
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
 listCategories();
-
-let subcategories = '';
-let subcategoriesShort = '';
 
 function listSubCategories() {
     fetch(`./backend/filter/filter-list-subcategory.php?cdc=${cdc}`)
@@ -197,14 +568,12 @@ function listSubCategories() {
                 subcategories = template;
                 subcategoriesShort = templateShort;
             }
+            getName("subcategory");
         })
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-listSubCategories();
-
-let types = '';
-let typesShort = '';
+// listSubCategories();
 
 function listTypes() {
     fetch(`./backend/filter/filter-list-type.php?cdc=${cdc}`)
@@ -237,14 +606,12 @@ function listTypes() {
                 types = template;
                 typesShort = templateShort;
             }
+            getName("type");
         })
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-listTypes();
-
-let subtypes = '';
-let subtypesShort = '';
+// listTypes();
 
 function listSubTypes() {
     fetch(`./backend/filter/filter-list-subtype.php?cdc=${cdc}`)
@@ -277,20 +644,24 @@ function listSubTypes() {
                 subtypes = template;
                 subtypesShort = templateShort;
             }
+            getName("subtype");
         })
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-listSubTypes();
+// listSubTypes();
+
 
 function changeCategory(type) {
-    const text = document.getElementById(`see-more-${type}`);
+    const text = document.getElementById(`see-more-${type}-text`);
     const arrow = document.getElementById(`see-more-img-${type}`);
     let variable;
     let variableShort;
+    let selectedValue = "";
     if (type == 'category') {
         variable = categories;
         variableShort = categoriesShort;
+        selectedValue = document.querySelector('#category-category input[type="radio"]:checked')?.value || "";
     } else if (type == 'subcategory') {
         variable = subcategories;
         variableShort = subcategoriesShort;
@@ -306,19 +677,28 @@ function changeCategory(type) {
     if (text.innerText == 'Ver más') {
         text.innerText = 'Ver menos';
         document.getElementById(`category-${type}`).innerHTML = variable;
-        arrow.style.backgroundImage = 'url(./img/up-arrow.png)';
+        if (window.innerWidth <= 880) { 
+            arrow.style.backgroundImage = 'url(./img/up-arrowW.png)';
+        } else {
+            arrow.style.backgroundImage = 'url(./img/up-arrow.png)';
+        }
+        getName(type);
+        selectDefault(type);
+        
     } else {
         text.innerText = 'Ver más';
         document.getElementById(`category-${type}`).innerHTML = variableShort;
-        arrow.style.backgroundImage = 'url(./img/down-arrow.png)';
+        if (window.innerWidth <= 880) { 
+            arrow.style.backgroundImage = 'url(./img/down-arrowW.png)';
+        } else {
+            arrow.style.backgroundImage = 'url(./img/down-arrow.png)';
+        }
+        getName(type);
+        selectDefault(type);
     }
 }
 
-// parámetros de la URL actual
-try {
-    var params = new URLSearchParams(window.location.search);
-    var queryParams = '?' + params.toString();
-    var addLink = document.querySelector('.addmedia');
-    console.log(queryParams)
-    addLink.href = addLink.getAttribute('href') + queryParams;
-} catch (error) {}
+
+
+
+////

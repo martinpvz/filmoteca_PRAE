@@ -58,7 +58,6 @@ const url = new URL(window.location.href);
 const cdc = url.searchParams.get("cdc");
 const type = url.searchParams.get("type");
 // document.getElementById('classify-regular').style.display = 'flex'
-console.log(document.getElementById("filter"));
 
 const Category = document.getElementById("category");
 const Subcategory = document.getElementById("subcategory");
@@ -802,18 +801,126 @@ function verifyFilter() {
     return correctFilter;
 }
 
+function Base64(imagen) {
+    return new Promise((resolve, reject) => {
+        // Crear un objeto FileReader para leer el archivo de imagen
+        var reader = new FileReader();
+
+        // Escuchar el evento "load" para obtener la cadena Base64 del archivo de imagen
+        reader.addEventListener('load', function() {
+            // Obtener la cadena Base64 del archivo de imagen
+            var imagen_base64 = reader.result;
+
+            // Resolver la promesa con la cadena Base64 de la imagen
+            resolve(imagen_base64);
+        });
+
+        // Escuchar el evento "error" en caso de que ocurra un error de lectura
+        reader.addEventListener('error', function(error) {
+            // Rechazar la promesa con el error de lectura
+            reject(error);
+        });
+
+        // Leer el archivo de imagen como una URL de datos
+        reader.readAsDataURL(imagen);
+    });
+}
+
+
+async function addMedia(data) {
+    const response = await fetch(`./backend/media/media-add.php`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    console.log(result);
+
+    const error = document.getElementById('form__error')
+    if(result.estatus == "Correcto") {
+        setTimeout(function() {
+            error.style.display = "flex"
+            document.getElementById('form__error--text').innerText = "Media agregada correctamente"
+            error.style.backgroundColor = "#228B22";
+        }, 1000);
+    }
+}
+
 update.addEventListener("click", function(event) {
     const error = document.getElementById('form__error')
+
     const date = document.getElementById("date").value;
     const description = document.getElementById("description").value;
-    const rute = document.getElementById("rute").value;
-    const file = document.getElementById("file").value;
+    var select = document.querySelector('.input__option');
+    var selected = select.value;
+    if (selected == "image") {
+        selected = 1;
+    } else if (selected == "video") {
+        selected = 2;
+    } else { 
+        selected = 0;
+    }
+    const resource = document.getElementById("file").value;
+    const year_id = info.year != "" ? info.year : null;
+    const area_id = info.area != "" ? info.area : null;
+    const cdc_id = info.cdc != "" ? info.cdc : null;
+    const category_id = info.category != "" ? info.category : null;
+    const subcategory_id = info.subcategory != "" ? info.subcategory : null;
+    const type_id = info.type != "" ? info.type : null;
+    const subtype_id = info.subtype != "" ? info.subtype : null;
 
-    if (date === "" || description === "" || rute === "" || file === "") {
-        error.style.display = "flex"
+    const form = document.getElementById("form__add");
+
+    const imagen = form.file.files[0];
+
+    // aqui va a ir 
+    var loader = document.querySelector('.loader');
+    loader.style.visibility = 'visible';
+    loader.style.opacity = '1';
+
+
+    if (date === "" || description === "" || rute === "" || resource === "" || !selected ) {
+        document.getElementById('form__error--text').innerText = "Existen campos vacíos";
+        setTimeout(function() {
+            error.style.backgroundColor = "#e83845";
+            error.style.display = "flex"
+        }, 1000);
         event.preventDefault();
     } else if(!verifyFilter()) {
         document.getElementById('form__error--text').innerText = "Faltan categorías por seleccionar";
+        setTimeout(function() {
+            error.style.backgroundColor = "#e83845";
+            error.style.display = "flex"
+        }, 1000);
         event.preventDefault();
+    } else {
+        Base64(imagen)
+        .then(function(imagen_base64) {
+            console.log(imagen_base64);
+            const post = {
+                date: date,
+                description: description,
+                type: selected,
+                resource: imagen_base64,
+                year_id: year_id,
+                area_id: area_id,
+                cdc_id: cdc_id,
+                category_id: category_id,
+                subcategory_id: subcategory_id,
+                type_id: type_id,
+                subtype_id: subtype_id
+            }
+            addMedia(post);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
     }
+
+    setTimeout(function() {
+        loader.style.visibility = 'hidden';
+        loader.style.opacity = '0';
+    }, 1000);
 });

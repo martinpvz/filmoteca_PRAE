@@ -68,7 +68,121 @@ class Media extends DataBase
 
     public function add($post)
     {
+        $date = $post->date;
+        $description = $post->description;
+        $type = $post->type;
+        $resource = $post->resource;
+        $created_at = date('Y-m-d H:i:s');
+        $updated_at = date('Y-m-d H:i:s');
+        $year_id = $post->year_id;
+        $area_id = $post->area_id;
+        $cdc_name = $post->cdc_id;
+        $category_id = $post->category_id;
+        $subcategory_id = $post->subcategory_id;
+        $type_id = $post->type_id;
+        $subtype_id = $post->subtype_id;
 
+        if ($category_id == "") {
+            $category_id = NULL;
+        }
+        if ($subcategory_id == "") {
+            $subcategory_id = NULL;
+        }
+        if ($type_id == "") {
+            $type_id = NULL;
+        }
+        if ($subtype_id == "") {
+            $subtype_id = NULL;
+        }
+        
+        $resource = explode( ',', $resource );
+        $media = base64_decode($resource[1]);
+
+        // Guardar los datos de la imagen en un archivo temporal
+        $tmp_file = tempnam(sys_get_temp_dir(), 'image_');
+        file_put_contents($tmp_file, $media);
+
+        // Revisar si el archivo se generó correctamente
+        if (!file_exists($tmp_file)) {
+            $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en un archivo temporal';
+        } else {
+            $this->response['mensaje'] = 'Archivo temporal generado correctamente: ' . $tmp_file;
+        }
+
+        // Copiar el archivo temporal a la carpeta de destino
+        $uploads_dir = '../../img';
+        if( $type == '1') {
+            $name = uniqid() . '.jpg';
+        } else if($type == '2') {
+            $name = uniqid() . '.mp4';
+        }
+        $path = $uploads_dir . '/' . $name;
+        if (!copy($tmp_file, $path)) {
+            $this->response['mensaje'] = 'Error: no se pudo copiar el archivo temporal a la carpeta de destino';
+        } else {
+            $this->response['mensaje'] = $path;
+        }
+
+        $resource = './img/' . $name;
+
+        // Eliminar el archivo temporal
+        unlink($tmp_file);
+
+        $cdc_query = "SELECT id FROM cdc WHERE name LIKE '%$cdc_name%'";
+        $cdc_result = $this->conexion->query($cdc_query);
+        $cdc_row = mysqli_fetch_assoc($cdc_result);
+        $cdc_id = $cdc_row['id'];
+
+        $this->response = array();
+        // $sql = "INSERT INTO media (date, description, type, resource, created_at, updated_at, year_id, area_id, cdc_id, category_id, subcategory_id, type_id, subtype_id, favourite)
+        // VALUES ('$date', '$description', '$type', '$resource', '$created_at', '$updated_at', '$year_id', COALESCE('$area_id', NULL), COALESCE('$cdc_id', NULL), COALESCE('$category_id', NULL), COALESCE('$subcategory_id', NULL), COALESCE('$type_id', NULL), COALESCE('$subtype_id', NULL), 0)";
+        $sql = "INSERT INTO media (date, description, type, resource, created_at, updated_at, year_id, area_id, cdc_id, category_id, subcategory_id, type_id, subtype_id, favourite)
+        VALUES ('$date', '$description', '$type', '$resource', '$created_at', '$updated_at', '$year_id', ";
+        if ($area_id == '') {
+            $sql .= "NULL, ";
+        } else {
+            $sql .= "'$area_id', ";
+        }
+        
+        if ($cdc_id == '') {
+            $sql .= "NULL, ";
+        } else {
+            $sql .= "'$cdc_id', ";
+        }
+        
+        if ($category_id == '') {
+            $sql .= "NULL, ";
+        } else {
+            $sql .= "'$category_id', ";
+        }
+        
+        if ($subcategory_id == '' ) {
+            $sql .= "NULL, ";
+        } else {
+            $sql .= "'$subcategory_id', ";
+        }
+        
+        if ($type_id == '') {
+            $sql .= "NULL, ";
+        } else {
+            $sql .= "'$type_id', ";
+        }
+        
+        if ($subtype_id == '') {
+            $sql .= "NULL, ";
+        } else {
+            $sql .= "'$subtype_id', ";
+        }
+        
+        $sql .= "0)";
+        
+        if ($this->conexion->query($sql)) {
+            $this->response['estatus'] =  "Correcto";
+            $this->response['mensaje'] =  "La media se agregó correctamente";
+        } else {
+            $this->response['mensaje'] = $subcategory_id . "No se pudo ejecutar la instrucción $sql. " . mysqli_error($this->conexion);
+        }
+        $this->conexion->close();
     }
 
     public function edit($post)
