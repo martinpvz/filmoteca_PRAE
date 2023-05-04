@@ -185,6 +185,64 @@ class Media extends DataBase
         $this->conexion->close();
     }
 
+    public function update($post) {
+        $this->response = array();
+        $cdc = $post->cdc;
+        $year = $post->year;
+        $area = $post->area;
+        $category = $post->category;
+        $subcategory = $post->subcategory;
+        $type = $post->type;
+        $subtype = $post->subtype;
+
+        $query = "SELECT media.id AS media_id, media.description, media.date, media.type, media.resource, media.favourite, media.year_id, media.area_id, media.cdc_id, media.category_id, media.subcategory_id, media.type_id, media.subtype_id
+        FROM media
+        JOIN cdc ON media.cdc_id = cdc.id";
+
+        $conditions = array();
+
+        if (!empty($cdc)) {
+            $conditions[] = "cdc.name LIKE '%$cdc%'";
+        }
+        if (!empty($year)) {
+            $conditions[] = "media.year_id = '$year'";
+        }
+        if (!empty($area)) {
+            $conditions[] = "media.area_id = '$area'";
+        }
+        if (!empty($category)) {
+            $conditions[] = "media.category_id = '$category'";
+        }
+        if (!empty($subcategory)) {
+            $conditions[] = "media.subcategory_id = '$subcategory'";
+        }
+        if (!empty($type)) {
+            $conditions[] = "media.type_id = '$type'";
+        }
+        if (!empty($subtype)) {
+            $conditions[] = "media.subtype_id = '$subtype'";
+        }
+        
+        $conditions[] = "media.is_deleted = '0'";
+
+        if(count($conditions) > 0) {
+            $query .= " WHERE " . implode(' AND ', $conditions);
+        }
+
+        $result = $this->conexion->query($query);
+
+        if ($result->num_rows > 0) {
+            $this->response['estatus'] =  "Correcto";
+            $this->response['mensaje'] =  "Se encontraron " . $result->num_rows . " resultados";
+            $this->response['data'] = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $this->response['data'][] = $row;
+            }
+        } else {
+            $this->response['mensaje'] = "No se encontraron resultados";
+        }
+    }
+
     public function edit($post)
     {
         $media_id = $post['id'];

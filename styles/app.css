@@ -689,6 +689,35 @@ input:-webkit-autofill:focus {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.loaders {
+  width: 100%;
+  height: auto;
+  padding: 50px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.loaderT {
+  width: 90%;
+  max-width: 200px;
+  height: 220px;
+  background: linear-gradient(0.25turn, transparent, #FFF, transparent), linear-gradient(#DDD, #DDD), linear-gradient(#DDD, #DDD), linear-gradient(#DDD, #DDD);
+  background-color: #fff;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  background-size: 215px 220px, 215px 130px, 100px 15px, 150px 15px;
+  background-position: -215px 0, 0 0, 15px 150px, 15px 180px;
+  animation: loading 1.3s infinite;
+}
+
+@keyframes loading {
+  to {
+    background-position: 215px 0, 0 0, 15px 150px, 15px 180px;
+  }
+}
 .main__media {
   width: 100%;
   height: auto;
@@ -1591,8 +1620,8 @@ input:-webkit-autofill:focus {
 .loaderText:after {
   content: "";
   position: absolute;
-  width: 66%;
-  height: 75%;
+  width: 62%;
+  height: 72%;
   top: 15%;
   left: 0;
   background: linear-gradient(110deg, rgba(227, 227, 227, 0) 0%, rgba(227, 227, 227, 0) 40%, rgba(227, 227, 227, 0.5) 50%, rgba(227, 227, 227, 0) 60%, rgba(227, 227, 227, 0) 100%);

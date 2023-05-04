@@ -24,10 +24,10 @@ class Filter extends DataBase
         $sql = "SELECT y.id, y.year,COUNT(m.id) as total
                 FROM year y
                 LEFT JOIN (
-                    SELECT m.id, m.year_id, m.cdc_id
+                    SELECT m.id, m.year_id, m.cdc_id, m.is_deleted
                     FROM media m
                     INNER JOIN cdc c ON m.cdc_id = c.id
-                    WHERE c.name LIKE '%$cdc%'
+                    WHERE c.name LIKE '%$cdc%' AND m.is_deleted = 0
                 ) m ON y.id = m.year_id
                 GROUP BY y.id, y.year";
         if ($result = $this->conexion->query($sql)) {
@@ -51,10 +51,10 @@ class Filter extends DataBase
         $sql = "SELECT a.id, a.name, COUNT(m.id) as total
                 FROM area a
                 LEFT JOIN (
-                    SELECT m.id, m.area_id, m.cdc_id
+                    SELECT m.id, m.area_id, m.cdc_id, m.is_deleted
                     FROM media m
                     INNER JOIN cdc c ON m.cdc_id = c.id
-                    WHERE c.name LIKE '%$cdc%'
+                    WHERE c.name LIKE '%$cdc%' AND m.is_deleted = 0
                 ) m ON a.id = m.area_id
                 GROUP BY a.id, a.name";
         if ($result = $this->conexion->query($sql)) {
@@ -78,10 +78,10 @@ class Filter extends DataBase
         $sql = "SELECT c.id, c.name, COUNT(m.id) as total
                 FROM category c
                 LEFT JOIN (
-                    SELECT m.id, m.category_id, m.cdc_id
+                    SELECT m.id, m.category_id, m.cdc_id, m.is_deleted
                     FROM media m
                     INNER JOIN cdc c ON m.cdc_id = c.id
-                    WHERE c.name LIKE '%$cdc%'
+                    WHERE c.name LIKE '%$cdc%' AND m.is_deleted = 0
                 ) m ON c.id = m.category_id
                 GROUP BY c.id, c.name";
         if ($result = $this->conexion->query($sql)) {
@@ -105,10 +105,10 @@ class Filter extends DataBase
         $sql = "SELECT c.id, c.name, COUNT(m.id) as total
                 FROM subcategory c
                 LEFT JOIN (
-                    SELECT m.id, m.subcategory_id, m.cdc_id
+                    SELECT m.id, m.subcategory_id, m.cdc_id, m.is_deleted
                     FROM media m
                     INNER JOIN cdc c ON m.cdc_id = c.id
-                    WHERE c.name LIKE '%$cdc%'
+                    WHERE c.name LIKE '%$cdc%' AND m.is_deleted = 0
                 ) m ON c.id = m.subcategory_id
                 GROUP BY c.id, c.name";
         if ($result = $this->conexion->query($sql)) {
@@ -133,10 +133,10 @@ class Filter extends DataBase
         $sql = "SELECT t.id, t.name, COUNT(m.id) as total
                 FROM type t
                 LEFT JOIN (
-                    SELECT m.id, m.type_id, m.cdc_id
+                    SELECT m.id, m.type_id, m.cdc_id, m.is_deleted
                     FROM media m
                     INNER JOIN cdc c ON m.cdc_id = c.id
-                    WHERE c.name LIKE '%$cdc%'
+                    WHERE c.name LIKE '%$cdc%' AND m.is_deleted = 0
                 ) m ON t.id = m.type_id
                 GROUP BY t.id, t.name";
         if ($result = $this->conexion->query($sql)) {
@@ -161,10 +161,10 @@ class Filter extends DataBase
         $sql = "SELECT t.id, t.name, COUNT(m.id) as total
                 FROM subtype t
                 LEFT JOIN (
-                    SELECT m.id, m.type_id, m.cdc_id
+                    SELECT m.id, m.type_id, m.cdc_id, m.is_deleted
                     FROM media m
                     INNER JOIN cdc c ON m.cdc_id = c.id
-                    WHERE c.name LIKE '%$cdc%'
+                    WHERE c.name LIKE '%$cdc%' AND m.is_deleted = 0
                 ) m ON t.id = m.type_id
                 GROUP BY t.id, t.name";
         if ($result = $this->conexion->query($sql)) {
@@ -198,10 +198,10 @@ class Filter extends DataBase
             $sql = "SELECT y.id, y.year,COUNT(m.id) as total
             FROM year y
             LEFT JOIN (
-                SELECT m.id, m.year_id, m.cdc_id
+                SELECT m.id, m.year_id, m.cdc_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%'
+                WHERE c.name LIKE '%$cdc%' AND m.is_deleted = 0
             ) m ON y.id = m.year_id
             GROUP BY y.id, y.year";
 
@@ -216,10 +216,10 @@ class Filter extends DataBase
             $sql = "SELECT a.id, a.name, COUNT(m.id) as total
             FROM area a
             LEFT JOIN (
-                SELECT m.id, m.area_id, m.cdc_id
+                SELECT m.id, m.area_id, m.cdc_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year'
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.is_deleted = 0
             ) m ON a.id = m.area_id
             GROUP BY a.id, a.name";
 
@@ -233,10 +233,10 @@ class Filter extends DataBase
             $sql = "SELECT c.id, c.name, COUNT(m.id) as total
             FROM category c
             LEFT JOIN (
-                SELECT m.id, m.category_id, m.cdc_id
+                SELECT m.id, m.category_id, m.cdc_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year'
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.is_deleted = 0
             ) m ON c.id = m.category_id
             GROUP BY c.id, c.name";
 
@@ -250,10 +250,10 @@ class Filter extends DataBase
             $sql = "SELECT c.id, c.name, COUNT(m.id) as total
             FROM category c
             LEFT JOIN (
-                SELECT m.id, m.category_id, m.cdc_id
+                SELECT m.id, m.category_id, m.cdc_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area'
+                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.is_deleted = 0
             ) m ON c.id = m.category_id
             WHERE c.area_id = '$area'
             GROUP BY c.id, c.name";
@@ -268,10 +268,10 @@ class Filter extends DataBase
             $sql = "SELECT c.id, c.name, COUNT(m.id) as total
             FROM subcategory c
             LEFT JOIN (
-                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id
+                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category'
+                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category' AND m.is_deleted = 0
             ) m ON c.id = m.subcategory_id
             WHERE c.category_id = '$category'
             GROUP BY c.id, c.name";
@@ -286,10 +286,10 @@ class Filter extends DataBase
             $sql = "SELECT t.id, t.name, COUNT(m.id) as total
             FROM type t
             LEFT JOIN (
-                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id
+                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory'
+                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.is_deleted = 0
             ) m ON t.id = m.type_id
             WHERE t.subcategory_id = '$subcategory'
             GROUP BY t.id, t.name";
@@ -304,10 +304,10 @@ class Filter extends DataBase
             $sql = "SELECT s.id, s.name, COUNT(m.id) as total
             FROM subtype s
             LEFT JOIN (
-                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id
+                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type'
+                WHERE c.name LIKE '%$cdc%' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type', m.is_deleted = 0
             ) m ON s.id = m.subtype_id
             WHERE s.type_id = '$type'
             GROUP BY s.id, s.name";
@@ -324,10 +324,10 @@ class Filter extends DataBase
             $sql = "SELECT c.id, c.name, COUNT(m.id) as total
             FROM subcategory c
             LEFT JOIN (
-                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id
+                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category'
+                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category' AND m.is_deleted = 0
             ) m ON c.id = m.subcategory_id
             WHERE c.category_id = '$category'
             GROUP BY c.id, c.name";
@@ -342,10 +342,10 @@ class Filter extends DataBase
             $sql = "SELECT t.id, t.name, COUNT(m.id) as total
             FROM type t
             LEFT JOIN (
-                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id
+                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory'
+                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.is_deleted = 0
             ) m ON t.id = m.type_id
             WHERE t.subcategory_id = '$subcategory'
             GROUP BY t.id, t.name";
@@ -360,10 +360,10 @@ class Filter extends DataBase
             $sql = "SELECT s.id, s.name, COUNT(m.id) as total
             FROM subtype s
             LEFT JOIN (
-                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id
+                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type'
+                WHERE c.name LIKE '%$cdc%' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type' AND m.is_deleted = 0
             ) m ON s.id = m.subtype_id
             WHERE s.type_id = '$type'
             GROUP BY s.id, s.name";
@@ -378,10 +378,10 @@ class Filter extends DataBase
             $sql = "SELECT c.id, c.name, COUNT(m.id) as total
             FROM category c
             LEFT JOIN (
-                SELECT m.id, m.category_id, m.cdc_id
+                SELECT m.id, m.category_id, m.cdc_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area'
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.is_deleted = 0
             ) m ON c.id = m.category_id
             WHERE c.area_id = '$area'
             GROUP BY c.id, c.name";
@@ -396,10 +396,10 @@ class Filter extends DataBase
             $sql = "SELECT c.id, c.name, COUNT(m.id) as total
             FROM subcategory c
             LEFT JOIN (
-                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id
+                SELECT m.id, m.category_id, m.cdc_id, m.subcategory_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category'
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category' AND m.is_deleted = 0
             ) m ON c.id = m.subcategory_id
             WHERE c.category_id = '$category'
             GROUP BY c.id, c.name";
@@ -414,10 +414,10 @@ class Filter extends DataBase
             $sql = "SELECT t.id, t.name, COUNT(m.id) as total
             FROM type t
             LEFT JOIN (
-                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id
+                SELECT m.id, m.type_id, m.cdc_id, m.subcategory_id, m.category_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory'
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.is_deleted = 0
             ) m ON t.id = m.type_id
             WHERE t.subcategory_id = '$subcategory'
             GROUP BY t.id, t.name";
@@ -432,10 +432,10 @@ class Filter extends DataBase
             $sql = "SELECT s.id, s.name, COUNT(m.id) as total
             FROM subtype s
             LEFT JOIN (
-                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id
+                SELECT m.id, m.subtype_id, m.cdc_id, m.subcategory_id, m.category_id, m.type_id, m.is_deleted
                 FROM media m
                 INNER JOIN cdc c ON m.cdc_id = c.id
-                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type'
+                WHERE c.name LIKE '%$cdc%' AND m.year_id = '$year' AND m.area_id = '$area' AND m.category_id = '$category' AND m.subcategory_id = '$subcategory' AND m.type_id = '$type' AND m.is_deleted = 0
             ) m ON s.id = m.subtype_id
             WHERE s.type_id = '$type'
             GROUP BY s.id, s.name";

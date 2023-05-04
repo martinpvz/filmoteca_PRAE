@@ -9,7 +9,6 @@ function disableScroll(){
     window.scrollTo(0, 0);
 }
 
-console.log(currentCDC)
 
 if ( (currentCDC == '1' && cdc == 'chamontoya') || (currentCDC == '2' && cdc == 'zacatlán') || (currentCDC == '3' && cdc == 'cuacuila') ) {
     const template = /*html*/ `    
@@ -26,6 +25,11 @@ if ( (currentCDC == '1' && cdc == 'chamontoya') || (currentCDC == '2' && cdc == 
 
 
 const addMedia = document.getElementById('add-media');
+if (addMedia) {
+    addMedia.href = './add.php?cdc=' + cdc;
+}
+
+
 let photoInfo = [];
 
 
@@ -186,6 +190,7 @@ function listarMedia() {
             if (Object.keys(data).length > 0) {
                 let template = '';
                 photoInfo = data;
+                console.log(data)
                 data.forEach(photo => {
                     if(photo.type == "1") {
                         if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {

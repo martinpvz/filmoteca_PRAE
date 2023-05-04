@@ -229,6 +229,11 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
         </section>
 
         <section class="gallery">
+            <div class="loaders" id="loadersMedia">
+                <span class="loaderT"></span>
+                <span class="loaderT"></span>
+                <span class="loaderT"></span>
+            </div>
             <section class="media" id="media">
                 <?php
                     if ( $role == '1' || $role == '2') {

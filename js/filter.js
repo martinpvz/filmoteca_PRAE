@@ -62,12 +62,15 @@ const Type = document.getElementById("type");
 const Subtype = document.getElementById("subtype");
 const loader1 = document.getElementsByClassName("loaderText")[0];
 const loader2 = document.getElementsByClassName("loaderText")[1];
+const loaders = document.getElementById("loadersMedia");
 
 Subcategory.style.display = "none";
 Type.style.display = "none";
 Subtype.style.display = "none";
 loader1.style.display = "none";
 loader2.style.display = "none";
+loaders.style.display = "none";
+
 
 
 
@@ -82,12 +85,10 @@ loader2.style.display = "none";
 
 
 if (cdc != null) {
-    console.log(cdc);
     const cdcTitle = "CDC " + (cdc.charAt(0).toUpperCase() + cdc.slice(1));
     document.getElementById("title-mobile").innerText = cdcTitle;
     document.getElementById("title-desktop").innerText = cdcTitle;
 } else if (type != null) {
-    console.log(type);
     const typeTitle = (type.charAt(0).toUpperCase() + type.slice(1));
     document.getElementById("title-mobile").innerText = typeTitle;
     document.getElementById("title-desktop").innerText = typeTitle;
@@ -136,7 +137,6 @@ document.getElementById('filter').addEventListener('change', function() {
 
     for(let f in filtro) {
         if(filtro[f] != null) {
-            console.log(filtro[f]);
             if (url.searchParams.get(f) == null) {
                 url.searchParams.append(f, filtro[f]);
             } else {
@@ -194,8 +194,6 @@ function makeTemplate(data, name) {
         } else if (name == "subtype") {
             subtypesShort = templateShort;
         }
-        console.log(templateShort);
-        console.log(template);
         return templateShort;
     } else  {
         try {
@@ -225,7 +223,6 @@ function selectDefault(name) {
 
 async function updateFilter(data, name) {
     data.cdc = cdc;
-    console.log(data)
     const response = await fetch(`./backend/filter/filter-update.php`, {
         method: "POST",
         headers: {
@@ -327,7 +324,6 @@ async function updateFilter(data, name) {
 
         selectDefault("subtype");
     }
-    console.log(name)
     if(name == "anio") {
         Subcategory.style.display = "none";
         Type.style.display = "none";
@@ -364,6 +360,134 @@ async function updateFilter(data, name) {
         loader1.style.display = "none";
         loader2.style.display = "none";
     }, 1000);
+}
+
+function makeMedia(data) {
+    if(data != false ) {
+        let template = '';
+        photoInfo = data;
+        console.log(data)
+        data.forEach(photo => {
+            if(photo.type == "1") {
+                if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
+                    template += /*html*/`
+                    <div class="media__img">
+                        <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                        <div class="media__img--button">
+                            <a href="${photo.resource}" download class="download">
+                                <span class="download__img"></span>
+                            </a>
+                        </div>
+                        <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
+                    </div>
+                    `;
+                } else if(photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3"))  {
+                    template += /*html*/`
+                    <div class="media__img">
+                        <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                        <div class="media__img--button">
+                            <a href="${photo.resource}" download class="download">
+                                <span class="download__img"></span>
+                            </a>
+                        </div>
+                        <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
+                    </div>
+                    `;
+                } else {
+                    template += /*html*/`
+                    <div class="media__img">
+                        <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                        <div class="media__img--button">
+                            <a href="${photo.resource}" download class="download">
+                                <span class="download__img"></span>
+                            </a>
+                        </div>
+                    </div>
+                    `;
+                }
+            } else {
+                // aqui vamos a modificar ahorita
+                if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
+                    template += /*html*/`
+                    <div class="media__img">
+                        <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                        <div class="media__img--button">
+                            <a href="${photo.resource}" download class="download">
+                                <span class="download__img"></span>
+                            </a>
+                        </div>
+                        <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
+                    </div>
+                    `;
+                } else if(photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3"))  {
+                    template += /*html*/`
+                    <div class="media__img">
+                        <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                        <div class="media__img--button">
+                            <a href="${photo.resource}" download class="download">
+                                <span class="download__img"></span>
+                            </a>
+                        </div>
+                        <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
+                    </div>
+                    `;
+                } else {
+                    template += /*html*/`
+                    <div class="media__img">
+                        <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                        <div class="media__img--button">
+                            <a href="${photo.resource}" download class="download">
+                                <span class="download__img"></span>
+                            </a>
+                        </div>
+                    </div>
+                    `;
+                }
+            }
+        });
+
+        console.log(template)
+
+        if (addMedia) {
+            const mediaElement = document.getElementById('media');
+            mediaElement.innerHTML = addMedia.outerHTML + template;
+        } else {
+            document.getElementById('media').innerHTML = template;
+        }
+        function windowOnClick(event) {
+            if (event.target === modal) {
+                toggleModal();
+            }
+        }
+        for (let trigger of triggers) {
+            trigger.addEventListener("click", toggleModal);
+        }
+        closeButton.addEventListener("click", toggleModal);
+        window.addEventListener("click", windowOnClick);
+        // make a timer of 1 second to show the media
+        setTimeout(function() {
+            document.getElementById("media").style.display = "block";
+            loaders.style.display = "none";
+        }, 1000);
+
+    }
+}
+
+
+async function updateMedia(data) {
+    const response = await fetch('./backend/media/media-update.php', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const result = await response.json();
+    if(result.estatus == "Correcto") {
+        makeMedia(result.data)
+    } else {
+        makeMedia(false)
+    }
 }
 
 
@@ -440,9 +564,12 @@ const getName = (name) => {
             }
 
             document.getElementById("filter").style.display = "none";
+            document.getElementById("media").style.display = "none";
             loader1.style.display = "flex";
             loader2.style.display = "flex";
+            loaders.style.display = "flex";
             updateFilter(info, name);
+            updateMedia(info)
         });
     }
 }
@@ -452,7 +579,6 @@ function listYears() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 data.forEach(year => {
                     template += /*html*/`
@@ -479,7 +605,6 @@ function listAreas() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 data.forEach(area => {
                     template += /*html*/`
@@ -504,7 +629,6 @@ function listCategories() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 let templateShort = '';
                 data.forEach(category => {
@@ -542,7 +666,6 @@ function listSubCategories() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 let templateShort = '';
                 data.forEach(category => {
@@ -580,7 +703,6 @@ function listTypes() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 let templateShort = '';
                 data.forEach(type => {
@@ -618,7 +740,6 @@ function listSubTypes() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 let templateShort = '';
                 data.forEach(type => {
