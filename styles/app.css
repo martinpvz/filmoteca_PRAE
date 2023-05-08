@@ -1922,4 +1922,245 @@ input[type=file]::file-selector-button:hover {
   bottom: 10px;
 }
 
+.header__home .profile__info1 {
+  width: 203px;
+  height: 170px;
+  position: absolute;
+  bottom: -182px;
+  right: 47%;
+  border-radius: 15px;
+  box-shadow: 0px 0px 13px -4px rgba(0, 0, 0, 0.62);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #dfe0dc;
+  z-index: 2;
+}
+
+.header__home .profile__info1 a {
+  width: 100%;
+  height: 50%;
+  color: black;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 30px;
+  transition: 0.2s;
+}
+
+.header__home .profile__info1 a:hover {
+  background-color: #d1d3c4;
+}
+
+.header__home .profile__info1--edit {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.header__home .profile__info1--close {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.dashboard_mainPage {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: black;
+  padding: 10rem;
+}
+@media only screen and (max-width: 768px) {
+  .dashboard_mainPage {
+    padding: 1.5rem;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .dashboard_mainPage {
+    padding: 5rem;
+  }
+}
+.dashboard_mainPage--title {
+  font-size: 5rem;
+  font-weight: bold;
+  margin: 0;
+  align-self: center;
+}
+@media only screen and (max-width: 768px) {
+  .dashboard_mainPage--title {
+    font-size: 3rem;
+  }
+}
+
+.dashboard_card {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.dashboard_card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.dashboard_table--text {
+  width: auto;
+  font-size: 4rem;
+}
+@media only screen and (max-width: 768px) {
+  .dashboard_table--text {
+    font-size: 2.5rem;
+  }
+}
+.dashboard_table--text label {
+  font-size: 1.3rem;
+  margin: 1rem;
+}
+.dashboard_table--text input {
+  font-size: 1.3rem;
+}
+.dashboard_table--text select {
+  font-size: 1.1rem;
+}
+.dashboard_table--text option {
+  font-size: 1.3rem;
+}
+.dashboard_table--text a {
+  font-size: 1.2rem;
+}
+@media only screen and (max-width: 768px) {
+  .dashboard_table--text a {
+    font-size: 0.9rem;
+  }
+}
+.dashboard_table--thead {
+  font-size: 4rem;
+}
+@media only screen and (max-width: 768px) {
+  .dashboard_table--thead {
+    font-size: 2.9rem;
+  }
+}
+.dashboard_table--tbody {
+  text-align: left;
+  font-size: 4rem;
+}
+@media only screen and (max-width: 768px) {
+  .dashboard_table--tbody {
+    font-size: 3rem;
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.text-acciones {
+  color: blue;
+}
+.text-on {
+  color: #28a745;
+  font-size: 90%;
+}
+.text-off {
+  color: #dc3545;
+  font-size: 90%;
+}
+
+.submit__accessKey {
+  width: 100%;
+  height: 30px;
+  background-color: #043b9c;
+  color: white;
+  border-radius: 8px;
+  margin-top: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 1.3rem;
+  align-self: flex-end;
+  font-family: "Nunito", sans-serif;
+}
+
+.submit__accessKey:hover {
+  background-color: #0759e6;
+}
+
+.token_main {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.token_section {
+  width: 75%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  z-index: 1;
+}
+@media only screen and (max-width: 880px) {
+  .token_section {
+    width: 100%;
+  }
+}
+.token_section__form {
+  margin: 50px 0 20px 0;
+  height: auto;
+  width: 100%;
+  max-width: 650px;
+  position: relative;
+  background-color: #DFE0DC;
+  padding: 30px;
+  box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.22);
+  border-radius: 20px;
+}
+@media only screen and (min-width: 1780px) {
+  .token_section__form {
+    max-width: 750px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .token_section__form {
+    max-width: 550px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .token_section__form {
+    max-width: 400px;
+    margin: 60px 0;
+  }
+}
+.token_section__form--title {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: black;
+}
+.token_section__form--key {
+  text-align: center;
+  color: black;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.token_section__form h3 {
+  text-align: center;
+  color: black;
+  font-size: 2rem;
+}
+
 /*# sourceMappingURL=app.css.map */
