@@ -1,0 +1,107 @@
+.addCDC {
+    width: 75%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    @include media(tablet-s-only) {
+        width: 100%;
+    }
+    &__form {
+        margin: 0;
+        height: 560px;
+        width: 100%;
+        max-width: 700px;
+        position: relative;
+        padding: 10px;
+        @include media(desktop-xl) {
+            max-width: 850px;
+        }
+        @include media(mobile-only) {
+            max-width: 700px;
+            margin: 15px 0;
+        }
+        &--title {
+            text-align: center;
+            font-size: 2.4rem;
+            font-weight: 500;
+            color: black;
+        }
+    }
+    .form__addCDC--form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        form {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .addCDC__input {
+            width: 82%;
+            height: 40px;
+            display: flex;
+            margin-bottom: 30px;
+            justify-content: start;
+            border-radius: 10px;
+            position: relative;
+            padding: 0 15px 0 15px;
+            background: #DFe0dC;
+            @include media(mobile-only) {
+                width: 85%;
+            }
+            input {
+                width: 100%;
+                border: none;
+                font-size: 1.7rem;
+                font-weight: 300;
+                color: black;
+                outline: none;
+                font-family: 'Nunito', sans-serif;
+                background-color: transparent;
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+            }
+        }
+    }
+}
+.inputCDC[type=file]::file-selector-button {
+    background-color: $color-terciario;
+    color: #000;
+    cursor: pointer;
+    font-size: 1.7rem;
+    font-weight: 400;
+    font-family: 'Nunito', sans-serif;
+    transition: .5s;
+}
+
+.inputCDC[type=file]::file-selector-button:hover {
+    background-color: #d2d2d200;
+}
+
+.submit__addCDC {
+    width: 30%;
+    height: 30px;
+    background-color: #043b9c;
+    color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 1.3rem;
+    align-self: flex-end;
+    font-family: "Nunito", sans-serif;
+    margin-right: 9%;
+   
+}
+.submit__addCDC:hover {
+  background-color: #0759e6;
+}
+
+  

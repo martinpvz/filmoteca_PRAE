@@ -54,19 +54,12 @@
     <main class="token_main">
         <section class="token_section">
             <div class="token_section__form">
-                <p class="token_section__form--title">Clave de Acceso</p>
-                <p class="token_section__form--subtitle">La actual clave de acceso es:</p>
-                <p class="token_section__form--key">token</p>
+                <p class="token_section__form--title">Contraseña de Acceso Temporal</p>
                 <br>
-                <form action="" method="POST">
-                    <!--form* action="{{route('token')}}"-->
-                    <input
-                    type="submit"
-                    value="Generar nueva clave de acceso"
-                    class="submit__accessKey"
-                    id="claveAcceso"
-                    />
-                </form>
+                <p class="token_section__form--user">$usuario->name . ' ' . $usuario->surname;</p>
+                <br><br>
+                <p class="token_section__form--subtitle">La contraseña de acceso temporal es:</p>
+                <p class="token_section__form--key">$newPass;</p>
             </div>
         </section>
     </main>
