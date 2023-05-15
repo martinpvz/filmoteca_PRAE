@@ -21,33 +21,63 @@ class Media extends DataBase
     {
         $this->response = array();
         session_start();
-        $cdc = $data['cdc'];
-        $sql = "SELECT media.id AS media_id, media.description, media.date, media.type, media.resource, media.favourite, media.year_id, media.area_id, media.cdc_id, media.category_id, media.subcategory_id, media.type_id, media.subtype_id
-        FROM media 
-        JOIN cdc ON media.cdc_id = cdc.id 
-        WHERE cdc.name LIKE '%$cdc%' AND is_deleted = 0";
-        //"SELECT * FROM media JOIN cdc ON media.cdc_id = cdc.id WHERE cdc.name LIKE '%$cdc%'";
-        $sqlDir = "SELECT media.id AS media_id, media.description, media.date, media.type, media.resource, media.favourite, media.year_id, media.area_id, media.cdc_id, media.category_id, media.subcategory_id, media.type_id, media.subtype_id
-        FROM media 
-        JOIN cdc ON media.cdc_id = cdc.id 
-        WHERE cdc.name LIKE '%$cdc%' AND favourite = 1 AND is_deleted = 0";
-        //"SELECT * FROM media JOIN cdc ON media.cdc_id = cdc.id WHERE cdc.name LIKE '%$cdc%' AND favourite = 1";
-        
-        if ($_SESSION['role'] == "5") {
-            if ($result = $this->conexion->query($sqlDir)) {
-                $rows = $result->fetch_all(MYSQLI_ASSOC);
-                if (!is_null($rows)) {
-                    foreach ($rows as $num => $row) {
-                        foreach ($row as $key => $value) {
-                            $this->response[$num][$key] = $value;
+        $cdc = $data['cdc'] != "null" ? $data['cdc'] : "";
+        $type = $data['type'] != "null" ? $data['type'] : "";
+        if (!empty($cdc)) {
+            $sql = "SELECT media.id AS media_id, media.description, media.date, media.type, media.resource, media.favourite, media.year_id, media.area_id, media.cdc_id, media.category_id, media.subcategory_id, media.type_id, media.subtype_id
+            FROM media 
+            JOIN cdc ON media.cdc_id = cdc.id 
+            WHERE cdc.name LIKE '%$cdc%' AND is_deleted = 0";
+            //"SELECT * FROM media JOIN cdc ON media.cdc_id = cdc.id WHERE cdc.name LIKE '%$cdc%'";
+            $sqlDir = "SELECT media.id AS media_id, media.description, media.date, media.type, media.resource, media.favourite, media.year_id, media.area_id, media.cdc_id, media.category_id, media.subcategory_id, media.type_id, media.subtype_id
+            FROM media 
+            JOIN cdc ON media.cdc_id = cdc.id 
+            WHERE cdc.name LIKE '%$cdc%' AND favourite = 1 AND is_deleted = 0";
+            //"SELECT * FROM media JOIN cdc ON media.cdc_id = cdc.id WHERE cdc.name LIKE '%$cdc%' AND favourite = 1";
+            
+            if ($_SESSION['role'] == "5") {
+                if ($result = $this->conexion->query($sqlDir)) {
+                    $rows = $result->fetch_all(MYSQLI_ASSOC);
+                    if (!is_null($rows)) {
+                        foreach ($rows as $num => $row) {
+                            foreach ($row as $key => $value) {
+                                $this->response[$num][$key] = $value;
+                            }
                         }
                     }
+                    $result->free();
+                } else {
+                    die('No se pudo completar la operación');
                 }
-                $result->free();
             } else {
-                die('No se pudo completar la operación');
+                if ($result = $this->conexion->query($sql)) {
+                    $rows = $result->fetch_all(MYSQLI_ASSOC);
+                    if (!is_null($rows)) {
+                        foreach ($rows as $num => $row) {
+                            foreach ($row as $key => $value) {
+                                $this->response[$num][$key] = $value;
+                            }
+                        }
+                    }
+                    $result->free();
+                } else {
+                    die('No se pudo completar la operación');
+                }
             }
-        } else {
+            
+            $this->conexion->close();
+        } else if (!empty($type)) {
+            $sql = "";
+            if($type == "multimedia") {
+                $sql = "SELECT media_multi.id AS media_id, media_multi.description, media_multi.date, media_multi.type, media_multi.resource, media_multi.favourite, media_multi.year_multi_id, media_multi.category_multi_id
+                FROM media_multi 
+                WHERE is_deleted = 0";
+
+            } else if ( $type == "eventos") {
+                $sql = "SELECT media_event.id AS media_id, media_event.description, media_event.date, media_event.type, media_event.resource, media_event.favourite, media_event.year_event_id, media_event.category_event_id
+                FROM media_event
+                WHERE is_deleted = 0 AND favourite = 1";
+            }
             if ($result = $this->conexion->query($sql)) {
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
                 if (!is_null($rows)) {
@@ -62,8 +92,6 @@ class Media extends DataBase
                 die('No se pudo completar la operación');
             }
         }
-        
-        $this->conexion->close();
     }
 
     public function add($post)
@@ -186,6 +214,7 @@ class Media extends DataBase
     }
 
     public function update($post) {
+        session_start();
         $this->response = array();
         $cdc = $post->cdc;
         $year = $post->year;
@@ -194,36 +223,70 @@ class Media extends DataBase
         $subcategory = $post->subcategory;
         $type = $post->type;
         $subtype = $post->subtype;
+        $multimedia = $post->typeE != "null" ? $post->typeE : "";
 
         $query = "SELECT media.id AS media_id, media.description, media.date, media.type, media.resource, media.favourite, media.year_id, media.area_id, media.cdc_id, media.category_id, media.subcategory_id, media.type_id, media.subtype_id
         FROM media
         JOIN cdc ON media.cdc_id = cdc.id";
 
+        if(!empty($multimedia)) {
+            if($multimedia == "multimedia") {
+                $query = "SELECT media_multi.id AS media_id, media_multi.description, media_multi.date, media_multi.type, media_multi.resource, media_multi.favourite, media_multi.year_multi_id, media_multi.category_multi_id
+                FROM media_multi";
+            } else if ( $multimedia == "eventos") {
+                $query = "SELECT media_event.id AS media_id, media_event.description, media_event.date, media_event.type, media_event.resource, media_event.favourite, media_event.year_event_id, media_event.category_event_id
+                FROM media_event";
+            }
+        }
+
         $conditions = array();
 
-        if (!empty($cdc)) {
+        if (!empty($cdc) && empty($multimedia)) {
             $conditions[] = "cdc.name LIKE '%$cdc%'";
         }
-        if (!empty($year)) {
+        if (!empty($year) && empty($multimedia)) {
             $conditions[] = "media.year_id = '$year'";
+        } else if(!empty($year) && !empty($multimedia)) {
+            if($multimedia == "multimedia") {
+                $conditions[] = "media_multi.year_multi_id = '$year'";
+            } else if ( $multimedia == "eventos") {
+                $conditions[] = "media_event.year_event_id = '$year'";
+            }
         }
-        if (!empty($area)) {
+        if (!empty($area) && empty($multimedia)) {
             $conditions[] = "media.area_id = '$area'";
+        } else if(!empty($area) && !empty($multimedia)) {
+            if($multimedia == "multimedia") {
+                $conditions[] = "media_multi.category_multi_id = '$area'";
+            } else if ( $multimedia == "eventos") {
+                $conditions[] = "media_event.category_event_id = '$area'";
+            }
         }
-        if (!empty($category)) {
+        if (!empty($category) && empty($multimedia)) {
             $conditions[] = "media.category_id = '$category'";
         }
-        if (!empty($subcategory)) {
+        if (!empty($subcategory) && empty($multimedia)) {
             $conditions[] = "media.subcategory_id = '$subcategory'";
         }
-        if (!empty($type)) {
+        if (!empty($type) && empty($multimedia)) {
             $conditions[] = "media.type_id = '$type'";
         }
-        if (!empty($subtype)) {
+        if (!empty($subtype) && empty($multimedia)) {
             $conditions[] = "media.subtype_id = '$subtype'";
         }
-        
-        $conditions[] = "media.is_deleted = '0'";
+        if ($_SESSION['role'] == "5") {
+            $conditions[] = "media.favourite = '1'";
+        }
+        if(empty($multimedia)){
+            $conditions[] = "media.is_deleted = '0'";
+        } else {
+            if($multimedia == "multimedia") {
+                $conditions[] = "media_multi.is_deleted = '0'";
+            } else if ( $multimedia == "eventos") {
+                $conditions[] = "media_event.is_deleted = '0'";
+            }
+        }
+        //$conditions[] = "media.is_deleted = '0'";
 
         if(count($conditions) > 0) {
             $query .= " WHERE " . implode(' AND ', $conditions);
@@ -239,7 +302,7 @@ class Media extends DataBase
                 $this->response['data'][] = $row;
             }
         } else {
-            $this->response['mensaje'] = "No se encontraron resultados";
+            $this->response['mensaje'] = $query . "No se encontraron resultados";
         }
     }
 

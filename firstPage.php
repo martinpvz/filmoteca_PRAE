@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['sesion']) != true) {
-    header("location:./mainPage.php"); 
+    header("location:./index.php"); 
 }
 $nombre = $_SESSION['name'];
 $apellido = $_SESSION['surname'];
@@ -75,24 +75,6 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
                     ';
                 }
             ?>
-            <!-- <a href="./media.php" class="card">  
-                <img src="./img/chamontoya.jpeg" alt="cdc">
-                <div class="card--text">
-                    CDC Chamontoya
-                </div>
-            </a>
-            <a href="./media.php" class="card">
-                <img src="./img/zacatlan.jpeg" alt="cdc">
-                <div class="card--text">
-                    CDC Zacatlán
-                </div>
-            </a>
-            <a href="./media.php" class="card">
-                <img src="./img/cuacuila.jpeg" alt="cdc">
-                <div class="card--text">
-                    CDC Zacatlán
-                </div>
-            </a> -->
             <a href="./media.php?type=multimedia" class="card">
                 <img src="./img/eventos.jpeg" alt="cdc">
                 <div class="card--text">

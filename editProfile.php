@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['sesion']) != true) {
-    header("location:./mainPage.php"); 
+    header("location:./index.php"); 
 }
 $nombre = $_SESSION['name'];
 $apellido = $_SESSION['surname'];
@@ -123,7 +123,7 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
             </div>
             <div class="profile__info" id="profile-info">
                 <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
-                <a class="profile__info--close" href="./mainPage.php">Cerrar sesión</a>
+                <a class="profile__info--close" href="./logout.php">Cerrar sesión</a>
             </div>
         </div>
     </header>
@@ -161,7 +161,7 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
         </div>
         <div class="options__menu">
             <a href="#">Editar perfil</a>
-            <a href="./mainPage.php">Cerrar sesion</a>
+            <a href="./logout.php">Cerrar sesion</a>
         </div>
     </section>
 

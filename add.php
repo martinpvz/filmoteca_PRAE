@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['sesion']) != true) {
-    header("location:./mainPage.php"); 
+    header("location:./index.php"); 
 } else {
     if($_SESSION['role'] != 1 && $_SESSION['role'] != 2 && $_SESSION['role'] != 3) {
         header("location:./firstPage.php"); 

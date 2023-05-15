@@ -90,6 +90,7 @@ if (cdc != null) {
     document.getElementById("title-desktop").innerText = cdcTitle;
 } else if (type != null) {
     const typeTitle = (type.charAt(0).toUpperCase() + type.slice(1));
+    Category.style.display = "none";
     document.getElementById("title-mobile").innerText = typeTitle;
     document.getElementById("title-desktop").innerText = typeTitle;
 }
@@ -223,6 +224,7 @@ function selectDefault(name) {
 
 async function updateFilter(data, name) {
     data.cdc = cdc;
+    data.typeE = type;
     const response = await fetch(`./backend/filter/filter-update.php`, {
         method: "POST",
         headers: {
@@ -366,7 +368,6 @@ function makeMedia(data) {
     if(data != false ) {
         let template = '';
         photoInfo = data;
-        console.log(data)
         data.forEach(photo => {
             if(photo.type == "1") {
                 if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
@@ -446,7 +447,6 @@ function makeMedia(data) {
             }
         });
 
-        console.log(template)
 
         if (addMedia) {
             const mediaElement = document.getElementById('media');
@@ -483,6 +483,7 @@ async function updateMedia(data) {
         }
     });
     const result = await response.json();
+    console.log(result);
     if(result.estatus == "Correcto") {
         makeMedia(result.data)
     } else {
@@ -575,7 +576,7 @@ const getName = (name) => {
 }
 
 function listYears() {
-    fetch(`./backend/filter/filter-list-year.php?cdc=${cdc}`)
+    fetch(`./backend/filter/filter-list-year.php?cdc=${cdc}&type=${type}`)
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
@@ -601,7 +602,7 @@ listYears();
 
 
 function listAreas() {
-    fetch(`./backend/filter/filter-list-area.php?cdc=${cdc}`)
+    fetch(`./backend/filter/filter-list-area.php?cdc=${cdc}&type=${type}`)
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
@@ -659,7 +660,9 @@ function listCategories() {
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-listCategories();
+if (cdc != null) { 
+    listCategories();
+}
 
 function listSubCategories() {
     fetch(`./backend/filter/filter-list-subcategory.php?cdc=${cdc}`)

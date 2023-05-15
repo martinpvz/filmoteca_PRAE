@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['sesion']) != true) {
-    header("location:./mainPage.php"); 
+    header("location:./index.php"); 
 }
 $nombre = $_SESSION['name'];
 $apellido = $_SESSION['surname'];

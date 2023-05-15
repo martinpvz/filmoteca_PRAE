@@ -12,7 +12,7 @@
 </head>
 <body>
     <header class="header__login">
-        <a href="./mainPage.php"><img src="./img/return.png" class="header__login--return" alt="Return"></a>
+        <a href="./index.php"><img src="./img/return.png" class="header__login--return" alt="Return"></a>
         <img src="./img/logo.png" alt="Logo" class="header__login--logo">
     </header>
 
