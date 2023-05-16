@@ -20,11 +20,30 @@ class Favourite extends DataBase
     public function makeFavourite( $get )
     {  
         $media_id = $get['id'];
+        $type = "";
+        if(isset($get['type'])) {
+            $type = $get['type'] != "null" ? $get['type'] : "";
+        } 
         $this->response = array();
         $sql = "UPDATE media
                 SET favourite = NOT favourite
                 WHERE id = '$media_id';
             ";
+        
+        if(!empty($type)) {
+            if($type == "multimedia") {
+                $sql = "UPDATE media_multi
+                SET favourite = NOT favourite
+                WHERE id = '$media_id';
+                ";
+
+            } else if ( $type == "eventos") {
+                $sql = "UPDATE media_event
+                SET favourite = NOT favourite
+                WHERE id = '$media_id';
+                ";
+            }
+        }
         if ($this->conexion->query($sql)) {
             $this->response['estatus'] =  "Correcto";
             $this->response['mensaje'] =  "El favorito se actualizó correctamente";

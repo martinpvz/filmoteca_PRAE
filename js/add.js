@@ -85,13 +85,12 @@ let subtypesShort = '';
 
 
 if (cdc != null) {
-    console.log(cdc);
     const cdcTitle = "CDC " + (cdc.charAt(0).toUpperCase() + cdc.slice(1));
     document.getElementById("title-mobile").innerText = cdcTitle;
     document.getElementById("title-desktop").innerText = cdcTitle;
 } else if (type != null) {
-    console.log(type);
     const typeTitle = (type.charAt(0).toUpperCase() + type.slice(1));
+    Category.style.display = "none";
     document.getElementById("title-mobile").innerText = typeTitle;
     document.getElementById("title-desktop").innerText = typeTitle;
 }
@@ -154,8 +153,6 @@ function makeTemplate(data, name) {
         } else if (name == "subtype") {
             subtypesShort = templateShort;
         }
-        console.log(templateShort);
-        console.log(template);
         return templateShort;
     } else  {
         try {
@@ -185,7 +182,7 @@ function selectDefault(name) {
 
 async function updateFilter(data, name) {
     data.cdc = cdc;
-    console.log(data)
+    data.typeE = type;
     const response = await fetch(`./backend/filter/filter-update.php`, {
         method: "POST",
         headers: {
@@ -287,7 +284,6 @@ async function updateFilter(data, name) {
 
         selectDefault("subtype");
     }
-    console.log(name)
     if(name == "anio") {
         Subcategory.style.display = "none";
         Type.style.display = "none";
@@ -408,7 +404,6 @@ const getName = (name) => {
             }
             // rute.value = " " + label.textContent + " ";
             rute.value = text;
-            console.log(value)
             document.getElementById("filter").style.display = "none";
             loader1.style.display = "flex";
             loader2.style.display = "flex";
@@ -418,11 +413,10 @@ const getName = (name) => {
 }
 
 function listYears() {
-    fetch(`./backend/filter/filter-list-year.php?cdc=${cdc}`)
+    fetch(`./backend/filter/filter-list-year.php?cdc=${cdc}&type=${type}`)
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 data.forEach(year => {
                     template += /*html*/`
@@ -445,11 +439,10 @@ listYears();
 
 
 function listAreas() {
-    fetch(`./backend/filter/filter-list-area.php?cdc=${cdc}`)
+    fetch(`./backend/filter/filter-list-area.php?cdc=${cdc}&type=${type}`)
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 data.forEach(area => {
                     template += /*html*/`
@@ -474,7 +467,6 @@ function listCategories() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 let templateShort = '';
                 data.forEach(category => {
@@ -505,14 +497,15 @@ function listCategories() {
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-listCategories();
+if (cdc != null) { 
+    listCategories();
+}
 
 function listSubCategories() {
     fetch(`./backend/filter/filter-list-subcategory.php?cdc=${cdc}`)
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 let templateShort = '';
                 data.forEach(category => {
@@ -550,7 +543,6 @@ function listTypes() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 let templateShort = '';
                 data.forEach(type => {
@@ -588,7 +580,6 @@ function listSubTypes() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0) {
-                console.log(data)
                 let template = '';
                 let templateShort = '';
                 data.forEach(type => {
@@ -758,44 +749,41 @@ function verifyFilter() {
         correctFilter = true;
     }
     
-    if (checkContent('category')) {
-        console.log("hola soy la funcion")
-        // check if there is a category selected
-        const category = document.querySelector('#category-category input[type="radio"]:checked')?.value || "";
-        if (category == "") {
-            correctFilter = false;
-        } else {
-            correctFilter = true;
+    if(cdc != null) {
+        if (checkContent('category')) {
+            const category = document.querySelector('#category-category input[type="radio"]:checked')?.value || "";
+            if (category == "") {
+                correctFilter = false;
+            } else {
+                correctFilter = true;
+            }
         }
-    }
-
-    if (checkContent('subcategory')) {
-        // check if there is a subcategory selected
-        const subcategory = document.querySelector('#category-subcategory input[type="radio"]:checked')?.value || "";
-        if (subcategory == "") {
-            correctFilter = false;
-        } else {
-            correctFilter = true;
+    
+        if (checkContent('subcategory')) {
+            const subcategory = document.querySelector('#category-subcategory input[type="radio"]:checked')?.value || "";
+            if (subcategory == "") {
+                correctFilter = false;
+            } else {
+                correctFilter = true;
+            }
         }
-    }
-
-    if (checkContent('type')) {
-        // check if there is a type selected
-        const type = document.querySelector('#category-type input[type="radio"]:checked')?.value || "";
-        if (type == "") {
-            correctFilter = false;
-        } else {
-            correctFilter = true;
+    
+        if (checkContent('type')) {
+            const type = document.querySelector('#category-type input[type="radio"]:checked')?.value || "";
+            if (type == "") {
+                correctFilter = false;
+            } else {
+                correctFilter = true;
+            }
         }
-    }
-
-    if (checkContent('subtype')) {
-        // check if there is a subtype selected
-        const subtype = document.querySelector('#category-subtype input[type="radio"]:checked')?.value || "";
-        if (subtype == "") {
-            correctFilter = false;
-        } else {
-            correctFilter = true;
+    
+        if (checkContent('subtype')) {
+            const subtype = document.querySelector('#category-subtype input[type="radio"]:checked')?.value || "";
+            if (subtype == "") {
+                correctFilter = false;
+            } else {
+                correctFilter = true;
+            }
         }
     }
     return correctFilter;
@@ -828,6 +816,7 @@ function Base64(imagen) {
 
 
 async function addMedia(data) {
+    data.typeE = type;
     const response = await fetch(`./backend/media/media-add.php`, {
         method: "POST",
         headers: {
@@ -845,7 +834,14 @@ async function addMedia(data) {
             document.getElementById('form__error--text').innerText = "Media agregada correctamente"
             error.style.backgroundColor = "#228B22";
         }, 1000);
+    } else {
+        setTimeout(function() {
+            error.style.display = "flex"
+            document.getElementById('form__error--text').innerText = "Error al agregar la media"
+            error.style.backgroundColor = "#e83845";
+        }, 1000);
     }
+
 }
 
 update.addEventListener("click", function(event) {
@@ -898,7 +894,6 @@ update.addEventListener("click", function(event) {
     } else {
         Base64(imagen)
         .then(function(imagen_base64) {
-            console.log(imagen_base64);
             const post = {
                 date: date,
                 description: description,

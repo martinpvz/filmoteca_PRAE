@@ -19,7 +19,7 @@ update.addEventListener("click", function(event) {
         formData.append('description', description);
         formData.append('date', date);
         formData.append('id', selectedMedia);
-        fetch(`./backend/media/media-edit.php`, {
+        fetch(`./backend/media/media-edit.php?type=${type}`, {
             method: 'POST',
             body: formData
         })

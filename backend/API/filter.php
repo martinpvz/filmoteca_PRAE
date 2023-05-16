@@ -20,15 +20,21 @@ class Filter extends DataBase
     public function listYears( $get )
     {  
         session_start();
-        $cdc = $get['cdc'] != "null" ? $get['cdc'] : "";
-        $type = $get['type'] != "null" ? $get['type'] : "";
+        $type = "";
+        $cdc = "";
+        if(isset($get['type'])) {
+            $type = $get['type'] != "null" ? $get['type'] : "";
+        } 
+        if(isset($get['cdc'])) {
+            $cdc = $get['cdc'] != "null" ? $get['cdc'] : "";
+        }
         $this->response = array();
 
         $directivo = "";
         if ($_SESSION['role'] == "5") {
             $directivo = "AND m.favourite = 1";
         }
-    
+        
         $sql = "SELECT y.id, y.year,COUNT(m.id) as total
                 FROM year y
                 LEFT JOIN (
@@ -79,8 +85,14 @@ class Filter extends DataBase
     public function listAreas( $get )
     {  
         session_start();
-        $cdc = $get['cdc'] != "null" ? $get['cdc'] : "";
-        $type = $get['type'] != "null" ? $get['type'] : "";
+        $type = "";
+        $cdc = "";
+        if(isset($get['type'])) {
+            $type = $get['type'] != "null" ? $get['type'] : "";
+        } 
+        if(isset($get['cdc'])) {
+            $cdc = $get['cdc'] != "null" ? $get['cdc'] : "";
+        }
         $this->response = array();
 
         $directivo = "";
@@ -282,7 +294,10 @@ class Filter extends DataBase
         $subcategory = $data->subcategory;
         $type = $data->type;
         $subtype = $data->subtype;
-        $multimedia = $data->typeE != "null" ? $data->typeE : "";
+        $multimedia = '';
+        if(isset($data->typeE)) {
+            $multimedia = $data->typeE != "null" ? $data->typeE : "";
+        }
 
         $directivo = "";
         if ($_SESSION['role'] == "5") {

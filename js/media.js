@@ -26,7 +26,11 @@ if ( (currentCDC == '1' && cdc == 'chamontoya') || (currentCDC == '2' && cdc == 
 
 const addMedia = document.getElementById('add-media');
 if (addMedia) {
-    addMedia.href = './add.php?cdc=' + cdc;
+    if(cdc != null) {
+        addMedia.href = './add.php?cdc=' + cdc;
+    } else if (type != null) {
+        addMedia.href = './add.php?type=' + type;
+    }
 }
 
 
@@ -134,7 +138,7 @@ function toggleEdit() {
 }
 
 function deleteMedia() {
-    fetch(`./backend/media/media-delete.php?id=${selectedMedia}`)
+    fetch(`./backend/media/media-delete.php?id=${selectedMedia}&type=${type}`)
         .then(response => response.json())
         .then(data => {
             if (data.estatus == "Correcto") {
@@ -169,9 +173,10 @@ try {
 } catch(e) {}
 
 async function star( id ) {
-    fetch(`./backend/favourite/make-favourite.php?id=${id}`)
+    fetch(`./backend/favourite/make-favourite.php?id=${id}&type=${type}`)
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             if (data.estatus == "Correcto") {
                 if (document.getElementById(`favourite${id}`).style.backgroundImage.includes("star.png")) {
                     document.getElementById(`favourite${id}`).style.backgroundImage = "url(./img/starWhite.png)";
