@@ -1,0 +1,134 @@
+.formRol {
+    width: 75%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    z-index: 1;
+    @include media(tablet-s-only) {
+        width: 100%;
+    }
+    &__form {
+        margin: 50px 0 20px 0;
+        height: auto;
+        width: 100%;
+        max-width: 700px;
+        position: relative;
+        background-color: #dfe0dc;
+        padding: 30px;
+        box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.22);
+        border-radius: 20px;
+        @include media(desktop-xl) {
+            max-width: 750px;
+        }
+        @include media(tablet-s-only) {
+            max-width: 550px;
+        }
+        @include media(mobile-only) {
+            max-width: 550px;
+            margin: 40px 20px;
+        }
+        &--title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: black;
+            @include media(mobile-only) {
+                font-size: 2rem;
+            }
+        }
+        &--subtitle {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 300;
+            color: black;
+            @include media(mobile-only) {
+                font-size: 1.5rem;
+            }
+        }
+    }
+    .form__formRol--form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        form {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+
+        }
+        .formRol__input {
+            width: 90%;
+            height: auto;
+            margin-bottom: 30px;
+            justify-content: start;
+            font-family: "Nunito", sans-serif;
+            position: relative;
+            @include media(mobile-only) {
+                width: 95%;
+            }
+            label {
+                padding: 10px;
+                font-size: 1.7rem;
+                background-color: transparent;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                display: inline-block;
+            }
+            select {
+                display: block;
+                width: 100%;
+                margin-left: 2%;
+                padding: 0.375rem 0.75rem;
+                font-size: 1.3rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: #212529;
+                background-color: #e9ecef;
+                border: 1px solid #ced4da;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                border-radius: 0.25rem;
+            }
+            select:focus {
+                outline:#0d6efd;
+                box-shadow: 0 0px 3px #0d6efd;
+            }
+
+            option {
+                font-size: 1.3rem;
+                line-height: 1.5;
+                color: #212529;
+                background-color: #e9ecef;
+            }
+        }
+    }
+}
+
+.submit__saveRol {
+    width: 30%;
+    height: 30px;
+    background-color: #043b9c;
+    color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 1.3rem;
+    align-self: flex-end;
+    font-family: "Nunito", sans-serif;
+    margin-left: 70%;
+}
+
+.submit__saveRol:hover,
+.submit__accessKey:hover {
+  background-color: #0759e6;
+}

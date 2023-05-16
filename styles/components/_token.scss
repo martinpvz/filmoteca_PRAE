@@ -1,0 +1,83 @@
+.submit__accessKey {
+    width: 100%;
+    height: 30px;
+    background-color: #043b9c;
+    color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 1.3rem;
+    align-self: flex-end;
+    font-family: "Nunito", sans-serif;
+}
+.submit__accessKey:hover {
+    background-color: #0759e6;
+}
+
+.token_main{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    position: relative
+}
+.token_section {
+    width: 90%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    z-index: 1;
+    @include media(tablet-s-only) {
+        width: 100%;
+    }
+    &__form {
+        margin: 70px 0 20px 0;
+        height: auto;
+        width: 100%;
+        max-width: 650px;
+        position: relative;
+        background-color: #DFE0DC;
+        padding: 30px;
+        box-shadow: 0px 0px 14px 7px rgba(0, 0, 0, 0.22);
+        border-radius: 20px;
+        color: black;
+        text-align: center;
+        @include media(desktop-xl) {
+            max-width: 850px;
+        }
+        @include media(desktop-s-only) {
+            max-width: 600px;
+        }
+        @include media(mobile-only) {
+            max-width: 600px;
+            margin: 50px 10px;
+        }
+        &--title {
+            font-size: 2.8rem;
+            font-weight: 600;
+        }
+        &--subtitle {
+            font-size: 2rem;
+            margin: 0;
+            @include media(mobile-only) {
+                font-size: 1.5rem;
+            }
+        }
+        &--user {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 500;
+            @include media(mobile-only) {
+                font-size: 2rem;
+            }
+        }
+        &--key{
+            font-size: 2.3rem;
+            margin: 0;
+        }
+    }
+}
