@@ -845,6 +845,39 @@ input:-webkit-autofill:focus {
     width: 100%;
   }
 }
+.main__media .gallery .noinfo {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  display: none;
+}
+.main__media .gallery .noinfo__div {
+  width: 80%;
+  max-width: 300px;
+  background-color: #DFE0DC;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 60px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+}
+.main__media .gallery .noinfo__div img {
+  width: 80px;
+}
+.main__media .gallery .show__noinfo {
+  display: none;
+}
+.main__media .gallery .noinfo__text {
+  font-size: 2rem;
+  font-weight: 600;
+  color: black;
+  margin: 20px 0 0 0;
+}
 .main__media .media {
   margin: 20px auto;
   height: auto;
@@ -2235,8 +2268,7 @@ input[type=file]::file-selector-button:hover {
   justify-content: start;
   border-radius: 10px;
   position: relative;
-  padding: 0 15px 0 15px;
-  background: #DFe0dC;
+  background: #D9D9D9;
 }
 @media only screen and (max-width: 768px) {
   .addCDC .form__addCDC--form .addCDC__input {
@@ -2248,19 +2280,35 @@ input[type=file]::file-selector-button:hover {
   border: none;
   font-size: 1.7rem;
   font-weight: 300;
+  padding: 0 28px 0 28px;
   color: black;
   outline: none;
   font-family: "Nunito", sans-serif;
   background-color: transparent;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.addCDC .form__addCDC--form .addCDC__input .inputCDC2 {
+  padding: 0 28px 0 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.addCDC .form__addCDC--form .addCDC__input input::placeholder {
+  font-size: 1.6rem;
+  font-family: "Nunito", sans-serif;
+  font-weight: 300;
+  color: gray;
+}
+
+.inputCDC {
+  background-color: #D9D9D9;
+}
 
 .inputCDC[type=file]::file-selector-button {
-  background-color: #DFE0DC;
+  background-color: #D9D9D9;
   color: #000;
   cursor: pointer;
   font-size: 1.7rem;
-  font-weight: 400;
+  font-weight: 300;
   font-family: "Nunito", sans-serif;
   transition: 0.5s;
 }
@@ -2270,17 +2318,17 @@ input[type=file]::file-selector-button:hover {
 }
 
 .submit__addCDC {
-  width: 30%;
-  height: 30px;
-  background-color: #043b9c;
+  width: 20%;
+  height: 42px;
+  background-color: #043B9C;
   color: white;
   border-radius: 8px;
   margin-top: 20px;
   border: none;
   outline: none;
   cursor: pointer;
-  transition: 0.2s;
-  font-size: 1.3rem;
+  transition: 0.3s;
+  font-size: 1.8rem;
   align-self: flex-end;
   font-family: "Nunito", sans-serif;
   margin-right: 9%;

@@ -1,3 +1,18 @@
+<?php
+session_start();
+if(isset($_SESSION['sesion']) != true) {
+    header("location:./index.php"); 
+} else {
+    if($_SESSION['role'] != 1 && $_SESSION['role'] != 2 && $_SESSION['role'] != 3) {
+        header("location:./firstPage.php"); 
+    }
+}
+$nombre = $_SESSION['name'];
+$apellido = $_SESSION['surname'];
+$inicialN = strtoupper(substr($nombre, 0, 1));
+$inicialA = strtoupper(substr($apellido, 0, 1));
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +33,7 @@
         <h1 class="header__home--title title__small" id="title-desktop">Añadir CDC</h1>
         <div class="profile">
             <div class="profile__circle" id="profile">
-                <p class="profile__circle--text"> </p>
+                <p class="profile__circle--text"><?php echo "$inicialN$inicialA" ?></p>
             </div>
             <div class="profile__info" id="profile-info">
                 <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
@@ -64,7 +79,7 @@
                             <input required type="tel" name="phoneCDC" id="phoneCDC" placeholder="Teléfono"/>
                         </div>
                         <div class="addCDC__input">                           
-                                <input class="inputCDC" required type="file" name="imageCDC" id="imageCDC" accept="image/png, image/jpeg, image/jpg"/>                           
+                                <input class="inputCDC inputCDC2" required type="file" name="imageCDC" id="imageCDC" accept="image/png, image/jpeg, image/jpg"/>                           
                         </div>
                         
                         <div class="form__error" id="form__error">

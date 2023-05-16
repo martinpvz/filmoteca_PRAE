@@ -65,7 +65,7 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
             <?php
                 if ( $role == '1' || $role == '2') {
                     echo '
-                        <a href="#" class="card" id="add-card">  
+                        <a href="./addCDC.php" class="card" id="add-card">  
                             <img src="./img/newCDC.jpeg" alt="cdc">
                             <div class="card--text card--add">
                                 <div class="card--add__img"></div>

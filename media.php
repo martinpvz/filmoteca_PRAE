@@ -234,6 +234,12 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
                 <span class="loaderT"></span>
                 <span class="loaderT"></span>
             </div>
+            <div class="noinfo" id="noinfo">
+                <div class="noinfo__div">
+                    <img src="./img/no-results.png" alt="No results">
+                    <p class="noinfo__text">No hay información</p>
+                </div>
+            </div>
             <section class="media" id="media">
                 <?php
                     if ( $role == '1' || $role == '2') {

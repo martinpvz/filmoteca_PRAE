@@ -154,6 +154,40 @@
         @include media(tablet-s-only) {
             width: 100%;
         }
+        .noinfo {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            display: none;
+        }
+        .noinfo__div {
+            width: 80%;
+            max-width: 300px;
+            background-color: #DFE0DC;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 60px;
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.30);
+            img {
+                width: 80px;
+            }
+        }
+        .show__noinfo {
+            display: none;
+        }
+        .noinfo__text {
+            font-size: 2rem;
+            font-weight: 600;
+            color: black;
+            margin: 20px 0 0 0;
+            //margin-top: 50px;
+        }
     }
     .media {
         margin: 20px auto;

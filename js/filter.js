@@ -468,8 +468,15 @@ function makeMedia(data) {
         setTimeout(function() {
             document.getElementById("media").style.display = "block";
             loaders.style.display = "none";
+            document.getElementById('noinfo').style.display = "none";
         }, 1000);
 
+    } else {
+        setTimeout(function() {
+            document.getElementById('noinfo').style.display = "flex";
+            //document.getElementById("media").style.display = "block";
+            loaders.style.display = "none";
+        }, 1000);
     }
 }
 
@@ -483,7 +490,7 @@ async function updateMedia(data) {
         }
     });
     const result = await response.json();
-    console.log(result);
+    // document.getElementById('noinfo').style.display = "none";
     if(result.estatus == "Correcto") {
         makeMedia(result.data)
     } else {
@@ -563,7 +570,8 @@ const getName = (name) => {
                 value.type = "";
                 value.subtype = "";
             }
-
+            
+            document.getElementById('noinfo').style.display = "none";
             document.getElementById("filter").style.display = "none";
             document.getElementById("media").style.display = "none";
             loader1.style.display = "flex";
