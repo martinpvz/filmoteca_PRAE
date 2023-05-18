@@ -10,28 +10,53 @@ function disableScroll(){
 }
 
 
-if ( (currentCDC == '1' && cdc == 'chamontoya') || (currentCDC == '2' && cdc == 'zacatlán') || (currentCDC == '3' && cdc == 'cuacuila') ) {
-    const template = /*html*/ `    
-    <a href="./add.php" class="card addmedia" id="add-media">
-        <img src="./img/blue.jpeg">
-        <div class="card--text card--add">
-            <div class="card--add__img"></div>
-            <span>Agregar</span>
-        </div>
-    </a>
-    `;
-    document.getElementById('media').insertAdjacentHTML('afterbegin', template);
-}
-
-
 const addMedia = document.getElementById('add-media');
-if (addMedia) {
-    if(cdc != null) {
-        addMedia.href = './add.php?cdc=' + cdc;
-    } else if (type != null) {
-        addMedia.href = './add.php?type=' + type;
-    }
+
+function listarCDC() {
+    fetch(`./backend/cdc/cdc-list.php`)
+        .then(response => response.json())
+        .then(data => {
+            if (Object.keys(data).length > 0 && cdc != null) {
+                console.log(data)
+                cdc_name = cdc;
+                let cdc_id = "";
+                for( let cdc of data ) {
+                    if(cdc.name.toLowerCase().includes(cdc_name.toLowerCase())) {
+                        cdc_id = cdc.id;
+                    }
+                }
+                if(currentCDC == cdc_id) {
+                    const template = /*html*/ `    
+                    <a href="./add.php" class="card addmedia" id="add-media">
+                        <img src="./img/blue.jpeg">
+                        <div class="card--text card--add">
+                            <div class="card--add__img"></div>
+                            <span>Agregar</span>
+                        </div>
+                    </a>
+                    `;
+                    console.log(template)
+                    document.getElementById('media').insertAdjacentHTML('afterbegin', template);
+                    
+                }
+            }
+        })
+        .then(() => {
+            const addMedia = document.getElementById('add-media');
+            if (addMedia) {
+                if(cdc != null) {
+                    addMedia.href = './add.php?cdc=' + cdc;
+                } else if (type != null) {
+                    addMedia.href = './add.php?type=' + type;
+                }
+            }
+            listarMedia();
+        })
+        .catch(error => console.error('Error al realizar la petición', error));
 }
+
+
+listarCDC()
 
 
 let photoInfo = [];
@@ -274,6 +299,7 @@ function listarMedia() {
                         }
                     }
                 });
+            const addMedia = document.getElementById('add-media');
             if (addMedia) {
                 addMedia.insertAdjacentHTML('afterend', template);
             } else {
@@ -296,5 +322,5 @@ function listarMedia() {
 }
 
 
-listarMedia();
+//listarMedia();
 
