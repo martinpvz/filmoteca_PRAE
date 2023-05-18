@@ -179,7 +179,7 @@ class Media extends DataBase
         unlink($tmp_file);
 
         $cdc_id = '';
-        if(!empty($cdc)) {
+        if(!empty($cdc_name)) {
             $cdc_query = "SELECT id FROM cdc WHERE name LIKE '%$cdc_name%'";
             $cdc_result = $this->conexion->query($cdc_query);
             $cdc_row = mysqli_fetch_assoc($cdc_result);
@@ -242,7 +242,7 @@ class Media extends DataBase
             $this->response['estatus'] =  "Correcto";
             $this->response['mensaje'] =  "La media se agregó correctamente";
         } else {
-            $this->response['mensaje'] = $subcategory_id . "No se pudo ejecutar la instrucción $sql. " . mysqli_error($this->conexion);
+            $this->response['mensaje'] = $cdc_name . "No se pudo ejecutar la instrucción $sql. " . mysqli_error($this->conexion);
         }
         $this->conexion->close();
     }

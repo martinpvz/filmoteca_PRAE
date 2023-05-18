@@ -67,6 +67,15 @@
                 background-color: transparent;
                 -webkit-tap-highlight-color: rgba(0,0,0,0);
             }
+            input::-webkit-autofill,
+            input::-webkit-autofill:hover,
+            input::-webkit-autofill:focus,
+            input::-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0 30px transparent inset;
+                -webkit-text-fill-color: black;
+                background-color: transparent;
+                border-radius: 4px;
+            }
             .inputCDC2 {
                 padding: 0 28px 0 0;
                 border-top-left-radius: 10px;

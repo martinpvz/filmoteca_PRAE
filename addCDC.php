@@ -24,8 +24,94 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Add | Filmoteca PRAE</title>
+    <style>
+        .loader {
+            visibility: hidden;
+            opacity: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(20, 20, 20, 0.95);
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition:all .3s ease;
+        }
+
+        .spinner {
+            width: 44px;
+            height: 44px;
+            animation: spinner-y0fdc1 2s infinite ease;
+            transform-style: preserve-3d;
+        }
+
+        .spinner > div {
+            background-color: rgba(0,77,255,0.2);
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            border: 2px solid #004dff;
+        }
+
+        .spinner div:nth-of-type(1) {
+            transform: translateZ(-22px) rotateY(180deg);
+        }
+
+        .spinner div:nth-of-type(2) {
+            transform: rotateY(-270deg) translateX(50%);
+            transform-origin: top right;
+        }
+
+        .spinner div:nth-of-type(3) {
+            transform: rotateY(270deg) translateX(-50%);
+            transform-origin: center left;
+        }
+
+        .spinner div:nth-of-type(4) {
+            transform: rotateX(90deg) translateY(-50%);
+            transform-origin: top center;
+        }
+
+        .spinner div:nth-of-type(5) {
+            transform: rotateX(-90deg) translateY(50%);
+            transform-origin: bottom center;
+        }
+
+        .spinner div:nth-of-type(6) {
+            transform: translateZ(22px);
+        }
+
+        @keyframes spinner-y0fdc1 {
+            0% {
+            transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+            }
+
+            50% {
+            transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+            }
+
+            100% {
+            transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+            }
+        }
+
+    </style>
 </head>
 <body class="body__add">
+    <div class="loader" id="loader">
+        <div class="spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
     <header class="header__home">
         <div class="header__home--img">
             <img src="./img/logo.png" alt="Logo">
@@ -68,7 +154,7 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
             <div class="addCDC__form">
                 <p class="addCDC__form--title">Datos generales</p>
                 <div class="form__addCDC--form">
-                    <form action="" method="post">
+                    <form action="" method="post" id="form__add" enctype="multipart/form-data">
                         <div class="addCDC__input">
                             <input required type="text" name="nameCDC" id="nameCDC" placeholder="Nombre"/>
                         </div>
@@ -85,7 +171,6 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
                         <div class="form__error" id="form__error">
                             <p id="form__error--text">Existen campos vacíos</p>
                         </div>
-
                         <input type="submit" value="Guardar" class="submit__addCDC" id="createCDC">
                     </form>
                 </div>
@@ -100,5 +185,6 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
     </footer>
 
     <script src="./js/main.js"></script>
+    <script src="./js/addCdc.js"></script>
 </body>
 </html>

@@ -2287,6 +2287,15 @@ input[type=file]::file-selector-button:hover {
   background-color: transparent;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.addCDC .form__addCDC--form .addCDC__input input::-webkit-autofill,
+.addCDC .form__addCDC--form .addCDC__input input::-webkit-autofill:hover,
+.addCDC .form__addCDC--form .addCDC__input input::-webkit-autofill:focus,
+.addCDC .form__addCDC--form .addCDC__input input::-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset;
+  -webkit-text-fill-color: black;
+  background-color: transparent;
+  border-radius: 4px;
+}
 .addCDC .form__addCDC--form .addCDC__input .inputCDC2 {
   padding: 0 28px 0 0;
   border-top-left-radius: 10px;

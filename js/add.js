@@ -103,11 +103,12 @@ let info = {
     subcategory: "",
     type: "",
     subtype: "",
+    cdc: cdc,
 }
 
 let value = {...info}
 
-
+console.log(cdc, value, info)
 ///////////// ------------------------ FILTROS ------------------------ //////////////
 
 function makeTemplate(data, name) {
