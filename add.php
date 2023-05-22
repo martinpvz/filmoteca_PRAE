@@ -7,11 +7,7 @@ if(isset($_SESSION['sesion']) != true) {
         header("location:./firstPage.php"); 
     }
 }
-$nombre = $_SESSION['name'];
-$apellido = $_SESSION['surname'];
 $role = $_SESSION['role'];
-$inicialN = strtoupper(substr($nombre, 0, 1));
-$inicialA = strtoupper(substr($apellido, 0, 1));
 ?>
 
 
@@ -121,7 +117,7 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
         <h1 class="header__home--title title__small" id="title-desktop"></h1>
         <div class="profile">
             <div class="profile__circle" id="profile">
-                <p class="profile__circle--text"> <?php echo "$inicialN$inicialA" ?> </p>
+                <p class="profile__circle--text" id="username-text"></p>
             </div>
             <div class="profile__info" id="profile-info">
                 <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
@@ -348,7 +344,7 @@ $inicialA = strtoupper(substr($apellido, 0, 1));
         <p class="footer__home--text">© 2023 Copyright: PROYECTO ROBERTO ALONSO ESPINOSA </p>
     </footer>
 
-    <!-- <script src="./js/main.js"></script> -->
-    <script src="./js/add.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/add.js" type="module"></script>
 </body>
 </html>

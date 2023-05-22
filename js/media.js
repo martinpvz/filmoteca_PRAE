@@ -4,6 +4,11 @@ const closeButton = document.querySelector(".modal__header--img");
 const file = document.getElementById("rute_input");
 let selectedMedia = null;
 
+const username = document.getElementById('username-text');
+(async () => {
+    username.innerText = await getUsername();
+})();
+
 // FUNCTION TO DISABLE SCROLL WHEN MENU SOMEONE´S INSIDE THE MENU
 function disableScroll(){  
     window.scrollTo(0, 0);
@@ -17,7 +22,6 @@ function listarCDC() {
         .then(response => response.json())
         .then(data => {
             if (Object.keys(data).length > 0 && cdc != null) {
-                console.log(data)
                 cdc_name = cdc;
                 let cdc_id = "";
                 for( let cdc of data ) {
@@ -220,7 +224,6 @@ function listarMedia() {
             if (Object.keys(data).length > 0) {
                 let template = '';
                 photoInfo = data;
-                console.log(data)
                 data.forEach(photo => {
                     if(photo.type == "1") {
                         if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {

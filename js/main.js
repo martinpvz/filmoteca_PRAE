@@ -47,3 +47,9 @@ function toggleProfileInfo() {
         document.getElementById('profile-info').style.display = 'flex';
     }
 }
+
+async function getUsername() {
+    const response = await fetch(`./backend/user/user-name.php`);
+    const data = await response.json();
+    return data.mensaje;
+}

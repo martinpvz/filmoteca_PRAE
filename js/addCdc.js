@@ -7,6 +7,11 @@ const errorMsg = document.getElementById('form__error--text');
 const loader = document.getElementById('loader');
 const form = document.getElementById("form__add");
 
+const username = document.getElementById('username-text');
+(async () => {
+    username.innerText = await getUsername();
+})();
+
 async function addCDC(data) {
     const response = await fetch('./backend/cdc/cdc-add.php', {
         method: 'POST',

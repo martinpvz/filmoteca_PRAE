@@ -50,6 +50,10 @@ function firstResponsiveFilter() {
 firstResponsiveFilter();
 
 
+const username = document.getElementById('username-text');
+(async () => {
+    username.innerText = await getUsername();
+})();
 
 
 
@@ -103,12 +107,10 @@ let info = {
     subcategory: "",
     type: "",
     subtype: "",
-    cdc: cdc,
 }
 
 let value = {...info}
 
-console.log(cdc, value, info)
 ///////////// ------------------------ FILTROS ------------------------ //////////////
 
 function makeTemplate(data, name) {

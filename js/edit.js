@@ -1,3 +1,8 @@
+const username = document.getElementById('username-text');
+(async () => {
+    username.innerText = await getUsername();
+})();
+
 const form = document.getElementById("submit__edit");
 
 form.addEventListener("click", function(event) {
@@ -41,6 +46,9 @@ form.addEventListener("click", function(event) {
                         error.style.display = "flex"
                         document.getElementById('error__p').innerText = "Perfil actualizado correctamente"
                         error.style.backgroundColor = "#228B22";
+                        (async () => {
+                            username.innerText = await getUsername();
+                        })();
                     } else {
                         error.style.display = "flex"
                         document.getElementById('error__p').innerText = "Usuario o correo ya existentes"

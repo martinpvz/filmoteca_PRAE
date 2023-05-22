@@ -135,6 +135,24 @@ class User extends DataBase
             }
         }
     }
+
+    public function getName() {
+        session_start();
+        if ($_SESSION['id']) {
+            // get the name out of the database
+            $sql = "SELECT name, surname FROM user WHERE id = '{$_SESSION['id']}'";
+            $result = mysqli_query($this->conexion, $sql);
+            $filas = $result->fetch_all(MYSQLI_ASSOC);
+            // get the first letter of name and surname and put it together in mayus
+            $name = strtoupper(substr($filas[0]['name'], 0, 1) . substr($filas[0]['surname'], 0, 1));
+
+            $this->response['estatus'] =  "Correcto";
+            $this->response['mensaje'] =  $name;
+        } else {
+            $this->response['estatus'] =  "Error";
+            $this->response['mensaje'] =  "No se pudo obtener el nombre";
+        }
+    }
 }
 
 ?>
