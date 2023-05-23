@@ -65,7 +65,7 @@
                 <div class="dashboard_mainPage--title">
                     <h2>Administración de usuarios</h2>
                 </div>
-                <br />
+                <br>
                 <div class="dashboard_table--text table-responsive">
                     <table id="users" class="display" style="width: 100%;">
                         <thead class="dashboard_table--thead">
@@ -81,34 +81,43 @@
                             </tr>
                         </thead>
                         <tbody class="dashboard_table--tbody">
-                            <tr>
-                                <td>userR</td>
-                                <td>name</td>
-                                <td>surname</td>
-                                <td>email</td>
-                                <td class="text">
-                                    <div class="text-on">Activo</div>
-                                    <div class="text-off">Desactivado</div>
-                                </td>
-                                <td>rol</td>
-                                <td>id_sede</td>
-                                <td class="text">
-                                    <a class="text-acciones" href="">
-                                        <i class="fas fa-user-tag"></i> Cambiar rol
-                                    </a>
-                                    <br>
-                                    <a class="text-acciones" href="#">
-                                        <i class="fas fa-key"></i> Cambiar contraseña
-                                    </a>
-                                    <br>
-                                    <a class="text-acciones" href="#">
-                                        <i class="fas fa-toggle-off"></i> Descativar
-                                        <i class="fas fa-toggle-on"></i> Activar
-                                    </a>
-                                </td>
-                            </tr>
+                            <?php foreach ($usuarios as $usuario): ?>
+                                <tr>
+                                    <td><?php echo $usuario['username']; ?></td>
+                                    <td><?php echo $usuario['name']; ?></td>
+                                    <td><?php echo $usuario['surname']; ?></td>
+                                    <td><?php echo $usuario['email']; ?></td>
+                                    <td class="text">
+                                        <?php if ($usuario['active']): ?>
+                                            <div class="text-on">Activo</div>
+                                        <?php else: ?>
+                                            <div class="text-off">Desactivado</div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?php echo $usuario['role_id']['name']; ?></td>
+                                    <td>
+                                        <?php if ($usuario['cdc_id'] != null): ?>
+                                            <?php echo $usuario['cdc_id']['name']; ?>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text">
+                                        <!-- ACCION: Cambiar Rol -->
+                                        <a class="text-acciones" href="#"><i class="fas fa-user-tag"></i>Cambiar rol</a>
+                                        <br>
+                                        <!-- ACCION: Cambiar Contraseña -->
+                                        <a class="text-acciones" href="#" onclick="#"><i class="fas fa-key"></i>Cambiar contraseña</a>
+                                        <br>
+                                        <!-- ACCION: Activar/Desactivar -->
+                                        <?php if ($usuario['active']): ?>
+                                            <a class="text-acciones" href="#" onclick="#"><i class="fas fa-toggle-off"></i>Desactivar</a>
+                                        <?php else: ?>
+                                            <a class="text-acciones" href="#" onclick="#"><i class="fas fa-toggle-on"></i>Activar</a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
-                    </table>
+                    </table>                    
                 </div>
             </div>
         </div>
