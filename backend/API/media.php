@@ -193,20 +193,11 @@ class Media extends DataBase
                 $tmp_file = tempnam(sys_get_temp_dir(), 'image_');
                 imagejpeg($image, $tmp_file, $quality);
                 imagedestroy($image);
-                if (!file_exists($tmp_file)) {
-                    $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en un archivo temporal';
-                } else {
-                    $this->response['mensaje'] = 'Archivo temporal generado correctamente: ' . $tmp_file;
-                }
     
                 $uploads_dir = '../../img';
                 $name = uniqid() . '.jpeg';
                 $path = $uploads_dir . '/' . $name;
-                if (!copy($tmp_file, $path)) {
-                    $this->response['mensaje'] = 'Error: no se pudo copiar el archivo temporal a la carpeta de destino';
-                } else {
-                    $this->response['mensaje'] = $path;
-                }
+                copy($tmp_file, $path);
     
                 $resource = './img/' . $name;
 
@@ -217,27 +208,24 @@ class Media extends DataBase
             file_put_contents($tmp_file, $media);
 
             // Revisar si el archivo se generó correctamente
-            if (!file_exists($tmp_file)) {
-                $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en un archivo temporal';
-            } else {
-                $this->response['mensaje'] = 'Archivo temporal generado correctamente: ' . $tmp_file;
-            }
+            // if (!file_exists($tmp_file)) {
+            //     $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en un archivo temporal';
+            // } else {
+            //     $this->response['mensaje'] = 'Archivo temporal generado correctamente: ' . $tmp_file;
+            // }
 
             // Copiar el archivo temporal a la carpeta de destino
             $uploads_dir = '../../img';
             $name = uniqid() . '.mp4';
             $path = $uploads_dir . '/' . $name;
-            if (!copy($tmp_file, $path)) {
-                $this->response['mensaje'] = 'Error: no se pudo copiar el archivo temporal a la carpeta de destino';
-            } else {
-                $this->response['mensaje'] = $path;
-            }
+            copy($tmp_file, $path);
 
             $resource = './img/' . $name;
 
             // Eliminar el archivo temporal
             unlink($tmp_file);
         }
+
 
 
 

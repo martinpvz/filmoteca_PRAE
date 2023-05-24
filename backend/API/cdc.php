@@ -111,11 +111,7 @@ class CDC extends DataBase
         $path = $uploads_dir . '/' . $name;
         
         // Guardar la imagen en la carpeta de destino
-        if (file_put_contents($path, $media) === false) {
-            $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en la carpeta de destino';
-        } else {
-            $this->response['mensaje'] = $path;
-        }
+        file_put_contents($path, $media);
     
         $resource = './img/' . $name;
         

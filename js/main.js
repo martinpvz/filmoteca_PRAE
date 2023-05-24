@@ -26,7 +26,12 @@ function mostrarMedia() {
     document.getElementById('footer__media').style.display = 'block'
     document.getElementById('filter__responsive').style.display = 'none'
     window.scrollTo(0, 0);
-    document.querySelector('.body__media').style.backgroundColor = '#F4F4F4';
+    try {
+        document.querySelector('.body__media').style.backgroundColor = '#F4F4F4';        
+    } catch (e) {}
+    try {
+        document.querySelector('.body__add').style.backgroundColor = '#F4F4F4';        
+    } catch (e) {}
 }
 
 

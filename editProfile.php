@@ -163,10 +163,6 @@ $id = $_SESSION['id'];
         </div>
     </section>
 
-    <main>
-
-    </main>
-
     <footer class="footer__home" id="footer__edit">
         <p class="footer__home--text">© 2023 Copyright: PROYECTO ROBERTO ALONSO ESPINOSA </p>
     </footer>
