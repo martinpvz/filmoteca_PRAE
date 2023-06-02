@@ -54,7 +54,7 @@ function listarCDC() {
                     addMedia.href = './add.php?type=' + type;
                 }
             }
-            listarMedia();
+            listarMedia(currentUserType);
         })
         .catch(error => console.error('Error al realizar la petición', error));
 }
@@ -178,11 +178,6 @@ function deleteMedia() {
 }
 
 function closeModify() {
-    // if ( window.innerWidth <= 880 ) {
-    //     document.querySelector('.classify').classList.add('hide');
-    // } else {
-    //     document.querySelector('.classify').classList.remove('hide');
-    // }
     document.querySelector('.classify').classList.remove('hide');
     // document.querySelector('.classify').style.display = "flex";
     document.querySelector(".gallery").style.display = "flex"
@@ -217,113 +212,199 @@ async function star( id ) {
         .catch(error => console.error('Error al realizar la petición', error));
 }
 
-function listarMedia() {
-    fetch(`./backend/media/media-list.php?cdc=${cdc}&type=${type}`)
-        .then(response => response.json())
-        .then(data => {
-            if (Object.keys(data).length > 0) {
-                let template = '';
-                photoInfo = data;
-                data.forEach(photo => {
-                    if(photo.type == "1") {
-                        if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
-                            template += /*html*/`
-                            <div class="media__img">
-                                <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
-                                <div class="media__img--button">
-                                    <a href="${photo.resource}" download class="download">
-                                        <span class="download__img"></span>
-                                    </a>
-                                </div>
-                                <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
-                            </div>
-                            `;
-                        } else if(photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3"))  {
-                            template += /*html*/`
-                            <div class="media__img">
-                                <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
-                                <div class="media__img--button">
-                                    <a href="${photo.resource}" download class="download">
-                                        <span class="download__img"></span>
-                                    </a>
-                                </div>
-                                <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
-                            </div>
-                            `;
-                        } else {
-                            template += /*html*/`
-                            <div class="media__img">
-                                <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
-                                <div class="media__img--button">
-                                    <a href="${photo.resource}" download class="download">
-                                        <span class="download__img"></span>
-                                    </a>
-                                </div>
-                            </div>
-                            `;
-                        }
-                    } else {
-                        // aqui vamos a modificar ahorita
-                        if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
-                            template += /*html*/`
-                            <div class="media__img">
-                                <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
-                                <div class="media__img--button">
-                                    <a href="${photo.resource}" download class="download">
-                                        <span class="download__img"></span>
-                                    </a>
-                                </div>
-                                <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
-                            </div>
-                            `;
-                        } else if(photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3"))  {
-                            template += /*html*/`
-                            <div class="media__img">
-                                <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
-                                <div class="media__img--button">
-                                    <a href="${photo.resource}" download class="download">
-                                        <span class="download__img"></span>
-                                    </a>
-                                </div>
-                                <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
-                            </div>
-                            `;
-                        } else {
-                            template += /*html*/`
-                            <div class="media__img">
-                                <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
-                                <div class="media__img--button">
-                                    <a href="${photo.resource}" download class="download">
-                                        <span class="download__img"></span>
-                                    </a>
-                                </div>
-                            </div>
-                            `;
-                        }
-                    }
-                });
-            const addMedia = document.getElementById('add-media');
-            if (addMedia) {
-                addMedia.insertAdjacentHTML('afterend', template);
-            } else {
-                document.getElementById('media').insertAdjacentHTML('afterbegin', template);
-            }
-            function windowOnClick(event) {
-                if (event.target === modal) {
-                    toggleModal();
-                }
-            }
-            for (let trigger of triggers) {
-                trigger.addEventListener("click", toggleModal);
-            }
-            closeButton.addEventListener("click", toggleModal);
-            window.addEventListener("click", windowOnClick);
-            
+let currentPage = 1;
+
+function createTemplate(startIndex, endIndex, currentUserType) {
+    let template = '';
+    for (let index = startIndex; index < endIndex; index++) {
+        const photo = photoInfo[index];
+        if (!photo) {
+            break;
         }
-        })
-        .catch(error => console.error('Error al realizar la petición', error));
+        
+        // Plantilla proporcionada
+        if (photo.type == "1") {
+            if (photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
+                template += /*html*/`
+                <div class="media__img">
+                    <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                    <div class="media__img--button">
+                        <a href="${photo.resource}" download class="download">
+                            <span class="download__img"></span>
+                        </a>
+                    </div>
+                    <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
+                </div>
+                `;
+            } else if (photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
+                template += /*html*/`
+                <div class="media__img">
+                    <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                    <div class="media__img--button">
+                        <a href="${photo.resource}" download class="download">
+                            <span class="download__img"></span>
+                        </a>
+                    </div>
+                    <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
+                </div>
+                `;
+            } else {
+                template += /*html*/`
+                <div class="media__img">
+                    <img src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}">
+                    <div class="media__img--button">
+                        <a href="${photo.resource}" download class="download">
+                            <span class="download__img"></span>
+                        </a>
+                    </div>
+                </div>
+                `;
+            }
+        } else {
+            if (photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
+                template += /*html*/`
+                <div class="media__img">
+                    <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                    <div class="media__img--button">
+                        <a href="${photo.resource}" download class="download">
+                            <span class="download__img"></span>
+                        </a>
+                    </div>
+                    <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/star.png)" onclick="star(${photo.media_id})"></span>
+                </div>
+                `;
+            } else if (photo.favourite == "0" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
+                template += /*html*/`
+                <div class="media__img">
+                    <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                    <div class="media__img--button">
+                        <a href="${photo.resource}" download class="download">
+                            <span class="download__img"></span>
+                        </a>
+                    </div>
+                    <span class="favourite" id="favourite${photo.media_id}" style="background-image: url(./img/starWhite.png)" onclick="star(${photo.media_id})"></span>
+                </div>
+                `;
+            } else {
+                template += /*html*/`
+                <div class="media__img">
+                    <video src="${photo.resource}" alt="" class="trigger" id="${photo.media_id}"></video>
+                    <div class="media__img--button">
+                        <a href="${photo.resource}" download class="download">
+                            <span class="download__img"></span>
+                        </a>
+                    </div>
+                </div>
+                `;
+            }
+        }
+    }
+    return template;
 }
 
+function removeChildrenExceptAddMedia(parentElement) {
+    let currentNode = parentElement.firstChild;
+    while (currentNode) {
+        if (currentNode.id === 'add-media') {
+            currentNode = currentNode.nextSibling;
+            continue;
+        }
+        const nodeToRemove = currentNode;
+        currentNode = currentNode.nextSibling;
+        parentElement.removeChild(nodeToRemove);
+    }
+}
+function listarMedia(currentUserType) {
+    if (photoInfo.length === 0) {
+        fetch(`./backend/media/media-list.php?cdc=${cdc}&type=${type}`)
+            .then(response => response.json())
+            .then(data => {
+                photoInfo = data;
+                const startIndex = (currentPage - 1) * 10;
+                const endIndex =currentPage * 10;
+                const template = createTemplate(startIndex, endIndex, currentUserType);
 
-//listarMedia();
+                const addMedia = document.getElementById('add-media');
+                if (addMedia) {
+                    addMedia.insertAdjacentHTML('afterend', template);
+                } else {
+                    document.getElementById('media').insertAdjacentHTML('afterbegin', template);
+                }
+                function windowOnClick(event) {
+                    if (event.target === modal) {
+                        toggleModal();
+                    }
+                }
+                for (let trigger of triggers) {
+                    trigger.addEventListener("click", toggleModal);
+                }
+                closeButton.addEventListener("click", toggleModal);
+                window.addEventListener("click", windowOnClick);
+                
+                if(data.length > 10) {
+                    document.getElementById("arrows").style.display = "flex";
+                }
+            })
+            .catch(error => console.error('Error al realizar la petición', error));
+    } else {
+        const startIndex = (currentPage - 1) * 10;
+        const endIndex = currentPage * 10;
+        const template = createTemplate(startIndex, endIndex, currentUserType);
 
+        const mediaContainer = document.getElementById('media');
+        const addMedia = document.getElementById('add-media');
+        
+        // Vacía el contenedor antes de agregar la nueva plantilla, pero conserva el elemento "add-media"
+        removeChildrenExceptAddMedia(mediaContainer);
+
+        if (addMedia) {
+            addMedia.insertAdjacentHTML('afterend', template);
+        } else {
+            document.getElementById('media').insertAdjacentHTML('afterbegin', template);
+        }
+        function windowOnClick(event) {
+            if (event.target === modal) {
+                toggleModal();
+            }
+        }
+        for (let trigger of triggers) {
+            trigger.addEventListener("click", toggleModal);
+        }
+        closeButton.addEventListener("click", toggleModal);
+        window.addEventListener("click", windowOnClick);
+        
+        if(photoInfo.length > 10) {
+            //document.getElementById("arrows").style.display = "flex";
+            setTimeout(function() {
+                document.getElementById("media").style.display = "block";
+                document.getElementById("arrows").style.display = "flex";
+                loaders.style.display = "none";
+            }, 600);
+        }
+    }
+}
+
+function changePage(direction) {
+    if (direction === "left" && currentPage > 1) {
+        currentPage--;
+        if(currentPage === 1) {
+            document.getElementById("arrow-left").style.visibility = "hidden";
+        }
+        document.getElementById("arrow-right").style.visibility = "visible";
+    } else if (direction === "right" && currentPage * 10 < photoInfo.length) {
+        currentPage++;
+        if( (currentPage + 1) * 10 > photoInfo.length ) {
+            document.getElementById("arrow-right").style.visibility = "hidden";
+        }
+        document.getElementById("arrow-left").style.visibility = "visible";
+    }
+    document.getElementById("media").style.display = "none";
+    document.getElementById("arrows").style.display = "none";
+    window.scroll({
+        top: 0,
+        behavior: 'smooth'
+    });
+    loaders.style.display = "flex";
+    
+    listarMedia(currentUserType);
+}

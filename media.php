@@ -251,6 +251,16 @@ $role = $_SESSION['role'];
                     }
                 ?>
             </section>
+            <div class="arrows" id="arrows">
+                <div class="arrow arrow-left" id="arrow-left" onclick="changePage('left')">
+                    <img src="./img/left2.png" alt="left">
+                    <p>Anterior</p>
+                </div>
+                <div class="arrow arrow-right" id="arrow-right" onclick="changePage('right')">
+                    <p>Siguiente</p>    
+                    <img src="./img/right2.png" alt="right">
+                </div>
+            </div>
         </section>
 
         <section class="modify">

@@ -367,8 +367,11 @@ async function updateFilter(data, name) {
 function makeMedia(data) {
     if(data != false ) {
         let template = '';
-        photoInfo = data;
-        data.forEach(photo => {
+        photoInfo = [...data];
+        let limit = Math.min(10, photoInfo.length);
+        for (let index = 0; index < limit; index++) {
+            const photo = photoInfo[index];
+            console.log(photo);
             if(photo.type == "1") {
                 if(photo.favourite == "1" && (currentUserType == "1" || currentUserType == "2" || currentUserType == "3")) {
                     template += /*html*/`
@@ -445,7 +448,7 @@ function makeMedia(data) {
                     `;
                 }
             }
-        });
+        };
 
 
         if (addMedia) {
@@ -465,16 +468,23 @@ function makeMedia(data) {
         closeButton.addEventListener("click", toggleModal);
         window.addEventListener("click", windowOnClick);
         // make a timer of 1 second to show the media
+        currentPage = 1;
+        document.getElementById("arrow-left").style.visibility = "hidden";
         setTimeout(function() {
             document.getElementById("media").style.display = "block";
             loaders.style.display = "none";
+            if (photoInfo.length > 10) {
+                document.getElementById("arrows").style.display = "flex";
+            }
             document.getElementById('noinfo').style.display = "none";
         }, 1000);
 
     } else {
         setTimeout(function() {
             document.getElementById('noinfo').style.display = "flex";
-            //document.getElementById("media").style.display = "block";
+            if (photoInfo.length > 10) {
+                document.getElementById("arrows").style.display = "flex";
+            }
             loaders.style.display = "none";
         }, 1000);
     }
@@ -490,7 +500,6 @@ async function updateMedia(data) {
         }
     });
     const result = await response.json();
-    // document.getElementById('noinfo').style.display = "none";
     if(result.estatus == "Correcto") {
         makeMedia(result.data)
     } else {
@@ -574,6 +583,7 @@ const getName = (name) => {
             document.getElementById('noinfo').style.display = "none";
             document.getElementById("filter").style.display = "none";
             document.getElementById("media").style.display = "none";
+            document.getElementById("arrows").style.display = "none";
             loader1.style.display = "flex";
             loader2.style.display = "flex";
             loaders.style.display = "flex";
