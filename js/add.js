@@ -873,6 +873,7 @@ update.addEventListener("click", function(event) {
     const form = document.getElementById("form__add");
 
     const imagen = form.file.files[0];
+    const files = form.file.files;
 
     // aqui va a ir 
     var loader = document.querySelector('.loader');
@@ -895,26 +896,29 @@ update.addEventListener("click", function(event) {
         }, 1000);
         event.preventDefault();
     } else {
-        Base64(imagen)
-        .then(function(imagen_base64) {
-            const post = {
-                date: date,
-                description: description,
-                type: selected,
-                resource: imagen_base64,
-                year_id: year_id,
-                area_id: area_id,
-                cdc_id: cdc_id,
-                category_id: category_id,
-                subcategory_id: subcategory_id,
-                type_id: type_id,
-                subtype_id: subtype_id
-            }
-            addMedia(post);
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            Base64(file)
+            .then(function(imagen_base64) {
+                const post = {
+                    date: date,
+                    description: description,
+                    type: selected,
+                    resource: imagen_base64,
+                    year_id: year_id,
+                    area_id: area_id,
+                    cdc_id: cdc_id,
+                    category_id: category_id,
+                    subcategory_id: subcategory_id,
+                    type_id: type_id,
+                    subtype_id: subtype_id
+                }
+                addMedia(post);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
     }
 
     setTimeout(function() {
