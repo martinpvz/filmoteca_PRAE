@@ -4,7 +4,13 @@ use DataBase\ADMIN;
 
 require_once '../API/admin.php';
 
+session_start();
+
 $var = new ADMIN();
+$var -> getDasboard();
+$datosJson = $var->getResponse();
 
-echo $var->getDasboard();
+$_SESSION['datos'] = $datosJson;
+//header("Location: ../../dashboard.php");
 
+exit;

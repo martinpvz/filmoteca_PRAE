@@ -6,4 +6,7 @@ require_once '../API/admin.php';
 
 $var = new ADMIN();
 
-//echo $var->generateToken();
+$var->cambioRol($_POST);
+//echo $var->getResponse();
+
+

@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    // Obtener los datos de la sesión y decodificar el JSON
+    $datosJson = $_SESSION['datos'];
+    $datos = json_decode($datosJson, true);
+
+    
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="./js/admin.js"></script>
+    
     
 </head>
 <body>
@@ -69,7 +78,7 @@
                 <div class="dashboard_table--text table-responsive">
                     <table id="users" class="display" style="width: 100%;">
                         <thead class="dashboard_table--thead">
-                            <tr>
+                            <tr >
                                 <th>Usuario</th>
                                 <th>Nombre(s)</th>
                                 <th>Apellidos</th>
@@ -81,7 +90,9 @@
                             </tr>
                         </thead>
                         <tbody class="dashboard_table--tbody">
-                            <?php foreach ($usuarios as $usuario): ?>
+                            <?php 
+                                foreach ($datos as $usuario):
+                            ?>
                                 <tr>
                                     <td><?php echo $usuario['username']; ?></td>
                                     <td><?php echo $usuario['name']; ?></td>
@@ -94,25 +105,28 @@
                                             <div class="text-off">Desactivado</div>
                                         <?php endif; ?>
                                     </td>
-                                    <td><?php echo $usuario['role_id']['name']; ?></td>
+                                    <td><?php echo $usuario['role_name']; ?></td>
                                     <td>
                                         <?php if ($usuario['cdc_id'] != null): ?>
-                                            <?php echo $usuario['cdc_id']['name']; ?>
+                                            <?php echo $usuario['cdc_name']; ?>
                                         <?php endif; ?>
                                     </td>
                                     <td class="text">
                                         <!-- ACCION: Cambiar Rol -->
-                                        <a class="text-acciones" href="#"><i class="fas fa-user-tag"></i>Cambiar rol</a>
+                                        <a class="text-acciones" href="roles.php" onclick="toggleUser_changeRol('<?php echo $usuario['id']; ?>');"><i class="fas fa-user-tag"></i>Cambiar rol</a>
                                         <br>
                                         <!-- ACCION: Cambiar Contraseña -->
-                                        <a class="text-acciones" href="#" onclick="#"><i class="fas fa-key"></i>Cambiar contraseña</a>
+                                        <a class="text-acciones" href="password.php" onclick="toggleUser_newpass('<?php echo $usuario['id']; ?>');"><i class="fas fa-key"></i>Cambiar contraseña</a>
                                         <br>
                                         <!-- ACCION: Activar/Desactivar -->
                                         <?php if ($usuario['active']): ?>
-                                            <a class="text-acciones" href="#" onclick="#"><i class="fas fa-toggle-off"></i>Desactivar</a>
+                                            <a class="text-acciones" href="" onclick="toggleUser_disable('<?php echo $usuario['id']; ?>');"><i class="fas fa-toggle-off"></i>Desactivar</a>
                                         <?php else: ?>
-                                            <a class="text-acciones" href="#" onclick="#"><i class="fas fa-toggle-on"></i>Activar</a>
+                                            <a class="text-acciones" href="" onclick="toggleUser_enable('<?php echo $usuario['id']; ?>');"><i class="fas fa-toggle-on"></i>Activar</a>
                                         <?php endif; ?>
+                                        <br>
+                                        <!-- ACCION: Eliminar usuario -->
+                                        <a class="text-acciones" href="" onclick=""><i class="fas fa-trash"></i>Eliminar</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -128,5 +142,6 @@
     </footer>
 
     <script src="./js/main.js"></script>
+    <script src="./js/admin.js"></script>
 </body>
 </html>

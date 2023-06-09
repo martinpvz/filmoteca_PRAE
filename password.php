@@ -1,3 +1,10 @@
+<?php 
+session_start(); 
+$name = $_SESSION['name'];
+$surname = $_SESSION['surname'];
+$newPass = $_SESSION['password'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,10 +63,10 @@
             <div class="token_section__form">
                 <p class="token_section__form--title">Contraseña de Acceso Temporal</p>
                 <br>
-                <p class="token_section__form--user">$usuario->name . ' ' . $usuario->surname;</p>
+                <p class="token_section__form--user"><?php echo $name . ' ' . $surname;?> </p>
                 <br><br>
                 <p class="token_section__form--subtitle">La contraseña de acceso temporal es:</p>
-                <p class="token_section__form--key">$newPass;</p>
+                <p class="token_section__form--key"><?php echo $newPass; ?></p>
             </div>
         </section>
     </main>
