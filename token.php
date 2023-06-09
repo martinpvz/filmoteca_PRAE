@@ -1,3 +1,8 @@
+<?php 
+session_start(); 
+$newToken = $_SESSION['token'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,16 +61,15 @@
             <div class="token_section__form">
                 <p class="token_section__form--title">Clave de Acceso</p>
                 <p class="token_section__form--subtitle">La actual clave de acceso es:</p>
-                <p class="token_section__form--key">token</p>
+                <p class="token_section__form--key"><?php echo $newToken ?></p>
                 <br>
-                <form action="" method="POST">
-                    <!--form* action="{{route('token')}}"-->
+                <form action="./backend/admin/admin-token.php" method="POST">            
                     <input
                     type="submit"
                     value="Generar nueva clave de acceso"
                     class="submit__accessKey"
                     id="claveAcceso"
-                    />
+                    >
                 </form>
             </div>
         </section>
