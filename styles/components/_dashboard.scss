@@ -136,3 +136,50 @@
         font-size: 90%;
     }
 }
+
+/*Button dropdown*/
+.dashboard_dropbtn {
+    font-size: 1.5rem;
+    color: #ffffff;
+    display: inline-block;
+    border: none;
+    border-radius: 4p;
+    padding: 10px 30px 10px 20px;
+    background-color: #043b9c;
+    cursor: pointer;
+    white-space: nowrap;
+}
+  
+.dashboard_btn{
+    position: relative;
+    display: inline-block;
+}
+  
+.dashboard_btnContent {
+    display: none;
+    //position: absolute;
+    background-color: #f9f9f9;
+    //min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.dashboard_btnContent a {
+    color: black;
+    padding: 5px 8px;
+    text-decoration: none;
+    display: block;
+}
+  
+.dashboard_btnContent a:hover {
+    background-color: #0759e63a;
+    color: #043b9c;
+}
+  
+.dashboard_btn:hover .dashboard_dropbtn {
+    background-color: #0759e6;
+}
+
+.dashboard_btn:active .dashboard_dropbtn  {
+    background-color: #0759e6;
+}

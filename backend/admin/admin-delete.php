@@ -6,7 +6,5 @@ require_once '../API/admin.php';
 
 $var = new ADMIN();
 
-$var->indexCambioRol($_POST);
+$var->delete($_POST);
 echo $var->getResponse();
-
-

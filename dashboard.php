@@ -3,10 +3,8 @@
     // Obtener los datos de la sesión y decodificar el JSON
     $datosJson = $_SESSION['datos'];
     $datos = json_decode($datosJson, true);
-
-    
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,21 +110,23 @@
                                         <?php endif; ?>
                                     </td>
                                     <td class="text">
-                                        <!-- ACCION: Cambiar Rol -->
-                                        <a class="text-acciones" href="roles.php" onclick="toggleUser_changeRol('<?php echo $usuario['id']; ?>');"><i class="fas fa-user-tag"></i>Cambiar rol</a>
-                                        <br>
-                                        <!-- ACCION: Cambiar Contraseña -->
-                                        <a class="text-acciones" href="password.php" onclick="toggleUser_newpass('<?php echo $usuario['id']; ?>');"><i class="fas fa-key"></i>Cambiar contraseña</a>
-                                        <br>
-                                        <!-- ACCION: Activar/Desactivar -->
-                                        <?php if ($usuario['active']): ?>
-                                            <a class="text-acciones" href="" onclick="toggleUser_disable('<?php echo $usuario['id']; ?>');"><i class="fas fa-toggle-off"></i>Desactivar</a>
-                                        <?php else: ?>
-                                            <a class="text-acciones" href="" onclick="toggleUser_enable('<?php echo $usuario['id']; ?>');"><i class="fas fa-toggle-on"></i>Activar</a>
-                                        <?php endif; ?>
-                                        <br>
-                                        <!-- ACCION: Eliminar usuario -->
-                                        <a class="text-acciones" href="" onclick=""><i class="fas fa-trash"></i>Eliminar</a>
+                                        <div class="dashboard_btn">
+                                            <button class="dashboard_dropbtn" onclick="toggleMenu()">Acciones</button>
+                                            <div class="dashboard_btnContent" id="dropdownMenu">
+                                                <!-- ACCION: Cambiar Rol -->
+                                                    <a class="text-acciones" href="roles.php" onclick="toggleUser_changeRol('<?php echo $usuario['id']; ?>');"><i class="fas fa-user-tag"></i> Cambiar rol</a>
+                                                    <!-- ACCION: Cambiar Contraseña -->
+                                                    <a class="text-acciones" href="password.php" onclick="toggleUser_newpass('<?php echo $usuario['id']; ?>');"><i class="fas fa-key"></i> Cambiar contraseña</a>
+                                                    <!-- ACCION: Activar/Desactivar -->
+                                                    <?php if ($usuario['active']): ?>
+                                                        <a class="text-acciones" href="" onclick="toggleUser_disable('<?php echo $usuario['id']; ?>');"><i class="fas fa-toggle-off"></i> Desactivar</a>
+                                                    <?php else: ?>
+                                                        <a class="text-acciones" href="" onclick="toggleUser_enable('<?php echo $usuario['id']; ?>');"><i class="fas fa-toggle-on"></i> Activar</a>
+                                                    <?php endif; ?>
+                                                    <!-- ACCION: Eliminar usuario -->
+                                                    <a class="text-acciones" href="" onclick="toggleUser_delete('<?php echo $usuario['id']; ?>');"><i class="fas fa-trash"></i> Eliminar</a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

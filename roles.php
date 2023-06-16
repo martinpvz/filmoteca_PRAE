@@ -1,9 +1,17 @@
 <?php 
 session_start(); 
+$id = $_SESSION['id'];
 $name = $_SESSION['name'];
 $surname = $_SESSION['surname'];
+$role = $_SESSION['role_id'];
+$cdc = $_SESSION['cdc_id'];
 
-include './backend/admin/admin-cambioRol.php';
+$arrayRol = $_SESSION['roles'];
+$rolesEncode = json_encode($arrayRol);
+
+$sedes = $_SESSION['sedes'];
+
+include './backend/API/admin.php';
 ?>
 
 
@@ -20,7 +28,7 @@ include './backend/admin/admin-cambioRol.php';
     <title>ADMIN | Filmoteca PRAE</title>
 </head>
 <body>
-<header class="header__home">
+    <header class="header__home">
         <div class="header__home--img">
             <img src="./img/logo.png" alt="Logo">
         </div>
@@ -63,26 +71,52 @@ include './backend/admin/admin-cambioRol.php';
     <main class="main__media">
         <section class="formRol">
             <div class="formRol__form">
-            <p class="formRol__form--title">Asignación de Nuevo Rol de Usuario</p>
-            <p class="formRol__form--subtitle"><?php echo $name . ' ' . $surname;?> </p>
+                <p class="formRol__form--title">Asignación de Nuevo Rol de Usuario</p>
+                <p class="formRol__form--subtitle"><?php echo $id. ' ' . $name . ' ' . $surname;?> <br>
+                <?php echo 'Role: '. $role;?>
+                <br>
+                <?php 
+                    if($cdc != null){
+                        echo 'CDC: '. $cdc;
+                    };?>
+                <br>
+                <?php
+                    echo $roles;
+                ?>
+                <br>
+                <?php 
+                if (is_array($roles)) {
+                    foreach ($roles as $role) {
+                        if (isset($role['id_role']) && isset($role['role_name'])) {
+                            $id = $role['id_role'];
+                            $nombre = $role['role_name'];
+                        }
+                    }
+                } else {
+                    echo "No se pudo decodificar el valor de \$roles como un array.";
+                } ?>
+
+                </p>
+
+
                 <div class="form__formRol--form">
-                    <form method="POST" action="<?php echo route('rol', ['id' => $usuario['id']]); ?>">
+                    <form method="POST" action="">
                         <div class="formRol__input">
-                            <label for="RolSelected">Selecciona el nuevo rol del usuario:</label>
-                            <select id="Rol" name="rol" onchange="habilita()">
+                            <label for="role">Selecciona el nuevo rol del usuario:</label>
+                            <select id="role" name="role" onchange="habilita()">
                                 <?php foreach ($roles as $rol): ?>
-                                    <option value="<?php echo $rol['id']; ?>" <?php echo ($usuario['id_role'] == $rol['id']) ? 'selected' : ''; ?>>
-                                        <?php echo $rol['id']; ?>
+                                    <option value="<?php echo $rol['id_role']; ?>" <?php if ($role == $rol['id_role']) { echo 'selected'; } ?>>
+                                        <?php echo $rol['role_name']; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="formRol__input" id="CDCGroup">
-                            <label for="SedeSelected"> Asignar un Centro de Desarrollo Comunitario:</label>
-                            <select class="form-control" id="CDC" name="cdc">
+                        <div class="formRol__input" id="CDCGroup" hidden>
+                            <label for="cdc"> Asignar un Centro de Desarrollo Comunitario:</label>
+                            <select class="form-control" id="cdc" name="cdc">
                                 <?php foreach ($sedes as $sede): ?>
-                                    <option value="<?php echo $sede['id']; ?>" <?php echo ($usuario['id_sede'] == $sede['id']) ? 'selected' : ''; ?>>
-                                        <?php echo $sede->nombre; ?>
+                                    <option value="<?php echo $cdc; ?>" <?php echo ($usuario['id_sede'] == $sede['id']) ? 'selected' : ''; ?>>
+                                        <?php echo $cdc; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>

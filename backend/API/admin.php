@@ -58,59 +58,70 @@ class Admin extends DataBase
         while ($fila = $result->fetch_assoc()) {
             $this->response[] = $fila;
         }
-
-        
         //$result->free();
-        //$this->conexion->close();
+        $this->conexion->close();
     }
 
-    //Funcion para mostrar el cambio de rol
-    public function indexCambioRol(){}
-
-    //Funcion para mostrar el cambio de rol
-    public function cambioRol($post){
+    //Funcion para mostrar las opciones del select en roles.php
+    public function indexCambioRol($post){
         session_start();
+        $userID = $post['id'];
+        
+        //Verificamos el ID
+        $sql = "SELECT * FROM user WHERE role_id != 1 AND id = '$userID'";
+        $result = $this->conexion->query($sql);
+        if ($this->conexion->query($sql)) {
+            $row = $result->fetch_assoc();
+            $_SESSION['id'] = $row['id'];
+            $_SESSION['name'] = $row['name'];
+            $_SESSION['surname'] = $row['surname'];
+            $_SESSION['role_id'] = $row['role_id'];
+            $_SESSION['cdc_id'] = $row['cdc_id'];
+        
+            // Obtener todas las sedes
+            $sqlCDC = "SELECT id AS id_cdc, name AS cdc_name FROM cdc ORDER BY id ASC";
+            $resultCDC = $this->conexion->query($sqlCDC);
+            $sedes = array();
+            while ($row = $resultCDC->fetch_all(MYSQLI_ASSOC)) {
+                $sedes[] = $row;
+                $_SESSION['sedes'] = $sedes;
+            }
+
+            // Obtener todos los roles
+            $sqlRole = "SELECT id AS id_role, name AS role_name FROM role WHERE id != 1 ORDER BY id_role ASC";
+            $resultRole = $this->conexion->query($sqlRole);
+            $roles = $resultRole->fetch_all(MYSQLI_ASSOC);
+            $_SESSION['roles'] = $roles;
+        }
+
+        $this->conexion->close();
+    }
+
+    //Funcion para cambiar de rol
+    public function cambioRol($post){
         $updated_at = date("Y-m-d H:i:s");
         $userID = $post['id'];
 
         //Verificamos el ID
         $sql = "SELECT * FROM user WHERE role_id != 1 AND id = '$userID'";
-        if ($this->conexion->query($sql)) {
-            $row = $result->fetch_assoc();
-            $_SESSION['name'] = $row['name'];
-            $_SESSION['surname'] = $row['surname'];
-
-            //opciones existentes de roles
-            $roles= array();
+        $result = $this->conexion->query($sql);
+            /*$roles= array();
             $sqlROL = "SELECT id AS id_role, name AS role_name FROM role WHERE id != 1";
-            $resultROL= mysqli_query($conexion, $sqlROL);
-            while ($fila = mysqli_fetch_assoc($resultROL)) {
+            $resultROL= $this->conexion->query($sqlROL);
+            while ($fila = $sqlROL->fetch_assoc()) {
+                //$_SESSION['id_role'] = $row['id_role'];
+                //$_SESSION['role_name'] = $row['role_name'];
                 $roles[] = $fila;
-            }
+                $this->response[] = $roles;
+            }*/
 
             //opciones existentes de cdc
             $sedes= array();
             $sqlCDC = "SELECT id AS id_cdc, name AS cdc_name FROM cdc" ;
-            $resultCDC= mysqli_query($conexion, $sqlCDC);
+            $resultCDC= $this->conexion->query($sqlCDC);
             while ($fila = mysqli_fetch_assoc($resultCDC)) {
                 $sedes[] = $fila;
             }
-
-        } else {
-            $this->response['mensaje'] = "Error en la consulta. " . mysqli_error($this->conexion);
-        }
-        
-
-        /*if(mysqli_num_rows($result) > 0){
-            
-
-            $update = "UPDATE user SET updated_at = '$updated_at', password = '$password' WHERE role_id != 1 AND id = '$userID'";
-            
-
-        }else{
-            $error = 'No se encontró ningún usuario válido con el ID ' . $userId . '.';
-            $this->response = $error;
-        }*/
         $this->conexion->close();
     }
 
@@ -183,7 +194,22 @@ class Admin extends DataBase
     }
 
     //Funcion para eliminar usuarios
-    public function delete(){}
+    public function delete($post){
+        $userID = $post['id'];
+
+        $sql = "SELECT * FROM user WHERE role_id != 1 AND id = '$userID'";
+        $result = $this->conexion->query($sql);
+
+        if(mysqli_num_rows($result) > 0){
+            $deleteUser = "DELETE FROM user WHERE role_id != 1 AND id = '$userID'";
+            $this->conexion->query($deleteUser);
+            //header("Location: ../../dashboard.php");
+            $this->conexion->close();
+        }else{
+            $error = 'No se encontró ningún usuario válido con el ID ' . $userId . '.';
+            $this->response = $error;
+        }
+    }
 }
    
 ?>
