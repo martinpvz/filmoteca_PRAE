@@ -3,6 +3,10 @@ namespace DataBase;
 
 use DataBase\DataBase;
 require_once __DIR__ . '/database.php';
+require '../../vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class User extends DataBase
 {
@@ -157,6 +161,99 @@ class User extends DataBase
         } else {
             $this->response['estatus'] =  "Error";
             $this->response['mensaje'] =  "No se pudo obtener el nombre";
+        }
+    }
+
+    public function recover($post) {
+        $email = $post['email'];
+        $sql = "SELECT * FROM user WHERE email = '{$email}'";
+        $result = mysqli_query($this->conexion, $sql);
+        $filas = $result->fetch_all(MYSQLI_ASSOC);
+
+        // if there is at least one row with the email we send the email
+        if (!empty($filas)) {
+            $sql = "DELETE FROM password_resets WHERE email = '{$email}'";
+            $result = mysqli_query($this->conexion, $sql);
+
+            $code = rand(100000, 999999);
+            $expires = date('Y-m-d', strtotime('+1 day'));
+            $sql = "INSERT INTO password_resets (email, code, expires) VALUES ('{$email}', '{$code}', '{$expires}')";
+            $result = mysqli_query($this->conexion, $sql);
+            if ($result) {
+                $subject = 'Cambio de contraseña Filmoteca PRAE';
+                $subject_encoded = mb_encode_mimeheader($subject, 'UTF-8', 'Q', "\r\n");
+                $body = '
+                    <h1>Cambio de contraseña Filmoteca PRAE</h1>
+                    <p>Por favor, ingrese el siguiente código para cambiar su contraseña:</p>
+                    <p style="font-size: 24px; font-weight: bold; color: #f44336;">' . $code . '</p>
+                    <p>Si no solicitó un cambio de contraseña, ignore este correo electrónico.</p>
+                ';
+                $mail = new PHPMailer(true);
+                try {
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'filmotecaprae@gmail.com';
+                    $mail->Password = 'wpcleixaxsguxjsd';
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Port = 587;
+                    // Configuración del remitente y destinatario
+                    $mail->setFrom('filmotecaprae@gmail.com', 'Filmoteca PRAE');
+                    $mail->addAddress($email);
+
+                    // Contenido del correo
+                    $mail->isHTML(true);
+                    $mail->Subject = $subject_encoded;
+                    $mail->Body = $body;
+
+                    // Enviar correo
+                    $mail->send();
+                } catch (Exception $e) {
+                    echo 'No se pudo enviar el correo. Error: ', $mail->ErrorInfo;
+                }
+                //echo "Se ha enviado un email a su correo electrónico";
+                header('Location: ../../verify_code.php?email=' . $email);
+            } else {
+                echo "No se pudo ejecutar la instrucción $sql. " . mysqli_error($this->conexion);
+            }
+        } else {
+            header('Location: ../../verify_code.php?email=' . $email);
+        }
+    }
+
+    public function changePassword($post) {
+        $email = $post['email'];
+        $code = $post['code'];
+        $password = $post['password'];
+        $passE = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql = "SELECT * FROM password_resets WHERE email = '{$email}' AND code = '{$code}'";
+        $result = mysqli_query($this->conexion, $sql);
+        $filas = $result->fetch_all(MYSQLI_ASSOC);
+        if (!empty($filas)) {
+            $expires = $filas[0]['expires'];
+            $now = date('Y-m-d');
+            if ($now < $expires) {
+                $sql = "UPDATE user SET password = '{$passE}' WHERE email = '{$email}'";
+                $result = mysqli_query($this->conexion, $sql);
+                if ($result) {
+                    $sql = "DELETE FROM password_resets WHERE email = '{$email}'";
+                    $result = mysqli_query($this->conexion, $sql);
+                    if ($result) {
+                        //header('Location: ../../login.php?password_changed=1');
+                        $this->response['estatus'] =  "Correcto";
+                        $this->response['mensaje'] =  "Contraseña cambiada correctamente";
+                    } else {
+                        $this->response['estatus'] =  "Error";
+                    }
+                } else {
+                    $this->response['estatus'] =  "Error";
+                }
+            } else {
+                $this->response['estatus'] =  "Codigo expirado";
+            }
+        } else {
+            $this->response['estatus'] =  "Codigo no valido";
         }
     }
 }

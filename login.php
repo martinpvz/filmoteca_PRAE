@@ -32,6 +32,7 @@
                         <input required class="required" type="password" name="password" id="password" placeholder="Contraseña">
                         <span class="form__input--show" id="show__password"></span>
                     </div>
+                    <a href="./recover.php" class="forgot-password" id="forgot-password">Olvidé mi contraseña</a>
                     <div class="form__input disabled">
                         <input type="text" class="norequired" name="name" id="name" placeholder="Nombre">
                     </div>

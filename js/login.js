@@ -28,6 +28,7 @@ function register() {
         input.style.display = 'inline-block'
     }
     document.getElementById('submit').value = "Registrar"
+    document.getElementById('forgot-password').style.display = "none"
 
     let requeridos = document.getElementsByClassName('required')
     let norequeridos = document.getElementsByClassName('norequired')
@@ -72,6 +73,7 @@ function login() {
         input.firstElementChild.value = ""
     }
     document.getElementById('submit').value = "Acceder"
+    document.getElementById('forgot-password').style.display = "block"
 
     let requeridos = document.getElementsByClassName('required')
     let norequeridos = document.getElementsByClassName('norequired')

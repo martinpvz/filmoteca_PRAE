@@ -362,6 +362,20 @@ a {
   font-size: 1.7rem;
 }
 
+.forgot-password {
+  margin-left: 55%;
+  color: rgb(109, 109, 109);
+  font-size: 12px;
+  font-family: "Nunito", sans-serif;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+@media only screen and (max-width: 768px) {
+  .forgot-password {
+    margin-left: 0;
+  }
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
