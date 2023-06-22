@@ -31,8 +31,9 @@ class User extends DataBase
         // $_SESSION['username'] = $post['user'];
         
         //Consulta
-        $sqlAdmin = "SELECT * FROM user WHERE username='{$post['user']}' and password='{$post['password']}'";
-        $sqlUser = "SELECT * FROM user WHERE username='{$post['user']}' AND active='1'";
+        $sqlAdmin = "SELECT * FROM user WHERE username='{$post['user']}' AND active='1' AND role_id = 1";
+        //$sqlUser = "SELECT * FROM user WHERE username='{$post['user']}' AND active='1'";
+        $sqlUser = "SELECT * FROM user WHERE username='{$post['user']}' AND active='1' AND role_id <> 1";
         $sqlInactive = "SELECT * FROM user WHERE username='{$post['user']}' AND active='0'";
         $resultAdmin = mysqli_query($this->conexion,$sqlAdmin);
         $resultUser = mysqli_query($this->conexion,$sqlUser);
@@ -54,14 +55,28 @@ class User extends DataBase
                 $_SESSION['sesion'] = true;
                 $_SESSION['username'] = $post['user'];
                 
-                header("location:../../firstPage.php?email=" . $_POST['email']); 
+                header("location:../../firstPage.php"); 
+            } else {
+                header("location:../../login.php?error=1");
+            }
+        } else if($filasAdmin){
+            $password_hash = $filasAdmin[0]['password'];
+            if (password_verify($post['password'], $password_hash)) {
+                $_SESSION['id'] = $filasAdmin[0]['id'];
+                $_SESSION['name'] = $filasAdmin[0]['name'];
+                $_SESSION['surname'] = $filasAdmin[0]['surname'];
+                $_SESSION['email'] = $filasAdmin[0]['email'];
+                $_SESSION['role'] = $filasAdmin[0]['role_id'];
+                $_SESSION['cdc'] = $filasAdmin[0]['cdc_id'];
+                $_SESSION['sesion'] = true;
+                $_SESSION['username'] = $post['user'];
+                
+                header("location:../../dashboard.php"); 
             } else {
                 header("location:../../login.php?error=1");
             }
         } else if($filasInactive){
             header("location:../../disabled.php"); 
-        } else if($filasAdmin){
-            header("location:../../homeadmin.php");
         } else {
             header("location:../../login.php?error=1");
         }

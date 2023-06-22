@@ -13,7 +13,6 @@ update.addEventListener("click", function(event) {
         error.style.display = "flex"
         event.preventDefault();
     } else {
-        console.log("hola soy el update")
         event.preventDefault();
         const formData = new FormData();
         formData.append('description', description);
@@ -46,7 +45,7 @@ update.addEventListener("click", function(event) {
                         } else {
                             document.getElementById('media').innerHTML = '';
                         }
-                        listarMedia();
+                        updatePhotos();
                     }, 1000);
                 }
             })

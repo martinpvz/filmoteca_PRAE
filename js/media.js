@@ -314,6 +314,43 @@ function removeChildrenExceptAddMedia(parentElement) {
         parentElement.removeChild(nodeToRemove);
     }
 }
+
+function updatePhotos(currentUserType) {
+    fetch(`./backend/media/media-list.php?cdc=${cdc}&type=${type}`)
+        .then(response => response.json())
+        .then(data => {
+            photoInfo = data;
+            const startIndex = (currentPage - 1) * 10;
+            const endIndex =currentPage * 10;
+            const template = createTemplate(startIndex, endIndex, currentUserType);
+
+            const addMedia = document.getElementById('add-media');
+            if (addMedia) {
+                addMedia.insertAdjacentHTML('afterend', template);
+            } else {
+                document.getElementById('media').insertAdjacentHTML('afterbegin', template);
+            }
+            function windowOnClick(event) {
+                if (event.target === modal) {
+                    toggleModal();
+                }
+            }
+            for (let trigger of triggers) {
+                trigger.addEventListener("click", toggleModal);
+            }
+            closeButton.addEventListener("click", toggleModal);
+            window.addEventListener("click", windowOnClick);
+            
+            if(data.length > 10) {
+                document.getElementById("arrows").style.display = "flex";
+            }
+        })
+        .catch(error => console.error('Error al realizar la petición', error));
+}
+
+
+
+
 function listarMedia(currentUserType) {
     if (photoInfo.length === 0) {
         fetch(`./backend/media/media-list.php?cdc=${cdc}&type=${type}`)
