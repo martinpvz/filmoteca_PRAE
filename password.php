@@ -1,8 +1,22 @@
 <?php 
-session_start(); 
-$name = $_SESSION['name'];
-$surname = $_SESSION['surname'];
-$newPass = $_SESSION['password'];
+    session_start(); 
+    if ($_SESSION['role'] == 1) {
+        $name = $_SESSION['name'];
+        $surname = $_SESSION['surname'];
+        $newPass = $_SESSION['password'];
+        if (!isset($name) || !isset($surname) || !isset($newPass)) {
+            require_once './backend/API/admin.php';
+            $admin = new \DataBase\Admin();
+            $admin->changePassword($_POST);
+            $name = $_SESSION['name'];
+            $surname = $_SESSION['surname'];
+            $newPass = $_SESSION['password'];
+        }
+    } else {
+        //redirigir a la página de inicio
+        header("Location: index.php");
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +42,7 @@ $newPass = $_SESSION['password'];
                 <p class="profile__circle--text"> A </p>
             </div>
             <div class="profile__info1" id="profile-info">
-                <a class="profile__info1--edit" href="">Inicio</a>
+                <a class="profile__info1--edit" href="./firstPage">Inicio</a>
                 <a class="" href="./dashboard.php">Administración de usuarios</a>
                 <a class="" href="./token.php">Clave de acceso</a>
                 <a class="profile__info1--close" href="./logout.php">Cerrar sesión</a>
@@ -51,7 +65,7 @@ $newPass = $_SESSION['password'];
             <button type="button" class="options__close" onclick="mostrarPantalla()"></button>
         </div>
         <div class="options__menu">
-            <a class="profile__info1--edit" href="">Inicio</a>
+            <a class="profile__info1--edit" href="./firstPage">Inicio</a>
             <a class="" href="./dashboard.php">Administración de usuarios</a>
             <a class="" href="./token.php">Clave de acceso</a>
             <a class="profile__info1--close" href="./logout.php">Cerrar sesión</a>

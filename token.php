@@ -1,6 +1,19 @@
 <?php 
-session_start(); 
-$newToken = $_SESSION['token'];
+session_start();
+
+if ($_SESSION['role'] == 1) {
+    if (!isset($newToken)) {
+        require_once './backend/API/admin.php';
+        $admin = new \DataBase\Admin();
+        $admin->indexToken();
+        $newToken = $_SESSION['token'];
+    }
+} else {
+    //redirigir a la página de inicio
+    header("Location: index.php");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +39,7 @@ $newToken = $_SESSION['token'];
                 <p class="profile__circle--text"> A </p>
             </div>
             <div class="profile__info1" id="profile-info">
-                <a class="profile__info1--edit" href="">Inicio</a>
+                <a class="profile__info1--edit" href="./firstPage.php">Inicio</a>
                 <a class="" href="./dashboard.php">Administración de usuarios</a>
                 <a class="" href="./token.php">Clave de acceso</a>
                 <a class="profile__info1--close" href="./logout.php">Cerrar sesión</a>
@@ -38,9 +51,10 @@ $newToken = $_SESSION['token'];
         <div class="img-mobile">
             <img src="./img/logo.png" alt="Logo">
             <button class="menu" onclick="mostrarMenu()"></button>
+            <a href="./firstPage.php" class="return"></a>
         </div>
         <div class="title-mobile">
-            <h1>Filmoteca</h1>
+            <h1 id="title-mobile"></h1>
         </div>
     </header>
 
@@ -49,7 +63,7 @@ $newToken = $_SESSION['token'];
             <button type="button" class="options__close" onclick="mostrarPantalla()"></button>
         </div>
         <div class="options__menu">
-            <a class="profile__info1--edit" href="">Inicio</a>
+            <a class="profile__info1--edit" href="./firstPage.php">Inicio</a>
             <a class="" href="./dashboard.php">Administración de usuarios</a>
             <a class="" href="./token.php">Clave de acceso</a>
             <a class="profile__info1--close" href="./logout.php">Cerrar sesión</a>
@@ -68,8 +82,7 @@ $newToken = $_SESSION['token'];
                     type="submit"
                     value="Generar nueva clave de acceso"
                     class="submit__accessKey"
-                    id="claveAcceso"
-                    >
+                    id="claveAcceso">
                 </form>
             </div>
         </section>

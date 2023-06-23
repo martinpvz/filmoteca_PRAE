@@ -1,6 +1,5 @@
 <?php
 namespace DataBase;
-
 use DataBase\DataBase;
 require_once __DIR__ . '/database.php';
 
@@ -17,7 +16,6 @@ class Admin extends DataBase
 
     //Funcion para mostrar el token almacenado en la base de datos
     public function indexToken(){
-        session_start();
         $sql = "SELECT token FROM token WHERE  id = 1";
            
         if ($result = $this->conexion->query($sql)) {
@@ -26,7 +24,6 @@ class Admin extends DataBase
         } else {
             $this->response['mensaje'] = "Error en la consulta. " . mysqli_error($this->conexion);
         }        
-        $result->free();
         $this->conexion->close();
     }
 
@@ -37,7 +34,6 @@ class Admin extends DataBase
         $sql = "UPDATE token SET token = '$newtoken', uptadet_at = '$updated_at' WHERE id = 1";
 
         if($this->conexion->query($sql)) {
-            //$this->response = $newtoken;
             header("Location: ../../token.php");
         } else {
             echo '<p>Hubo un error: ' . $this->conexion->error() . '</p>';
@@ -46,19 +42,18 @@ class Admin extends DataBase
 
     //Funcion para mostrar a los usuarios registrados en una tabla
     public function getDasboard(){
-        // Consulta para obtener los usuarios
-        $this->response = array();
-        $sql = "SELECT user.*, role.name AS role_name, cdc.name AS cdc_name
+        session_start();
+        $sqlUsers = "SELECT user.*, role.name AS role_name, cdc.name AS cdc_name
         FROM user
         LEFT JOIN role ON user.role_id = role.id
         LEFT JOIN cdc ON user.cdc_id = cdc.id
         WHERE role_id != 1";
-
-        $result = $this->conexion->query($sql);
-        while ($fila = $result->fetch_assoc()) {
-            $this->response[] = $fila;
+        $result = $this->conexion->query($sqlUsers);
+        if ($result->num_rows > 0) {
+                $roles = $result->fetch_all(MYSQLI_ASSOC);
+                $_SESSION['datos'] = $roles;
         }
-        //$result->free();
+        
         $this->conexion->close();
     }
 
@@ -70,59 +65,53 @@ class Admin extends DataBase
         //Verificamos el ID
         $sql = "SELECT * FROM user WHERE role_id != 1 AND id = '$userID'";
         $result = $this->conexion->query($sql);
-        if ($this->conexion->query($sql)) {
-            $row = $result->fetch_assoc();
-            $_SESSION['id'] = $row['id'];
-            $_SESSION['name'] = $row['name'];
-            $_SESSION['surname'] = $row['surname'];
-            $_SESSION['role_id'] = $row['role_id'];
-            $_SESSION['cdc_id'] = $row['cdc_id'];
-        
-            // Obtener todas las sedes
-            $sqlCDC = "SELECT id AS id_cdc, name AS cdc_name FROM cdc ORDER BY id ASC";
-            $resultCDC = $this->conexion->query($sqlCDC);
-            $sedes = array();
-            while ($row = $resultCDC->fetch_all(MYSQLI_ASSOC)) {
-                $sedes[] = $row;
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $_SESSION['id'] = $row['id'];
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['surname'] = $row['surname'];
+                $_SESSION['role_id'] = $row['role_id'];
+                $_SESSION['cdc_id'] = $row['cdc_id'];
+
+                //Obtener todos los roles
+                $sqlRole = "SELECT id AS id_role, name AS role_name FROM role WHERE id != 1 ORDER BY id_role ASC";
+                $resultRole = $this->conexion->query($sqlRole);
+                $roles = $resultRole->fetch_all(MYSQLI_ASSOC);
+                $_SESSION['roles'] = $roles;
+
+                //Obtener todos los roles
+                $sqlCDC = "SELECT id AS id_cdc, name AS cdc_name FROM cdc ORDER BY id ASC";
+                $resultCDC = $this->conexion->query($sqlCDC);
+                $sedes = $resultCDC->fetch_all(MYSQLI_ASSOC);
                 $_SESSION['sedes'] = $sedes;
             }
-
-            // Obtener todos los roles
-            $sqlRole = "SELECT id AS id_role, name AS role_name FROM role WHERE id != 1 ORDER BY id_role ASC";
-            $resultRole = $this->conexion->query($sqlRole);
-            $roles = $resultRole->fetch_all(MYSQLI_ASSOC);
-            $_SESSION['roles'] = $roles;
         }
-
         $this->conexion->close();
     }
 
     //Funcion para cambiar de rol
-    public function cambioRol($post){
-        $updated_at = date("Y-m-d H:i:s");
-        $userID = $post['id'];
+    public function cambioRol(){
+        session_start();
+        $userID = $_SESSION['id'];
+        $newRoleID = $_POST['role'];
 
-        //Verificamos el ID
-        $sql = "SELECT * FROM user WHERE role_id != 1 AND id = '$userID'";
-        $result = $this->conexion->query($sql);
-            /*$roles= array();
-            $sqlROL = "SELECT id AS id_role, name AS role_name FROM role WHERE id != 1";
-            $resultROL= $this->conexion->query($sqlROL);
-            while ($fila = $sqlROL->fetch_assoc()) {
-                //$_SESSION['id_role'] = $row['id_role'];
-                //$_SESSION['role_name'] = $row['role_name'];
-                $roles[] = $fila;
-                $this->response[] = $roles;
-            }*/
+        if ($newRoleID === '3') {
+            //actualización del CDC del usuario si rol es igual a 3
+            $newCDCID = $_POST['cdc'];
+            $sqlUpdateCDC = "UPDATE user SET cdc_id = '$newCDCID' WHERE id = '$userID'";
+            $this->conexion->query($sqlUpdateCDC);
+        } else {      
+            //actualización del CDC del usuario si rol no es igual a 3
+            $sqlUpdateCDC = "UPDATE user SET cdc_id = NULL WHERE id = '$userID'";
+            $this->conexion->query($sqlUpdateCDC);
+        }
 
-            //opciones existentes de cdc
-            $sedes= array();
-            $sqlCDC = "SELECT id AS id_cdc, name AS cdc_name FROM cdc" ;
-            $resultCDC= $this->conexion->query($sqlCDC);
-            while ($fila = mysqli_fetch_assoc($resultCDC)) {
-                $sedes[] = $fila;
-            }
-        $this->conexion->close();
+        //actualización del rol del usuario
+        $sqlUpdateRole = "UPDATE user SET role_id = '$newRoleID' WHERE id = '$userID'";
+        $this->conexion->query($sqlUpdateRole);
+        
+        header("Location: ../../dashboard.php");
+        exit();
     }
 
     //Funcion para cambiar la contraseña a un usuario desde el dashboard
@@ -165,7 +154,6 @@ class Admin extends DataBase
         if(mysqli_num_rows($result) > 0){
             $update = "UPDATE user SET active = 1, updated_at = '$updated_at' WHERE role_id != 1 AND id = '$userID'";
             $this->conexion->query($update);
-            //header("Location: ../../dashboard.php");
             $this->conexion->close();
         }else{
             $error = 'No se encontró ningún usuario válido con el ID ' . $userId . '.';
@@ -184,13 +172,11 @@ class Admin extends DataBase
         if(mysqli_num_rows($result) > 0){
             $update = "UPDATE user SET active = 0, updated_at = '$updated_at' WHERE role_id != 1 AND id = '$userID'";
             $this->conexion->query($update);
-            //header("Location: ../../dashboard.php");
             $this->conexion->close();
         }else{
             $error = 'No se encontró ningún usuario válido con el ID ' . $userId . '.';
             $this->response = $error;
         }
-        getDasboard();
     }
 
     //Funcion para eliminar usuarios
@@ -203,7 +189,6 @@ class Admin extends DataBase
         if(mysqli_num_rows($result) > 0){
             $deleteUser = "DELETE FROM user WHERE role_id != 1 AND id = '$userID'";
             $this->conexion->query($deleteUser);
-            //header("Location: ../../dashboard.php");
             $this->conexion->close();
         }else{
             $error = 'No se encontró ningún usuario válido con el ID ' . $userId . '.';

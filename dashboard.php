@@ -1,8 +1,20 @@
 <?php
     session_start();
-    // Obtener los datos de la sesión y decodificar el JSON
-    $datosJson = $_SESSION['datos'];
-    $datos = json_decode($datosJson, true);
+    if ($_SESSION['role'] == 1) {
+        // Obtener los datos de la sesión
+        $datosJson = isset($_SESSION['datos']) ? $_SESSION['datos'] : array();
+        $datosEncode = json_encode($datosJson);
+        $datos = json_decode( $datosEncode, true);
+
+        if (empty($datosJson)) {
+            echo '<script>actualizar();</script>';
+        }
+    } else {
+        //redirigir a la página de inicio
+        header("Location: index.php");
+        exit;
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +35,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     
-    
 </head>
 <body>
     <header class="header__home">
@@ -36,7 +47,7 @@
                 <p class="profile__circle--text"> A </p>
             </div>
             <div class="profile__info1" id="profile-info">
-                <a class="profile__info1--edit" href="">Inicio</a>
+                <a class="profile__info1--edit" href="./firstPage.php">Inicio</a>
                 <a class="" href="./dashboard.php">Administración de usuarios</a>
                 <a class="" href="./token.php">Clave de acceso</a>
                 <a class="profile__info1--close" href="./logout.php">Cerrar sesión</a>
@@ -59,7 +70,7 @@
             <button type="button" class="options__close" onclick="mostrarPantalla()"></button>
         </div>
         <div class="options__menu">
-            <a class="profile__info1--edit" href="">Inicio</a>
+            <a class="profile__info1--edit" href="./firstPage.php">Inicio</a>
             <a class="" href="./dashboard.php">Administración de usuarios</a>
             <a class="" href="./token.php">Clave de acceso</a>
             <a class="profile__info1--close" href="./logout.php">Cerrar sesión</a>

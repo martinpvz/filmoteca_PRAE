@@ -26,13 +26,32 @@ $role = $_SESSION['role'];
         </div>
         <h1 class="header__home--title">Filmoteca</h1>
         <div class="profile">
-            <div class="profile__circle" id="profile">
-                <p class="profile__circle--text" id="username-text"></p>
-            </div>
-            <div class="profile__info" id="profile-info">
-                <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
-                <a class="profile__info--close" href="./logout.php">Cerrar sesión</a>
-            </div>
+            <?php
+                if ( $role == '1') {
+                    echo '
+                        <div class="profile__circle" id="profile">
+                            <p class="profile__circle--text"> A </p>
+                        </div>
+                        <div class="profile__info1" id="profile-info">
+                            <a class="profile__info1--edit" href="./firstPage.php">Inicio</a>
+                            <a class="" href="./dashboard.php">Administración de usuarios</a>
+                            <a class="" href="./token.php">Clave de acceso</a>
+                            <a class="profile__info1--close" href="./logout.php">Cerrar sesión</a>
+                        </div>
+                    ';
+                }else{
+                    echo'
+                        <div class="profile__circle" id="profile">
+                            <p class="profile__circle--text" id="username-text"></p>
+                        </div>
+
+                        <div class="profile__info" id="profile-info">
+                            <a class="profile__info--edit" href="./editProfile.php">Editar perfil</a>
+                            <a class="profile__info--close" href="./logout.php">Cerrar sesión</a>
+                        </div>
+                    ';
+                }
+            ?>
         </div>
     </header>
 
@@ -50,10 +69,25 @@ $role = $_SESSION['role'];
         <div class="options__header">
             <button type="button" class="options__close" onclick="mostrarPantalla()"></button>
         </div>
-        <div class="options__menu">
-            <a href="./editProfile.php">Editar perfil</a>
-            <a href="./logout.php">Cerrar sesion</a>
-        </div>
+        <?php
+            if ( $role == '1') {
+                echo '
+                    <div class="options__menu">
+                        <a class="profile__info1--edit" href="./firstPage.php">Inicio</a>
+                        <a class="" href="./dashboard.php">Administración de usuarios</a>
+                        <a class="" href="./token.php">Clave de acceso</a>
+                        <a class="profile__info1--close" href="./logout.php">Cerrar sesión</a>
+                    </div>
+                ';
+            }else{
+                echo'
+                    <div class="options__menu">
+                        <a href="./editProfile.php">Editar perfil</a>
+                        <a href="./logout.php">Cerrar sesion</a>
+                    </div>
+                ';
+            }
+        ?>
     </section>
 
     <main class="main__home">

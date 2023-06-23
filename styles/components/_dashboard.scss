@@ -138,16 +138,21 @@
 }
 
 /*Button dropdown*/
+
 .dashboard_dropbtn {
     font-size: 1.5rem;
     color: #ffffff;
     display: inline-block;
     border: none;
-    border-radius: 4p;
+    border-radius: 5px;
     padding: 10px 30px 10px 20px;
     background-color: #043b9c;
     cursor: pointer;
     white-space: nowrap;
+    @include media(mobile-only) {
+        font-size: 1rem;
+        padding: 6px 10px 6px 10px;
+    }
 }
   
 .dashboard_btn{

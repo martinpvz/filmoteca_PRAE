@@ -1,10 +1,10 @@
 <?php
 
-use DataBase\ADMIN;
+use DataBase\Admin;
 
 require_once '../API/admin.php';
 
-$var = new ADMIN();
+$var = new Admin();
 
 $var->changePassword($_POST);
 echo $var->getResponse();
