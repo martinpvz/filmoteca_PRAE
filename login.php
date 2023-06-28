@@ -66,10 +66,6 @@
         </div>
     </main>
 
-    <!-- <footer class="footer__login">
-        <p class="footer__login--text">© 2023 Copyright: PROYECTO ROBERTO ALONSO ESPINOSA </p>
-    </footer> -->
-
     <script src="./js/main.js"></script>
     <script src="./js/login.js"></script>
 </body>

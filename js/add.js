@@ -1,51 +1,30 @@
-// let regularFilter = '';
-// let responsiveFilter = ''; // aqui esta guardado
-
-// function handleResponsiveFilter() {
-//     const screenWidth = window.innerWidth;
-//     if (screenWidth <= 880) {
-//         if( document.getElementById('classify-regular').innerText != "" ) {
-//             console.log('entro')
-//             responsiveFilter = document.getElementById('classify-regular').innerHTML;
-//             console.log(responsiveFilter)
-//             document.getElementById('filter__responsive--section').innerHTML = responsiveFilter;
-//             document.getElementById('classify-regular').innerHTML = "";
-//             getName('anio')
-//             getName('area')
-//             getName('category')
-//             getName('subcategory')
-//             getName('type')
-//             getName('subtype')
-//         }
-//     } else {
-//         if( document.getElementById('filter__responsive--section').innerText != "" ) {  
-//             console.log('entro') 
-//             regularFilter = document.getElementById('filter__responsive--section').innerHTML;
-//             document.getElementById('classify-regular').innerHTML = regularFilter;
-//             document.getElementById('filter__responsive--section').innerHTML = "";
-//             getName('anio')
-//             getName('area')
-//             getName('category')
-//             getName('subcategory')
-//             getName('type')
-//             getName('subtype')
-//         }
-//     } 
-// }
+let lastWidth = window.innerWidth;
 
 function firstResponsiveFilter() {
     const screenWidth = window.innerWidth;
     if( screenWidth <= 880) {
-        //regularFilter = document.getElementById('classify-regular').innerHTML;
         document.getElementById('classify-regular').innerHTML = "";
     } else if ( screenWidth > 880) {
-        //responsiveFilter = document.getElementById('filter__responsive').innerHTML;
         document.getElementById('filter__responsive--section').innerHTML = "";
     }
 }
 
+function handleResponsiveFilter() {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth <= 880 && lastWidth > 880) {
+        // La ventana cambió de tamaño grande a pequeño
+        window.location.reload();
+    } else if (screenWidth > 880 && lastWidth <= 880) {
+        // La ventana cambió de tamaño pequeño a grande
+        window.location.reload();
+    }
+
+    lastWidth = screenWidth;
+}
+
 // Agregar el evento de cambio de tamaño de pantalla
-// window.addEventListener("resize", handleResponsiveFilter);
+window.addEventListener("resize", handleResponsiveFilter);
 
 firstResponsiveFilter();
 

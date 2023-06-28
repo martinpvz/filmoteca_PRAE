@@ -144,41 +144,6 @@ class Media extends DataBase
         if ($subtype_id == "") {
             $subtype_id = NULL;
         }
-        
-        // $resource = explode( ',', $resource );
-        // $media = base64_decode($resource[1]);
-        // // Guardar los datos de la imagen en un archivo temporal
-        // $tmp_file = tempnam(sys_get_temp_dir(), 'image_');
-        // file_put_contents($tmp_file, $media);
-
-        // // Revisar si el archivo se generó correctamente
-        // if (!file_exists($tmp_file)) {
-        //     $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en un archivo temporal';
-        // } else {
-        //     $this->response['mensaje'] = 'Archivo temporal generado correctamente: ' . $tmp_file;
-        // }
-
-        // // Copiar el archivo temporal a la carpeta de destino
-        // $uploads_dir = '../../img';
-        // if( $type == '1') {
-        //     $name = uniqid() . '.jpeg';
-        // } else if($type == '2') {
-        //     $name = uniqid() . '.mp4';
-        // }
-        // $path = $uploads_dir . '/' . $name;
-        // if (!copy($tmp_file, $path)) {
-        //     $this->response['mensaje'] = 'Error: no se pudo copiar el archivo temporal a la carpeta de destino';
-        // } else {
-        //     $this->response['mensaje'] = $path;
-        // }
-
-        // $resource = './img/' . $name;
-
-        // // Eliminar el archivo temporal
-        // unlink($tmp_file);
-
-
-        // opcion con la imagen funcionando comprimida sin video
 
         $resource = explode(',', $resource);
         $media = base64_decode($resource[1]);
@@ -207,14 +172,6 @@ class Media extends DataBase
             $tmp_file = tempnam(sys_get_temp_dir(), 'image_');
             file_put_contents($tmp_file, $media);
 
-            // Revisar si el archivo se generó correctamente
-            // if (!file_exists($tmp_file)) {
-            //     $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en un archivo temporal';
-            // } else {
-            //     $this->response['mensaje'] = 'Archivo temporal generado correctamente: ' . $tmp_file;
-            // }
-
-            // Copiar el archivo temporal a la carpeta de destino
             $uploads_dir = '../../img';
             $name = uniqid() . '.mp4';
             $path = $uploads_dir . '/' . $name;
@@ -226,48 +183,6 @@ class Media extends DataBase
             unlink($tmp_file);
         }
 
-
-
-
-        // Crea la imagen a partir de la cadena decodificada en base64
-        // $image = imagecreatefromstring($media);
-
-        // if (!$image) {
-        //     $this->response['mensaje'] = 'Error: no se pudo crear la imagen';
-        // } else {
-        //     $quality = 75; 
-        //     $tmp_file = tempnam(sys_get_temp_dir(), 'image_');
-        //     imagejpeg($image, $tmp_file, $quality);
-        //     imagedestroy($image);
-        //     if (!file_exists($tmp_file)) {
-        //         $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en un archivo temporal';
-        //     } else {
-        //         $this->response['mensaje'] = 'Archivo temporal generado correctamente: ' . $tmp_file;
-        //     }
-
-        //     $uploads_dir = '../../img';
-        //     if ($type == '1') {
-        //         $name = uniqid() . '.jpeg';
-        //     } else if ($type == '2') {
-        //         $name = uniqid() . '.mp4';
-        //     }
-        //     $path = $uploads_dir . '/' . $name;
-        //     if (!copy($tmp_file, $path)) {
-        //         $this->response['mensaje'] = 'Error: no se pudo copiar el archivo temporal a la carpeta de destino';
-        //     } else {
-        //         $this->response['mensaje'] = $path;
-        //     }
-
-        //     $resource = './img/' . $name;
-
-        //     // Eliminar el archivo temporal
-        //     unlink($tmp_file);
-        // }
-
-
-            ///////////////////////////////
-
-    ///////////////////////////////
 
         $cdc_id = '';
         if(!empty($cdc_name)) {

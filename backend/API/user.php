@@ -210,8 +210,8 @@ class User extends DataBase
                     $mail->SMTPAuth = true;
                     $mail->Username = 'filmotecaprae@gmail.com';
                     $mail->Password = 'wpcleixaxsguxjsd';
-                    $mail->SMTPSecure = 'tls';
-                    $mail->Port = 587;
+                    $mail->SMTPSecure = 'ssl';
+                    $mail->Port = 465;
                     // Configuración del remitente y destinatario
                     $mail->setFrom('filmotecaprae@gmail.com', 'Filmoteca PRAE');
                     $mail->addAddress($email);

@@ -37,56 +37,6 @@ class CDC extends DataBase
         $this->conexion->close();
     }
 
-    // public function add($post) {
-    //     $nameCdc = $post->name;
-    //     $address = $post->address;
-    //     $phone = $post->phone;
-    //     $resource = $post->resource;
-    //     $created_at = date('Y-m-d H:i:s');
-    //     $updated_at = date('Y-m-d H:i:s');
-        
-    //     $resource = explode( ',', $resource );
-    //     $media = base64_decode($resource[1]);
-
-    //     // Guardar los datos de la imagen en un archivo temporal
-    //     $tmp_file = tempnam(sys_get_temp_dir(), 'image_');
-    //     file_put_contents($tmp_file, $media);
-
-    //     // Revisar si el archivo se generó correctamente
-    //     if (!file_exists($tmp_file)) {
-    //         $this->response['mensaje'] = 'Error: no se pudo guardar la imagen en un archivo temporal';
-    //     } else {
-    //         $this->response['mensaje'] = 'Archivo temporal generado correctamente: ' . $tmp_file;
-    //     }
-
-    //     // Copiar el archivo temporal a la carpeta de destino
-    //     $uploads_dir = '../../img';
-    //     $name = uniqid() . '.jpg';
-    //     $path = $uploads_dir . '/' . $name;
-    //     if (!copy($tmp_file, $path)) {
-    //         $this->response['mensaje'] = 'Error: no se pudo copiar el archivo temporal a la carpeta de destino';
-    //     } else {
-    //         $this->response['mensaje'] = $path;
-    //     }
-
-    //     $resource = './img/' . $name;
-
-    //     // Eliminar el archivo temporal
-    //     unlink($tmp_file);
-        
-    //     $this->response = array();
-    //     $sql = "INSERT INTO cdc (name, image, address, phone, created_at, updated_at)
-    //     VALUES ('$nameCdc', '$resource', '$address', '$phone', '$created_at', '$updated_at')";
-        
-    //     if ($this->conexion->query($sql)) {
-    //         $this->response['estatus'] =  "Correcto";
-    //         $this->response['mensaje'] =  "El CDC se agregó correctamente";
-    //     } else {
-    //         $this->response['mensaje'] = "No se pudo ejecutar la instrucción $sql. " . mysqli_error($this->conexion);
-    //     }
-    //     $this->conexion->close();
-    // }
-
     public function add($post) {
         $nameCdc = $post->name;
         $address = $post->address;
