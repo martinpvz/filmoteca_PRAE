@@ -1,7 +1,6 @@
 <?php 
 session_start(); 
 if ($_SESSION['role'] == 1) {
-    $id = $_SESSION['id'];
     $name = $_SESSION['name'];
     $surname = $_SESSION['surname'];
     $role = $_SESSION['role_id'];
@@ -12,6 +11,15 @@ if ($_SESSION['role'] == 1) {
 
     $arrayCDC = $_SESSION['sedes'];
     $sedes = json_encode($arrayCDC);
+    if (!isset($name) || !isset($surname) || !isset($role)) {
+        require_once './backend/API/admin.php';
+        $admin = new \DataBase\Admin();
+        $admin->indexCambioRol($_POST);
+        $name = $_SESSION['name'];
+        $surname = $_SESSION['surname'];
+        $role = $_SESSION['role_id'];
+        $cdc = $_SESSION['cdc_id'];
+    }
 } else {
     //redirigir a la página de inicio
     header("Location: index.php");

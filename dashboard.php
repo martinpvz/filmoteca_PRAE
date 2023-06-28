@@ -5,10 +5,7 @@
         $datosJson = isset($_SESSION['datos']) ? $_SESSION['datos'] : array();
         $datosEncode = json_encode($datosJson);
         $datos = json_decode( $datosEncode, true);
-
-        if (empty($datosJson)) {
-            echo '<script>actualizar();</script>';
-        }
+        
     } else {
         //redirigir a la página de inicio
         header("Location: index.php");
